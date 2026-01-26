@@ -15,7 +15,6 @@ tools:
   edit: true
   bash: true
   openskills_*: true
-  discord_*: true
   vibekanban: true
   session: true
 ---
