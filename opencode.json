@@ -61,7 +61,7 @@
   },
   "agent": {
     "maia": {
-      "description": "THE ORCHESTRATOR. Strategy Only.",
+      "description": "THE ORCHESTRATOR. Strategy and Command.",
       "model": "zai-coding-plan/glm-4.7",
       "mode": "primary",
       "tools": {
@@ -75,7 +75,7 @@
       }
     },
     "sisyphus": {
-      "description": "THE MANAGER. Execution Loop.",
+      "description": "THE PROJECT MANAGER. Execution Loop.",
       "model": "zai-coding-plan/glm-4.7",
       "mode": "subagent",
       "tools": {
@@ -90,7 +90,7 @@
       }
     },
     "coder": {
-      "description": "THE ARCHITECT. Build Only.",
+      "description": "THE ARCHITECT. Build and Implementation.",
       "model": "zai-coding-plan/glm-4.7",
       "mode": "subagent",
       "tools": {
@@ -106,7 +106,7 @@
       }
     },
     "ops": {
-      "description": "THE INFRASTRUCTURE. Docker/Systems.",
+      "description": "THE INFRASTRUCTURE. Docker and System Stability.",
       "model": "zai-coding-plan/glm-4.7",
       "mode": "subagent",
       "tools": {
@@ -119,21 +119,8 @@
         "skill": true
       }
     },
-    "architect": {
-      "description": "THE SWARM BUILDER. Tooling Upgrades.",
-      "model": "zai-coding-plan/glm-4.7",
-      "mode": "subagent",
-      "tools": {
-        "scan_for_redundancy": true,
-        "read": true,
-        "write": true,
-        "edit": true,
-        "bash": true,
-        "skill": true
-      }
-    },
     "researcher": {
-      "description": "THE ORACLE. Deep Context.",
+      "description": "THE ORACLE. Deep Context and Documentation.",
       "model": "google/gemini-2.5-pro",
       "mode": "subagent",
       "tools": {
@@ -145,29 +132,19 @@
       }
     },
     "researcher_fast": {
-      "description": "THE RAPID ANALYST.",
+      "description": "THE FLASH ORACLE.",
       "model": "google/gemini-2.5-flash",
       "mode": "subagent",
       "tools": {
         "webfetch": true,
         "read": true,
-        "skill": true
-      }
-    },
-    "reviewer": {
-      "description": "THE GATEKEEPER. Safety.",
-      "model": "opencode/big-pickle",
-      "mode": "subagent",
-      "tools": {
-        "git_blame": true,
-        "read": true,
         "grep": true,
-        "lsp": true,
+        "glob": true,
         "skill": true
       }
     },
     "giuzu": {
-      "description": "THE REASONING CLONE. Simulation.",
+      "description": "THE REASONING CLONE. Strategic Simulation.",
       "model": "openrouter/deepseek/deepseek-r1:free",
       "mode": "subagent",
       "tools": {
@@ -179,7 +156,7 @@
       }
     },
     "vision": {
-      "description": "THE VISUAL ANALYST. Dedicated Multimodal.",
+      "description": "THE VISUAL ANALYST. Multimodal and Video.",
       "model": "google/gemini-2.0-flash",
       "mode": "subagent",
       "tools": {
@@ -188,9 +165,38 @@
         "session": true
       }
     },
+    "reviewer": {
+      "description": "THE GATEKEEPER. Safety and Logic Audits.",
+      "model": "opencode/big-pickle",
+      "mode": "subagent",
+      "tools": {
+        "git_blame": true,
+        "read": true,
+        "grep": true,
+        "lsp": true,
+        "skill": true
+      }
+    },
+    "opencode": {
+      "description": "THE PLATFORM ORACLE. Meta-Level Ecosystem Mastery.",
+      "model": "google/gemini-2.5-flash",
+      "mode": "subagent",
+      "tools": {
+        "read": true,
+        "write": true,
+        "edit": true,
+        "bash": true,
+        "webfetch": true,
+        "grep": true,
+        "glob": true,
+        "list": true,
+        "scan_for_redundancy": true,
+        "skill": true
+      }
+    },
     "workflow": {
-      "description": "THE AUTOMATOR. n8n/Flowise specialist.",
-      "model": "zai-coding-plan/glm-4.7",
+      "description": "THE AUTOMATION ARCHITECT.",
+      "model": "openrouter/qwen/qwen-2.5-coder-32b-instruct",
       "mode": "subagent",
       "tools": {
         "read": true,
@@ -225,30 +231,13 @@
       }
     },
     "maia_premium": {
-      "description": "THE GPT-5 ARCHITECT. Complex reasoning.",
+      "description": "THE GPT-5 ARCHITECT. Supreme Arbitration.",
       "model": "google/gemini-2.5-pro",
       "mode": "subagent",
       "tools": {
         "read": true,
         "write": true,
         "session": true,
-        "skill": true
-      }
-    },
-    "opencode": {
-      "description": "THE PLATFORM ORACLE. Master of OpenCode config/plugins.",
-      "model": "zai-coding-plan/glm-4.7",
-      "mode": "subagent",
-      "tools": {
-        "read": true,
-        "write": true,
-        "edit": true,
-        "bash": true,
-        "webfetch": true,
-        "grep": true,
-        "glob": true,
-        "list": true,
-        "scan_for_redundancy": true,
         "skill": true
       }
     }

@@ -46,7 +46,8 @@ multiagent-layer0/
 - **Skills Registry**: Flat, 22 independent skills
 - **TypeScript**: Strict mode, no `any`
 - **Import Groups**: External → Internal → Relative
-- **LSP-First**: @coder/@reviewer use LSP
+- **LSP-First**: @coder and @reviewer use LSP for semantic code analysis
+- **Authority Split**: @opencode handles meta-level tool audits; @ops handles infrastructure-level deployment safety
 
 ---
 
@@ -61,20 +62,20 @@ multiagent-layer0/
 
 ## AGENT ECOSYSTEM
 
-| Agent            | Model                | Role                               |
-| ---------------- | -------------------- | ---------------------------------- |
-| @maia            | GLM-4.7              | Orchestrator                       |
-| @coder           | GLM-4.7              | Code Architect (LSP)               |
-| @ops             | GLM-4.7              | Infrastructure (bash, Docker, n8n) |
-| @researcher      | Gemini 2.5 Pro       | Oracle (Context7)                  |
-| @researcher_fast | Gemini 2.5 Flash     | Flash Oracle                       |
-| @reviewer        | GLM-4.7              | Gatekeeper (LARP check)            |
-| @opencode        | Gemini 2.5 Flash     | Meta Specialist                    |
-| @workflow        | Qwen3 Coder (Free)   | Automation (n8n, Flowise)          |
-| @vision          | Gemini 2.5 Flash     | Eyes                               |
-| @giuzu           | DeepSeek R1 (Free)   | Digital Clone                      |
-| @starter         | Gemini 2.5 Flash     | Workspace Wizard                   |
-| @maia_premium    | GPT-5.2              | Premium Escalation                 |
+| Agent            | Model              | Role                               |
+| ---------------- | ------------------ | ---------------------------------- |
+| @maia            | GLM-4.7            | Orchestrator                       |
+| @sisyphus        | GLM-4.7            | Project Manager                    |
+| @coder           | GLM-4.7            | Code Architect (LSP)               |
+| @ops             | GLM-4.7            | Infrastructure (bash, Docker, n8n) |
+| @researcher      | Gemini 2.5 Pro     | Oracle (Context7)                  |
+| @researcher_fast | Gemini 2.5 Flash   | Flash Oracle                       |
+| @reviewer        | Big-Pickle         | Gatekeeper (LARP check)            |
+| @giuzu           | Big-Pickle         | Digital Clone                      |
+| @opencode        | Gemini 2.5 Flash   | Meta Specialist                    |
+| @workflow        | Qwen 2.5 Coder 32B | Automation (n8n, Flowise)          |
+
+**Note**: Additional specialized agents (@vision, @starter, @maia_premium) are documented but not currently registered in opencode.json.
 
 **Fallback**: 2-3 models, 3 retries each.
 
