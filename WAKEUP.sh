@@ -72,5 +72,9 @@ echo "━━━━━━━━━━━━━━━━━━━━━━━━�
 echo "✅ ECOSYSTEM READY. ACTION: /init triggered via terminal."
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 
-# 6. TRIGGER AGENTIC INIT (Always runs to ensure context is fresh)
+# 6. UPDATE STATUS.MD (Living Document Auto-Sync)
+sed -i '' "s/^\*\*Last Updated:\*\*.*/\*\*Last Updated:\*\* $(date '+%Y-%m-%d %H:%M')/" STATUS.md 2>/dev/null || true
+
+# 7. TRIGGER AGENTIC INIT (Always runs to ensure context is fresh)
 opencode run "@maia initialize the board and check for success patterns" --log-level ERROR > /dev/null 2>&1 &
+
