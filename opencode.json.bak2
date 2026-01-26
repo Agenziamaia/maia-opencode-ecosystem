@@ -130,8 +130,7 @@
         "bash": true,
         "webfetch": true,
         "session": true,
-        "vibekanban_*": true,
-        "scan_for_redundancy": true
+        "vibekanban_*": true
       }
     },
     "researcher": {
