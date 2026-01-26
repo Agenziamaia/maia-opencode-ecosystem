@@ -147,23 +147,21 @@
     },
     "giuzu": {
       "description": "Reasoning Clone.",
-      "model": "openrouter/deepseek/deepseek-r1:free",
+      "model": "openrouter/deepseek/deepseek-r1-0528:free",
       "mode": "subagent",
       "tools": {
         "read": true,
         "write": true,
-        "session": true,
-        "skill": true
+        "session": true
       }
     },
     "vision": {
       "description": "Native Vision.",
-      "model": "google/gemini-2.0-flash",
+      "model": "google/gemini-2.5-flash",
       "mode": "subagent",
       "tools": {
         "read": true,
-        "webfetch": true,
-        "session": true
+        "webfetch": true
       }
     },
     "reviewer": {
@@ -179,13 +177,12 @@
     },
     "workflow": {
       "description": "Automations.",
-      "model": "openrouter/qwen/qwen-2.5-coder-32b-instruct",
+      "model": "google/gemini-2.5-flash",
       "mode": "subagent",
       "tools": {
         "read": true,
         "write": true,
-        "bash": true,
-        "skill": true
+        "bash": true
       }
     },
     "opencode": {
