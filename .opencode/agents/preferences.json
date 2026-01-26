@@ -1,0 +1,62 @@
+{
+  "version": "2.0.0",
+  "last_updated": "2026-01-24",
+  "preferences": {
+    "model": {
+      "maia": "zai-coding-plan/glm-4.7",
+      "vision_enabled": true,
+      "fallback_system": {
+        "enabled": true,
+        "max_attempts_per_model": 3,
+        "timeout_ms": 10000,
+        "user_feedback_interval": 3
+      }
+    },
+    "workflow": {
+      "auto_start_dev_server": true,
+      "skip_confirmation_simple": false,
+      "preferred_communication": "concise",
+      "kanban_first": true
+    },
+    "tools": {
+      "vibe_kanban": {
+        "enabled": true,
+        "project_id": "b7a06d11-3600-447f-8dbd-617b0de52e67",
+        "project_name": "Multi-Agent Layer 0 v2",
+        "api_url": "http://localhost:62601"
+      }
+    },
+    "learned_patterns": {
+      "user_uses_vision": true,
+      "prefers_parallel_research": true,
+      "likes_message_mode": true,
+      "prefers_natural_language": true
+    },
+    "issues_resolved": [
+      {
+        "issue": "look_at tool not working with temp paths",
+        "fix": "User should save screenshots to persistent location first",
+        "date": "2026-01-22"
+      },
+      {
+        "issue": "Unlimited retry loops when models unreachable",
+        "fix": "Implemented retry_config with 3 attempts per model + fallback chain",
+        "date": "2026-01-24"
+      }
+    ],
+    "model_health": {
+      "tracked_models": [
+        "zai-coding-plan/glm-4.7",
+        "zai-coding-plan/glm-4.7",
+        "google/gemini-2.5-pro",
+        "google/gemini-2.5-flash",
+        "qwen/qwen-2.5-coder-32b-instruct",
+        "zai-coding-plan/glm-4.7",
+        "deepseek/deepseek-coder",
+        "codestral/codestral-latest"
+      ],
+      "last_health_check": null,
+      "auto_optimization": false
+    }
+  }
+}

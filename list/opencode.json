@@ -1,0 +1,191 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "default_agent": "maia",
+  "permission": {
+    "edit": "allow",
+    "bash": "allow",
+    "write": "allow",
+    "webfetch": "allow"
+  },
+  "compaction": {
+    "auto": true,
+    "prune": true
+  },
+  "watcher": {
+    "ignore": [
+      "node_modules/**",
+      "dist/**",
+      ".git/**",
+      ".output/**",
+      ".next/**",
+      "coverage/**",
+      "*.log"
+    ]
+  },
+  "mcp": {
+    "filesystem": {
+      "type": "local",
+      "command": [
+        "npx",
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "."
+      ]
+    },
+    "git": {
+      "type": "local",
+      "command": [
+        "npx",
+        "-y",
+        "@modelcontextprotocol/server-git"
+      ]
+    },
+    "openskills": {
+      "type": "local",
+      "command": [
+        "npx",
+        "openskills",
+        "mcp"
+      ]
+    }
+  },
+  "tools": {
+    "git_*": false,
+    "filesystem_*": false
+  },
+  "agent": {
+    "maia": {
+      "description": "THE ORCHESTRATOR. Strategic planner. Can do quick tasks but prefers delegation for complex work.",
+      "model": "zai-coding-plan/glm-4.7",
+      "mode": "primary",
+      "tools": {
+        "read": true,
+        "grep": true,
+        "glob": true,
+        "list": true,
+        "skill": true,
+        "todowrite": true,
+        "todoread": true,
+        "question": true,
+        "webfetch": true,
+        "write": true,
+        "edit": true,
+        "bash": true,
+        "openskills_*": true
+      }
+    },
+    "coder": {
+      "description": "THE ARCHITECT. God-Tier Code Synthesis. Full write access. LSP enabled.",
+      "model": "zai-coding-plan/glm-4.7",
+      "mode": "subagent",
+      "tools": {
+        "read": true,
+        "grep": true,
+        "glob": true,
+        "list": true,
+        "skill": true,
+        "write": true,
+        "edit": true,
+        "patch": true,
+        "bash": true,
+        "lsp": true,
+        "git_*": true,
+        "filesystem_*": true,
+        "webfetch": false,
+        "question": false
+      }
+    },
+    "ops": {
+      "description": "INFRASTRUCTURE GOD. DevOps, Docker, Coolify, n8n. Full bash + git access.",
+      "model": "zai-coding-plan/glm-4.7",
+      "mode": "subagent",
+      "tools": {
+        "read": true,
+        "grep": true,
+        "glob": true,
+        "list": true,
+        "skill": true,
+        "write": true,
+        "edit": true,
+        "bash": true,
+        "webfetch": true,
+        "git_*": true,
+        "filesystem_*": true,
+        "question": false
+      },
+      "permission": {
+        "bash": {
+          "*": "allow",
+          "rm -rf *": "ask",
+          "docker rm *": "ask"
+        }
+      }
+    },
+    "researcher": {
+      "description": "THE ORACLE. Deep Context Analyst. Read-only. Webfetch enabled.",
+      "model": "google/gemini-2.5-pro",
+      "mode": "subagent",
+      "tools": {
+        "read": true,
+        "grep": true,
+        "glob": true,
+        "list": true,
+        "skill": true,
+        "webfetch": true,
+        "write": false,
+        "edit": false,
+        "bash": false,
+        "question": true
+      }
+    },
+    "reviewer": {
+      "description": "THE GATEKEEPER. Strict code audit. Read-only. LSP enabled.",
+      "model": "zai-coding-plan/glm-4.7",
+      "mode": "subagent",
+      "tools": {
+        "read": true,
+        "grep": true,
+        "glob": true,
+        "list": true,
+        "lsp": true,
+        "git_*": true,
+        "write": false,
+        "edit": false,
+        "bash": false,
+        "webfetch": false
+      }
+    }
+  },
+  "command": {
+    "plan": {
+      "description": "Construct a Strategic Battle Plan",
+      "template": "Strategic Initiative: \"$ARGUMENTS\".\n1. Read project structure.\n2. Construct a multi-agent battle plan.\n3. Delegate to @coder, @ops, @researcher.",
+      "agent": "maia"
+    },
+    "audit": {
+      "description": "Run strict God-Tier code quality checks",
+      "template": "Audit the codebase. Use grep/glob/lsp. Report issues. NO MERCY.",
+      "agent": "reviewer"
+    },
+    "ops": {
+      "description": "Execute Infra tasks with Extreme Prejudice",
+      "template": "Infra Task: \"$ARGUMENTS\".\n1. Plan safety checks.\n2. Execute with precision.\n3. Verify state.",
+      "agent": "ops"
+    },
+    "research": {
+      "description": "Ingest aggressively and Synthesize",
+      "template": "Context: \"$ARGUMENTS\".\n1. Ingest documentation/files.\n2. Synthesize into insight for @maia.",
+      "agent": "researcher"
+    },
+    "supercharge": {
+      "description": "Meta-Analyze the entire ecosystem",
+      "template": "Analyze project meta-structure. Suggest God-Tier improvements.",
+      "agent": "maia"
+    },
+    "init": {
+      "description": "Bootstrap the Reality",
+      "template": "Initialize the environment. Check Droids, Codebase, and Skills. Report readiness.",
+      "agent": "maia"
+    }
+  }
+}

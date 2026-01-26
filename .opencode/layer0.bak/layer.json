@@ -1,0 +1,19 @@
+{
+  "name": "maia-layer0",
+  "version": "1.0.0",
+  "description": "MAIA Base Layer - Complete project template",
+  "created": "2025-01-21T16:45:00Z",
+  "location": ".opencode/maia-layer0/",
+  "includes": [
+    "React 18 + Vite + TypeScript",
+    "Complete src/ structure",
+    "Testing (Vitest + RTL)",
+    "ESLint + Prettier",
+    "Entry files (main.tsx, App.tsx, index.html)",
+    "All configurations"
+  ],
+  "scripts": {
+    "init": "bash .opencode/scripts/init.sh",
+    "layer": "bash .opencode/scripts/layer.sh"
+  }
+}

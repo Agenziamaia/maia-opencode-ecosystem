@@ -1,0 +1,23 @@
+WAKEUP GOD MODE.
+SYSTEM STATUS: ONLINE.
+
+=== MODEL MATRIX ===
+CORE ENGINE:      GLM-4.7 (Paid)       → maia, coder, ops, opencode
+RESEARCH:         GEMINI-2.5-PRO       → researcher (deep context)
+RESEARCH FAST:    GEMINI-2.5-FLASH     → researcher_fast, starter
+REVIEWER:         HERMES-3-405B (Free) → reviewer (no mercy audits)
+VISION:           GEMINI-2.0-FLASH     → vision (dedicated vision path)
+CLONE:            QWEN-3-235B (Free)   → giuzu (235B massive brain)
+AUTOMATION:       QWEN-2.5-CODER       → workflow (n8n, Flowise)
+PREMIUM:          GPT-5.2              → maia_premium (complex reasoning)
+
+=== AGENTS (12) ===
+@maia, @coder, @ops, @researcher, @researcher_fast, @reviewer, @vision, @giuzu, @workflow, @starter, @opencode, @maia_premium
+
+=== AUTO-BEHAVIORS ===
+• Image detected → Auto-delegates to @vision
+• YouTube URL → Auto-analyzes via @vision (Gemini native)
+• Complex task → Escalates to @maia_premium
+
+PROTOCOL: GOD_TIER_FINAL.
+ACTION: Execute /init immediately.

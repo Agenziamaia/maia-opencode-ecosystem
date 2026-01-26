@@ -1,0 +1,78 @@
+{
+    "technical": {
+        "languages": {
+            "primary": [
+                "typescript",
+                "python"
+            ],
+            "secondary": [
+                "bash",
+                "go"
+            ],
+            "avoid": []
+        },
+        "frameworks": {
+            "web": [
+                "react",
+                "vite",
+                "next.js"
+            ],
+            "backend": [
+                "fastapi",
+                "node"
+            ],
+            "ai": [
+                "langchain",
+                "openai",
+                "anthropic"
+            ]
+        },
+        "tools": {
+            "development": [
+                "opencode",
+                "vscode"
+            ],
+            "deployment": [
+                "docker",
+                "coolify"
+            ],
+            "automation": [
+                "n8n",
+                "flowise",
+                "trigger.dev"
+            ],
+            "version_control": [
+                "git",
+                "github"
+            ]
+        },
+        "patterns": {
+            "prefer": [
+                "functional",
+                "composition",
+                "typed"
+            ],
+            "avoid": [
+                "deep inheritance",
+                "any types",
+                "callback hell"
+            ]
+        }
+    },
+    "workflow": {
+        "priorities": {
+            "1": "working code",
+            "2": "automation",
+            "3": "user experience",
+            "4": "documentation"
+        },
+        "testing": "optional unless critical",
+        "documentation": "minimal",
+        "dev_server": "auto_start"
+    },
+    "communication": {
+        "style": "concise",
+        "format": "bullet_points",
+        "confirmations": "skip_for_simple_tasks"
+    }
+}

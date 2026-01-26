@@ -1,0 +1,45 @@
+{
+  "user": {
+    "name": "User",
+    "preferences": {
+      "dev_server": "auto_start",
+      "testing": "optional",
+      "documentation": "minimal",
+      "delegation_style": "direct",
+      "preferred_agents": {
+        "coder": true,
+        "ops": "rare",
+        "researcher": "when_asked"
+      },
+      "workflow": "tell_me_what_to_build",
+      "communication_style": "concise"
+    },
+    "patterns": {
+      "most_common_tasks": [],
+      "successful_approaches": [],
+      "avoided_commands": [],
+      "typical_work_session": "quick_feature_build"
+    },
+    "session_stats": {
+      "total_sessions": 0,
+      "coder_sessions": 0,
+      "ops_sessions": 0,
+      "researcher_sessions": 0,
+      "reviewer_sessions": 0
+    }
+  },
+  "learning": {
+    "last_updated": "2025-01-21T16:45:00Z",
+    "learned_patterns": [
+      "User prefers minimal setup",
+      "User wants dev server auto-started",
+      "User dislikes manual commands",
+      "User values speed over documentation"
+    ],
+    "adaptations": {
+      "auto_start_dev_server": true,
+      "skip_confirmation_for_simple_tasks": true,
+      "prioritize_working_code_over_docs": true
+    }
+  }
+}

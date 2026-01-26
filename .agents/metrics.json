@@ -1,0 +1,36 @@
+{
+  "Coder": {
+    "tasks_completed": 0,
+    "files_created": 0,
+    "files_modified": 0,
+    "bugs_fixed": 0,
+    "review_rejections": 0,
+    "build_success_rate": 1.0
+  },
+  "Ops": {
+    "tasks_completed": 0,
+    "deployments": 0,
+    "downtime_incidents": 0,
+    "automations_created": 0,
+    "security_incidents": 0
+  },
+  "Researcher": {
+    "queries_answered": 0,
+    "documents_analyzed": 0,
+    "patterns_found": 0,
+    "accuracy_score": 1.0
+  },
+  "MAIA": {
+    "battles_planned": 0,
+    "delegations": 0,
+    "sessions_orchestrated": 0
+  },
+  "Reviewer": {
+    "audits_completed": 0,
+    "bugs_found": 0,
+    "security_issues_found": 0,
+    "performance_issues_found": 0,
+    "go_decisions": 0,
+    "no_go_decisions": 0
+  }
+}

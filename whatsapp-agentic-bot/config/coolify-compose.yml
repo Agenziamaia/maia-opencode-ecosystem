@@ -1,0 +1,129 @@
+version: '3.8'
+
+# Coolify Backup VPS Composition
+# Deploy on Hetzner/DigitalOcean VPS (2GB RAM, $5/mo)
+
+services:
+  # Redis replica (read-only replica of local Mac Redis)
+  redis-replica:
+    image: redis:7-alpine
+    command: >
+      redis-server
+      --replicaof ${LOCAL_MAC_IP:-192.168.1.100} 6379
+      --replica-read-only yes
+      --save 300 10
+      --save 60 1000
+      --appendonly yes
+      --appendfilename "appendonly.aof"
+      --maxmemory 256mb
+      --maxmemory-policy allkeys-lru
+    volumes:
+      - redis-replica-data:/data
+    restart: unless-stopped
+    healthcheck:
+      test: ['CMD', 'redis-cli', 'ping']
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - backup-network
+
+  # PostgreSQL for analytics (optional)
+  postgres-analytics:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-hotel_analytics}
+      POSTGRES_USER: ${POSTGRES_USER:-analytics}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    restart: unless-stopped
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U ${POSTGRES_USER:-analytics}']
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - backup-network
+
+  # Grafana for monitoring
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - '${GRAFANA_PORT:-3001}:3000'
+    environment:
+      GF_SECURITY_ADMIN_USER: ${GRAFANA_USER:-admin}
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_PASSWORD}
+      GF_INSTALL_PLUGINS: grafana-piechart-panel
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - ./config/grafana/dashboards:/etc/grafana/provisioning/dashboards
+      - ./config/grafana/datasources:/etc/grafana/provisioning/datasources
+    restart: unless-stopped
+    depends_on:
+      - postgres-analytics
+    networks:
+      - backup-network
+
+  # Failover workers (activate when Mac down)
+  failover-workers:
+    build:
+      context: ..
+      dockerfile: Dockerfile
+    command: node dist/failover/index.js
+    environment:
+      NODE_ENV: production
+      REDIS_HOST: redis-replica
+      REDIS_PORT: 6379
+      DATABASE_URL: postgresql://${POSTGRES_USER:-analytics}:${POSTGRES_PASSWORD}@postgres-analytics:5432/${POSTGRES_DB:-hotel_analytics}
+      GATEWAY_API_KEY: ${GATEWAY_API_KEY}
+    depends_on:
+      - redis-replica
+      - postgres-analytics
+    restart: unless-stopped
+    networks:
+      - backup-network
+
+  # Rsync service for backup sync
+  rsync-backup:
+    image: eeacms/rsync:latest
+    command: >
+      rsync
+      -avz
+      --delete
+      ${LOCAL_MAC_USER}@${LOCAL_MAC_IP}:/Users/g/Desktop/MAIA\ opencode/whatsapp-agentic-bot/data/
+      /backups/data/
+    volumes:
+      - backup-data:/backups
+    restart: unless-stopped
+    networks:
+      - backup-network
+
+  # Backup scheduler (cron)
+  backup-scheduler:
+    image: efrecon/rsync-backup:latest
+    command: >
+      /bin/sh -c "
+      echo '0 */4 * * * rsync -avz --delete ${LOCAL_MAC_USER}@${LOCAL_MAC_IP}:/Users/g/Desktop/MAIA\ opencode/whatsapp-agentic-bot/data/ /backups/data/ >> /var/log/rsync.log 2>&1' > /etc/crontab &&
+      echo '0 2 * * * rsync -avz --delete ${LOCAL_MAC_USER}@${LOCAL_MAC_IP}:/Users/g/Desktop/MAIA\ opencode/whatsapp-agentic-bot/logs/ /backups/logs/ >> /var/log/rsync.log 2>&1' >> /etc/crontab &&
+      crond -f -l 2
+      "
+    volumes:
+      - backup-data:/backups
+    restart: unless-stopped
+    networks:
+      - backup-network
+
+networks:
+  backup-network:
+    driver: bridge
+
+volumes:
+  redis-replica-data:
+    driver: local
+  postgres-data:
+    driver: local
+  grafana-data:
+    driver: local
+  backup-data:
+    driver: local
