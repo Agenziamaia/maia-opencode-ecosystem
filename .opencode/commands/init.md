@@ -1,67 +1,50 @@
 ---
-description: Session initialization command that bootstraps the MAIA environment
-agent: maia
+description: Bootstrap the Supercharged MAIA Ecosystem (WAKEUP Protocol)
 ---
 
-# /init - Bootstrap the MAIA Environment
+# /init - WAKEUP GOD MODE
+Execute the Definitive WAKEUP Protocol to initialize the Brain, Hive, and Swarm.
 
-Execute full environment initialization before any work begins.
+## Automatic Steps (Executed by WAKEUP.sh)
 
-## Automatic Steps (Executed by MAIA)
-
-### 1. Environment Bootstrap
+### 1. Unified Wakeup
 ```bash
-# Run auto-init script
-bash .opencode/scripts/auto-init.sh
+# Run the Master Protocol
+bash WAKEUP.sh
 ```
 
-### 2. Vibe Kanban Verification
-- Confirm HTTP 200 on http://localhost:62601
-- If failed, report error and continue in degraded mode
+### 2. Startup Sequence
+1.  **Legacy Purge**: Kills old sessions/ports.
+2.  **Hive Activation**: Starts VibeKanban (Port 62601).
+3.  **Brain Sync**: Syncs `layer0` strategy to production.
+4.  **Vault Audit**: Counts Universal Success Patterns.
+5.  **Agent Gen**: Generates `AGENTS.md` from `layer0` templates if missing.
 
-### 3. Agent Health Check
-Ping each agent with 30-second timeout:
-- @coder (GLM-4.7)
-- @ops (GLM-4.7)
-- @researcher (Gemini Pro)
-- @researcher_fast (Gemini Flash)
-- @reviewer (GLM-4.7)
-- @vision (Gemini Flash)
-- @workflow (Qwen)
-- @giuzu (Qwen)
-
-### 4. Status Report
-Generate report showing:
-- Which agents are ONLINE/OFFLINE
-- Fallback assignments for offline agents
-- Vibe Kanban board URL
-- Ready state
+### 3. Agent Roster Check (The Swarm)
+Verifies connectivity for the 12-Droid Cluster:
+- **Core**: @maia, @sisyphus, @coder, @ops
+- **Intel**: @researcher, @researcher_fast, @librarian
+- **Review**: @reviewer (Big-Pickle), @architect (GLM-4.7)
+- **Special**: @vision, @giuzu (Clone), @maia_premium
 
 ## Example Output
-
 ```
-🚀 MAIA ECOSYSTEM INITIALIZED
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🤖 WAKEUP GOD MODE. SYSTEM STATUS: INITIALIZING...
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🧹 Purging legacy processes...
+📋 Starting Vibe Kanban on port 62601...
+🧠 Synchronizing Universal Brain (Layer 0)...
+✅ Universal Strategy: ACTIVE
+💎 Success Vault: Found 14 Universal Patterns
+📝 Generating AGENTS.md from Universal Layer...
+⏳ Waiting for Engine Readiness...
+✅ Vibe Kanban: LIVE
 
-┌─────────────────────────────────────────┐
-│ AGENT STATUS                            │
-├─────────────────────────────────────────┤
-│ ✅ @maia        GLM-4.7       ONLINE    │
-│ ✅ @coder       GLM-4.7       ONLINE    │
-│ ✅ @ops         GLM-4.7       ONLINE    │
-│ ✅ @researcher  Gemini-Pro    ONLINE    │
-│ ✅ @reviewer    GLM-4.7       ONLINE    │
-│ ⚠️ @workflow    Qwen-32B      TIMEOUT   │
-│    └─ Fallback: @coder                  │
-│ ✅ @vision      Gemini-Flash  ONLINE    │
-├─────────────────────────────────────────┤
-│ 📋 Vibe Kanban: http://localhost:62601  │
-│ 🔑 API Keys: Loaded                     │
-├─────────────────────────────────────────┤
-│ ✅ READY FOR COMMANDS                   │
-└─────────────────────────────────────────┘
+=== AGENTS (12+) ===
+@maia, @coder, @ops, @researcher, @architect, @reviewer, @giuzu...
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✅ ECOSYSTEM READY. ACTION: /init triggered via terminal.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
-
-## Notes
-- This command is idempotent (safe to run multiple times)
-- Vibe Kanban will not restart if already healthy
-- Degraded mode continues without Kanban if startup fails
