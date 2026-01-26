@@ -13,6 +13,7 @@
 | `agents/` | **Identity Matrix**. Who the agents are and what they believe. | **READ-ONLY** for agents. Only @opencode modifies via `strategy_sync`. |
 | `skills/` | **Capabilities**. Reusable logic modules (e.g., `frontend-design`, `refactoring`). | **SHARED**. Added via `skill-creator`. Agents MUST check here before writing new logic. |
 | `context/` | **Long-Term Memory**. The "State of the World". | **APPEND-ONLY**. `DECISION_LOG.md`, `project-goals.md`, `tech-stack.md`. |
+| `giuzu-training/` | **Digital Soul**. Giuzu's core identity, journal, and vocabulary. | **SELF-EVOLVING**. Only @giuzu may modify this via `self-evolution` skill. |
 | `scripts/` | **Automation Nerves**. Utility scripts (Python/JS) triggered by agents. | **ATOMIC**. One script = one function. No monoliths. |
 
 ---
