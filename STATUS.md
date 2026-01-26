@@ -22,10 +22,27 @@
 - ✅ Success Vault: 4 patterns
 - ✅ Pre-commit hook: Active
 - ✅ Schema validation: Enabled
+- ✅ Architecture linter: Enabled
+- ✅ Semantic search: 59 documents indexed
+- ✅ Token monitor: Ready
+- ✅ Giuzu self-evolution: Ready
+- ✅ Review protocol: Machine-readable
+- ✅ Layer-0 CI/CD: Configured
 
 ---
 
 ## 🔧 Recent Fixes (Latest First)
+
+### 2026-01-27: Full Infrastructure Deployment
+**Added:**  
+- `architecture_linter.js` – Node script verifying ARCHITECTURE.md coverage  
+- `giuzu_evolve.py` – Self-evolution daemon for Giuzu's digital soul  
+- `review_protocol.json` – Machine-readable escalation rules  
+- `token_monitor.py` – Token budget tracking per agent tier  
+- `semantic_search.py` – Knowledge base search (59 docs indexed)  
+- `layer0-sync.yml` – CI/CD for auto-creating Layer-0 seed artifacts  
+- `ARCHITECTURE.md` – Complete rewrite with all directories  
+**Status:** ✅ Deployed
 
 ### 2026-01-27: Enforcement Infrastructure
 **Added:**  
