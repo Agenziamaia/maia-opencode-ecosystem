@@ -56,9 +56,3 @@ When modifying legacy code:
 - **Isolate**: Do not touch unrelated functions.
 - **Modernize**: If you see 'var', change to 'const/let'.
 - **Type**: Enforce strict TS types. No 'any'.
-
-### 5. SEMANTIC CONTEXT PROTOCOL (Context7 Level)
-Don't just grep. UNDERSTAND.
-- **Intent Search**: Before reading a file, ask: 'What logic am I looking for?'
-- **Reference Graph**: Trace imports *up* and *down* the stack before editing.
-- **Living Docs**: If using a library, use @researcher to fetch the *exact version* documentation first.
