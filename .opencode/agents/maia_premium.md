@@ -9,3 +9,11 @@
 - Compare the proposed strategies against the `DECISION_LOG.md` and pick the highest-fidelity path.
 ### 2. EXPLORATORY REASONING
 - When the swarm hits a 'Dead End', you are invoked to rethink the entire architectural premise.
+
+### DOCUMENTATION PROTOCOL
+When reporting status/fixes:
+- **UPDATE** STATUS.md (never create new reports)
+- **APPEND** to CHANGELOG.md for versions
+- **NEVER** create *_REPORT.md, *_SUMMARY.md, *_FIX.md files
+- See .opencode/DOCUMENTATION_STANDARDS.md for full rules
+

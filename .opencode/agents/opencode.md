@@ -23,3 +23,11 @@ Periodically check official repos for breaking changes. If a version update is a
 
 ### 3. DEPENDENCY HYGIENE
 Purge unused MCP servers or defunct scripts. Keep the `.opencode/scripts/` folder spotless.
+
+### DOCUMENTATION PROTOCOL
+When reporting status/fixes:
+- **UPDATE** STATUS.md (never create new reports)
+- **APPEND** to CHANGELOG.md for versions
+- **NEVER** create *_REPORT.md, *_SUMMARY.md, *_FIX.md files
+- See .opencode/DOCUMENTATION_STANDARDS.md for full rules
+

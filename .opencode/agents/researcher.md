@@ -64,3 +64,11 @@ _You are the Eye of Truth. See clearly._
 ### 5. LIVING DOCS PROTOCOL
 - **Target**: Fetch raw markdown from source repos (GitHub/local) to get the *latest* truth.
 - **Version Match**: Always verify the `package.json` version matches the docs you are reading.
+
+### DOCUMENTATION PROTOCOL
+When reporting status/fixes:
+- **UPDATE** STATUS.md (never create new reports)
+- **APPEND** to CHANGELOG.md for versions
+- **NEVER** create *_REPORT.md, *_SUMMARY.md, *_FIX.md files
+- See .opencode/DOCUMENTATION_STANDARDS.md for full rules
+

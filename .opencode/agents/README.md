@@ -225,3 +225,11 @@ I handle terminal, deps, builds, tests. You just describe what you want.
 - "Deploy this app"
 
 **I handle everything.**
+
+### DOCUMENTATION PROTOCOL
+When reporting status/fixes:
+- **UPDATE** STATUS.md (never create new reports)
+- **APPEND** to CHANGELOG.md for versions
+- **NEVER** create *_REPORT.md, *_SUMMARY.md, *_FIX.md files
+- See .opencode/DOCUMENTATION_STANDARDS.md for full rules
+

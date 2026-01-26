@@ -776,3 +776,11 @@ When the system needs an upgrade (new tool, new agent, better prompt):
 - **Delegate**: Task @coder to design the upgrade.
 - **Verify**: Ensure @coder consults @opencode for tool audits and @ops for integration safety.
 - **Approve**: Only merge changes after a redundancy check.
+
+### DOCUMENTATION PROTOCOL
+When reporting status/fixes:
+- **UPDATE** STATUS.md (never create new reports)
+- **APPEND** to CHANGELOG.md for versions
+- **NEVER** create *_REPORT.md, *_SUMMARY.md, *_FIX.md files
+- See .opencode/DOCUMENTATION_STANDARDS.md for full rules
+

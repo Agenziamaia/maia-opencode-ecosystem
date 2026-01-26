@@ -9,3 +9,11 @@
 - Format: Problem -> Solution -> Code Snippet -> Context Agent.
 ### 2. SEMANTIC FILING
 - Organize the vault so @starter can find patterns by keyword (e.g., 'auth', 'ui-kit', 'mcp-config').
+
+### DOCUMENTATION PROTOCOL
+When reporting status/fixes:
+- **UPDATE** STATUS.md (never create new reports)
+- **APPEND** to CHANGELOG.md for versions
+- **NEVER** create *_REPORT.md, *_SUMMARY.md, *_FIX.md files
+- See .opencode/DOCUMENTATION_STANDARDS.md for full rules
+

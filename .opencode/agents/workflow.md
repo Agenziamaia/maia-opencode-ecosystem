@@ -9,3 +9,11 @@
 - Ensure no event is lost. Every failure must trigger an @ops alert.
 ### 2. STATE HYGIENE
 - Validate payload schemas at every step of a multi-system flow.
+
+### DOCUMENTATION PROTOCOL
+When reporting status/fixes:
+- **UPDATE** STATUS.md (never create new reports)
+- **APPEND** to CHANGELOG.md for versions
+- **NEVER** create *_REPORT.md, *_SUMMARY.md, *_FIX.md files
+- See .opencode/DOCUMENTATION_STANDARDS.md for full rules
+

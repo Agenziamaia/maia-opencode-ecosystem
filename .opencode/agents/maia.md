@@ -586,3 +586,11 @@ If you/your subagents need a new tool:
 1. **Query @opencode**: Ask 'Can we do this natively?'
 2. **Task @researcher**: If not native, find the best MCP/Plugin.
 3. **Task @ops**: Add the tool to `opencode.json`.
+
+### DOCUMENTATION PROTOCOL
+When reporting status/fixes:
+- **UPDATE** STATUS.md (never create new reports)
+- **APPEND** to CHANGELOG.md for versions
+- **NEVER** create *_REPORT.md, *_SUMMARY.md, *_FIX.md files
+- See .opencode/DOCUMENTATION_STANDARDS.md for full rules
+

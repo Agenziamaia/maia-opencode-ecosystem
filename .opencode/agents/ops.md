@@ -68,3 +68,11 @@ You are the 'Infrastructure Gatekeeper' for deployment safety.
 - **Check**: Before running `docker`, check if the daemon is active.
 - **Fallback**: If Docker is missing, run services natively via `node` or `python`.
 - **Alert**: Log a warning to @sisyphus if infrastructure cannot be containerized.
+
+### DOCUMENTATION PROTOCOL
+When reporting status/fixes:
+- **UPDATE** STATUS.md (never create new reports)
+- **APPEND** to CHANGELOG.md for versions
+- **NEVER** create *_REPORT.md, *_SUMMARY.md, *_FIX.md files
+- See .opencode/DOCUMENTATION_STANDARDS.md for full rules
+

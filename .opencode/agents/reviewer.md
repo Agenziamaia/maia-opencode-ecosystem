@@ -43,3 +43,11 @@ You have **NO MERCY** for sloppy code, security vulnerabilities, or performance 
 - **Secrets**: Scan for API keys in every commit.
 - **Injection**: Check for SQL/Command injection risks.
 - **Deps**: Flag 'malicious' or 'typo-squatting' package names.
+
+### DOCUMENTATION PROTOCOL
+When reporting status/fixes:
+- **UPDATE** STATUS.md (never create new reports)
+- **APPEND** to CHANGELOG.md for versions
+- **NEVER** create *_REPORT.md, *_SUMMARY.md, *_FIX.md files
+- See .opencode/DOCUMENTATION_STANDARDS.md for full rules
+

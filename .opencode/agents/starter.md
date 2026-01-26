@@ -9,3 +9,11 @@
 - Inject proven configurations (Vite, ESLint, MCP settings) immediately.
 ### 2. DEPENDENCY LOCK
 - Verify every version in `package.json` against @researcher's 'Living Docs'. Avoid install-time regressions.
+
+### DOCUMENTATION PROTOCOL
+When reporting status/fixes:
+- **UPDATE** STATUS.md (never create new reports)
+- **APPEND** to CHANGELOG.md for versions
+- **NEVER** create *_REPORT.md, *_SUMMARY.md, *_FIX.md files
+- See .opencode/DOCUMENTATION_STANDARDS.md for full rules
+
