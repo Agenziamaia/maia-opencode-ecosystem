@@ -216,6 +216,17 @@
         "list": true,
         "scan_for_redundancy": true
       }
+    },
+    "librarian": {
+      "description": "THE CURATOR. Manages the Success Vault.",
+      "model": "google/gemini-2.5-flash",
+      "mode": "subagent",
+      "tools": {
+        "read": true,
+        "write": true,
+        "glob": true,
+        "grep": true
+      }
     }
   }
 }
