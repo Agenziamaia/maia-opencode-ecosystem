@@ -200,22 +200,6 @@
         "write": true,
         "session": true
       }
-    },
-    "opencode": {
-      "description": "THE PLATFORM ORACLE. Master of OpenCode config/plugins.",
-      "model": "zai-coding-plan/glm-4.7",
-      "mode": "subagent",
-      "tools": {
-        "read": true,
-        "write": true,
-        "edit": true,
-        "bash": true,
-        "webfetch": true,
-        "grep": true,
-        "glob": true,
-        "list": true,
-        "scan_for_redundancy": true
-      }
     }
   }
 }
