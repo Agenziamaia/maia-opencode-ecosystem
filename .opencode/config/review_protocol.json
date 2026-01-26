@@ -1,0 +1,139 @@
+{
+    "version": "1.0.0",
+    "description": "Machine-readable escalation rules for the gate-keeper chain",
+    "confidence_thresholds": {
+        "fast_track": 95,
+        "standard_review": 70,
+        "deep_review": 50,
+        "escalate_premium": 30
+    },
+    "routing_rules": [
+        {
+            "id": "fast-track",
+            "condition": "confidence >= 95",
+            "action": "skip_review",
+            "destination": "done",
+            "requires_approval": false,
+            "description": "Simple, high-confidence tasks go directly to DONE"
+        },
+        {
+            "id": "standard",
+            "condition": "confidence >= 70 AND confidence < 95",
+            "action": "review",
+            "destination": "@reviewer",
+            "requires_approval": true,
+            "timeout_hours": 24,
+            "description": "Normal tasks require reviewer sign-off"
+        },
+        {
+            "id": "deep-review",
+            "condition": "confidence >= 50 AND confidence < 70",
+            "action": "multi_review",
+            "destination": [
+                "@reviewer",
+                "@coder"
+            ],
+            "requires_approval": true,
+            "timeout_hours": 48,
+            "description": "Complex tasks need multiple reviewers"
+        },
+        {
+            "id": "escalate",
+            "condition": "confidence < 50 OR review_conflict = true",
+            "action": "escalate",
+            "destination": "@maia_premium",
+            "requires_approval": true,
+            "timeout_hours": 72,
+            "description": "High-risk or disputed tasks go to Supreme Arbiter"
+        }
+    ],
+    "escalation_chain": [
+        {
+            "level": 1,
+            "agent": "@reviewer",
+            "role": "Logic Audit",
+            "can_approve": true,
+            "can_reject": true,
+            "can_escalate": true
+        },
+        {
+            "level": 2,
+            "agent": "@coder",
+            "role": "Technical Validation",
+            "can_approve": true,
+            "can_reject": false,
+            "can_escalate": true
+        },
+        {
+            "level": 3,
+            "agent": "@maia_premium",
+            "role": "Supreme Arbiter",
+            "can_approve": true,
+            "can_reject": true,
+            "can_escalate": false,
+            "final_authority": true
+        }
+    ],
+    "conflict_resolution": {
+        "method": "consensus",
+        "fallback": "@maia_premium",
+        "rules": [
+            {
+                "scenario": "reviewer_rejects_coder_approves",
+                "action": "escalate_to_premium"
+            },
+            {
+                "scenario": "timeout_exceeded",
+                "action": "escalate_to_premium"
+            },
+            {
+                "scenario": "security_concern",
+                "action": "immediate_escalate",
+                "notify": [
+                    "@maia",
+                    "@ops"
+                ]
+            }
+        ]
+    },
+    "task_categories": {
+        "documentation": {
+            "default_confidence_boost": 20,
+            "reviewers": [
+                "@librarian"
+            ]
+        },
+        "infrastructure": {
+            "default_confidence_penalty": 10,
+            "reviewers": [
+                "@ops",
+                "@reviewer"
+            ]
+        },
+        "feature": {
+            "default_confidence": 70,
+            "reviewers": [
+                "@reviewer",
+                "@coder"
+            ]
+        },
+        "hotfix": {
+            "default_confidence": 60,
+            "reviewers": [
+                "@coder"
+            ],
+            "expedited": true
+        },
+        "research": {
+            "default_confidence": 80,
+            "reviewers": [
+                "@researcher"
+            ]
+        }
+    },
+    "metadata": {
+        "created": "2026-01-27",
+        "author": "MAIA Ecosystem",
+        "last_updated": "2026-01-27"
+    }
+}

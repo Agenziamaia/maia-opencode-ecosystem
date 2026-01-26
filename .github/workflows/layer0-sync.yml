@@ -1,0 +1,89 @@
+name: Layer-0 Seed Sync
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'opencode.json'
+      - '.opencode/agents/**'
+      - '.opencode/schema/**'
+      - '.opencode/config/**'
+
+jobs:
+  sync-layer0:
+    name: Synchronize Layer-0 Seed
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout main repo
+        uses: actions/checkout@v4
+        with:
+          path: main
+      
+      - name: Validate opencode.json
+        run: python3 main/.opencode/scripts/validate_config.py
+        working-directory: .
+      
+      - name: Extract Layer-0 seed
+        run: |
+          # Create layer0 seed directory
+          mkdir -p layer0_seed/.opencode
+          
+          # Copy core config
+          cp main/opencode.json layer0_seed/
+          
+          # Copy agents
+          cp -r main/.opencode/agents layer0_seed/.opencode/
+          
+          # Copy schema
+          cp -r main/.opencode/schema layer0_seed/.opencode/
+          
+          # Copy review protocol
+          mkdir -p layer0_seed/.opencode/config
+          cp main/.opencode/config/review_protocol.json layer0_seed/.opencode/config/ 2>/dev/null || true
+          
+          # Create manifest
+          cat > layer0_seed/MANIFEST.json << EOF
+          {
+            "name": "MAIA Layer-0 Seed",
+            "version": "$(date +%Y.%m.%d)",
+            "source_commit": "${{ github.sha }}",
+            "generated_at": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
+            "files": $(find layer0_seed -type f | wc -l | tr -d ' ')
+          }
+          EOF
+          
+          echo "📦 Layer-0 seed contents:"
+          find layer0_seed -type f
+      
+      - name: Create seed artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: layer0-seed-${{ github.sha }}
+          path: layer0_seed/
+          retention-days: 30
+      
+      - name: Notify on success
+        run: |
+          echo "✅ Layer-0 seed created successfully"
+          echo "📦 Artifact: layer0-seed-${{ github.sha }}"
+          echo "📊 Source commit: ${{ github.sha }}"
+
+  notify-downstream:
+    name: Notify Downstream Repos
+    runs-on: ubuntu-latest
+    needs: sync-layer0
+    if: success()
+    
+    steps:
+      - name: Trigger downstream sync (placeholder)
+        run: |
+          echo "🔔 Would notify downstream repos here"
+          echo "   - layer0 (main derivative)"
+          echo "   - MAIA_Layer0 (secondary derivative)"
+          # Uncomment when ready:
+          # curl -X POST \
+          #   -H "Authorization: token ${{ secrets.GH_TOKEN }}" \
+          #   -H "Accept: application/vnd.github.v3+json" \
+          #   https://api.github.com/repos/OWNER/layer0/dispatches \
+          #   -d '{"event_type":"layer0-seed-updated","client_payload":{"sha":"${{ github.sha }}"}}'
