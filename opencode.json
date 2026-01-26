@@ -70,7 +70,9 @@
         "read": true,
         "write": true,
         "bash": true,
-        "skill": true
+        "skill": true,
+        "grep": true,
+        "glob": true
       }
     },
     "sisyphus": {
@@ -83,7 +85,9 @@
         "read": true,
         "write": true,
         "grep": true,
-        "skill": true
+        "skill": true,
+        "todoread": true,
+        "todowrite": true
       }
     },
     "coder": {
@@ -123,6 +127,17 @@
         "webfetch": true,
         "read": true,
         "grep": true,
+        "skill": true,
+        "glob": true
+      }
+    },
+    "researcher_fast": {
+      "description": "Flash Oracle.",
+      "model": "google/gemini-2.5-flash",
+      "mode": "subagent",
+      "tools": {
+        "webfetch": true,
+        "read": true,
         "skill": true
       }
     },
@@ -181,13 +196,36 @@
         "skill": true
       }
     },
+    "starter": {
+      "description": "Bootstrapper.",
+      "model": "google/gemini-2.5-flash",
+      "mode": "subagent",
+      "tools": {
+        "read": true,
+        "write": true,
+        "bash": true,
+        "skill": true
+      }
+    },
+    "librarian": {
+      "description": "Success Curator.",
+      "model": "google/gemini-2.5-flash",
+      "mode": "subagent",
+      "tools": {
+        "read": true,
+        "write": true,
+        "skill": true,
+        "glob": true
+      }
+    },
     "maia_premium": {
       "description": "Supreme Arbiter.",
       "model": "google/gemini-2.5-pro",
       "mode": "subagent",
       "tools": {
         "read": true,
-        "session": true
+        "session": true,
+        "write": true
       }
     }
   }
