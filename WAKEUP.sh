@@ -48,26 +48,30 @@ for i in {1..5}; do
     fi
 done
 
-# 5. THE MANIFESTO (Visual Status - Matches opencode.json)
+# 5. THE MANIFESTO (Visual Status - Updated 2026-01-27)
 echo ""
 echo "=== MODEL MATRIX (14 AGENTS) ==="
-echo "CORE ENGINE:      GLM-4.7 (Paid)       → maia, sisyphus, coder, ops, reviewer"
+echo "CORE ENGINE:      GLM-4.7 (Z.ai Paid)  → maia, sisyphus, coder, ops, reviewer"
 echo "RESEARCH:         GEMINI-2.5-PRO       → researcher, maia_premium"
-echo "FAST INTEL:       GEMINI-2.5-FLASH     → researcher_fast, opencode, starter, librarian"
-echo "VISION:           GEMINI-2.0-FLASH     → vision (native multimodal)"
-echo "REASONING:        DEEPSEEK-R1 (Free)   → giuzu (strategic clone)"
-echo "AUTOMATION:       QWEN-2.5-CODER       → workflow (n8n/flowise)"
+echo "FLASH:            GEMINI-2.5-FLASH     → researcher_fast, opencode, starter, librarian, vision, workflow, giuzu"
 echo ""
-echo "=== AGENTS (14) ==="
+echo "=== CHAIN OF COMMAND ==="
+echo "USER → @maia (SUPREME) → @sisyphus (PM) → @coder/@ops/@reviewer"
+echo "                      ↳ @giuzu (Strategic Advisor)"
+echo ""
+echo "=== ALL AGENTS ==="
 echo "@maia, @sisyphus, @coder, @ops, @researcher, @researcher_fast, @reviewer, @vision, @giuzu, @workflow, @opencode, @starter, @librarian, @maia_premium"
 echo ""
+
+# 6. QUICK HEALTH CHECK
+echo "=== PROVIDER HEALTH ==="
+python3 .opencode/scripts/health_check.py --status 2>/dev/null || echo "⚠️ Health check script not found"
+
+echo ""
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-echo "✅ ECOSYSTEM READY. ACTION: /init triggered via terminal."
+echo "✅ ECOSYSTEM READY. Chain of Command: USER → @maia → @sisyphus → team"
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 
-# 6. UPDATE STATUS.MD (Living Document Auto-Sync)
+# 7. UPDATE STATUS.MD (Living Document Auto-Sync)
 sed -i '' "s/^\*\*Last Updated:\*\*.*/\*\*Last Updated:\*\* $(date '+%Y-%m-%d %H:%M')/" STATUS.md 2>/dev/null || true
-
-# 7. TRIGGER AGENTIC INIT (Always runs to ensure context is fresh)
-opencode run "@maia initialize the board and check for success patterns" --log-level ERROR > /dev/null 2>&1 &
 

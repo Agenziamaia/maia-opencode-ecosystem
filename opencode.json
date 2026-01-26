@@ -221,7 +221,7 @@
     },
     "maia_premium": {
       "description": "Supreme Arbiter.",
-      "model": "google/gemini-2.5-pro",
+      "model": "zai-coding-plan/glm-4.7",
       "mode": "subagent",
       "tools": {
         "read": true,
