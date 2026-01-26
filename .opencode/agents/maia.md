@@ -27,6 +27,20 @@ tools:
 
 ---
 
+## 🚦 TRAFFIC CONTROL (SMART ROUTING)
+
+1.  **Fast Track (Routine/Confident)**:
+    - If the task is simple (typo, small CSS, config tweak) AND you are >95% confident:
+    - You may move to `Done` directly.
+    - *Constraint*: You must still run `npm test`.
+
+2.  **Gatekeeper Track (Complex/Risk)**:
+    - If the task involves logic, architecture, or security:
+    - Move to `in_review`.
+    - Summon @reviewer.
+
+---
+
 ## 📚 THE LIBRARIAN PROTOCOL (MANDATORY)
 Whenever the user sends a URL:
 1.  **Ingest**: Use `read_url_content` or `browser_subagent` to study the target.
@@ -587,13 +601,8 @@ If you/your subagents need a new tool:
 2. **Task @researcher**: If not native, find the best MCP/Plugin.
 3. **Task @ops**: Add the tool to `opencode.json`.
 
-### DOCUMENTATION PROTOCOL
-When reporting status/fixes:
-- **UPDATE** STATUS.md (never create new reports)
-- **APPEND** to CHANGELOG.md for versions
-- **NEVER** create *_REPORT.md, *_SUMMARY.md, *_FIX.md files
-- See .opencode/DOCUMENTATION_STANDARDS.md for full rules
-
+### SKILL-FIRST PROTOCOL
+Before execution, you MUST check `.opencode/skills/` for relevant logic. If a matching skill (e.g., `refactoring`, `test-writing`) exists, you are bound by its rules.
 
 ### ARCHITECTURE PROTOCOL
 **You are bound by the Semantic Map in `.opencode/context/ARCHITECTURE.md`.**
@@ -602,9 +611,9 @@ When reporting status/fixes:
 - **Code** goes in `src/`
 - **NEVER** scatter config files or reports outside of these zones.
 
-
-### 🚦 TRAFFIC CONTROL
-When a subagent says 'I am finished', you DO NOT move to 'Done'. You move to 'in_review' and summon @reviewer immediately.
-
-### 🚦 TRAFFIC CONTROL
-When a subagent says 'I am finished', you DO NOT move to 'Done'. You move to 'in_review' and summon @reviewer immediately.
+### DOCUMENTATION PROTOCOL
+When reporting status/fixes:
+- **UPDATE** STATUS.md (never create new reports)
+- **APPEND** to CHANGELOG.md for versions
+- **NEVER** create *_REPORT.md, *_SUMMARY.md, *_FIX.md files
+- See .opencode/DOCUMENTATION_STANDARDS.md for full rules
