@@ -7,17 +7,25 @@ echo "━━━━━━━━━━━━━━━━━━━━━━━━�
 echo "🤖 WAKEUP GOD MODE. SYSTEM STATUS: INITIALIZING..."
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 
-# 1. CLEANUP & PORT HYGIENE
-echo "🧹 Purging legacy processes..."
-pkill -f "vibe-kanban" || true
-sleep 1
-
-# 2. VIBE KANBAN ENGINE (Tactical Core)
 VIBE_PORT=62601
-echo "📋 Starting Vibe Kanban on port $VIBE_PORT..."
-PORT=$VIBE_PORT HOST=127.0.0.1 npx -y vibe-kanban@latest > /dev/null 2>&1 &
 
-# 3. UNIVERSAL STRATEGY SYNC (Brain Sync)
+# 1. SMART CHECK (Idempotency)
+if lsof -i :$VIBE_PORT >/dev/null 2>&1; then
+    if curl -s -o /dev/null -w "%{http_code}" http://localhost:$VIBE_PORT | grep -q "200"; then
+        echo "✅ Vibe Kanban: ALREADY LIVE (Skipping Purge)"
+    else
+        echo "⚠️ Vibe Kanban Unhealthy. Restarting..."
+        pkill -f "vibe-kanban" || true
+        sleep 1
+        PORT=$VIBE_PORT HOST=127.0.0.1 npx -y vibe-kanban@latest > /dev/null 2>&1 &
+    fi
+else
+    echo "📋 Starting Vibe Kanban on port $VIBE_PORT..."
+    PORT=$VIBE_PORT HOST=127.0.0.1 npx -y vibe-kanban@latest > /dev/null 2>&1 &
+fi
+
+# 2. UNIVERSAL STRATEGY SYNC (Brain Sync)
+# This is safe to run repeatedly; it just refreshes logic.
 echo "🧠 Synchronizing Universal Brain (Layer 0)..."
 if [ -f "layer0/.opencode/scripts/strategy_sync.py" ]; then
     python3 "layer0/.opencode/scripts/strategy_sync.py" > /dev/null
@@ -30,14 +38,14 @@ else
     echo "⚠️ layer0/ not found. Running in standalone production mode."
 fi
 
-# 4. AGENT DEFINITION GENERATION (Inside-Out Build)
+# 3. AGENT DEFINITION GENERATION (Inside-Out Build)
 if [ ! -f "AGENTS.md" ]; then
     echo "📝 Generating AGENTS.md from Universal Layer..."
     cat layer0/.opencode/agents/*.md > AGENTS.md 2>/dev/null
     echo "✅ AGENTS.md Created from Layer 0 Templates"
 fi
 
-# 5. HEALTH CHECK & READINESS
+# 4. FINAL HEALTH CHECK
 echo "⏳ Waiting for Engine Readiness..."
 for i in {1..5}; do
     sleep 1
@@ -47,7 +55,7 @@ for i in {1..5}; do
     fi
 done
 
-# 6. THE MANIFESTO (Visual Status)
+# 5. THE MANIFESTO (Visual Status)
 echo ""
 echo "=== MODEL MATRIX ==="
 echo "CORE ENGINE:      GLM-4.7 (Paid)       → maia, coder, ops, opencode"
@@ -64,5 +72,5 @@ echo "━━━━━━━━━━━━━━━━━━━━━━━━�
 echo "✅ ECOSYSTEM READY. ACTION: /init triggered via terminal."
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 
-# 7. TRIGGER AGENTIC INIT
+# 6. TRIGGER AGENTIC INIT (Always runs to ensure context is fresh)
 opencode run "@maia initialize the board and check for success patterns" --log-level ERROR > /dev/null 2>&1 &
