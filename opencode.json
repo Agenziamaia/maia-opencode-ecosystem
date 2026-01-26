@@ -69,7 +69,9 @@
         "session": true,
         "read": true,
         "write": true,
-        "glob": true
+        "glob": true,
+        "skill": true,
+        "bash": true
       }
     },
     "sisyphus": {
@@ -83,7 +85,8 @@
         "write": true,
         "grep": true,
         "todoread": true,
-        "todowrite": true
+        "todowrite": true,
+        "skill": true
       }
     },
     "coder": {
@@ -98,7 +101,8 @@
         "write": true,
         "read": true,
         "lsp": true,
-        "bash": true
+        "bash": true,
+        "skill": true
       }
     },
     "ops": {
@@ -111,11 +115,12 @@
         "write": true,
         "edit": true,
         "webfetch": true,
-        "scan_for_redundancy": true
+        "scan_for_redundancy": true,
+        "skill": true
       }
     },
     "architect": {
-      "description": "THE BUILDER. Tooling Upgrades.",
+      "description": "THE SWARM BUILDER. Tooling Upgrades.",
       "model": "zai-coding-plan/glm-4.7",
       "mode": "subagent",
       "tools": {
@@ -123,7 +128,8 @@
         "read": true,
         "write": true,
         "edit": true,
-        "bash": true
+        "bash": true,
+        "skill": true
       }
     },
     "researcher": {
@@ -134,18 +140,30 @@
         "webfetch": true,
         "read": true,
         "grep": true,
-        "glob": true
+        "glob": true,
+        "skill": true
+      }
+    },
+    "researcher_fast": {
+      "description": "THE RAPID ANALYST.",
+      "model": "google/gemini-2.5-flash",
+      "mode": "subagent",
+      "tools": {
+        "webfetch": true,
+        "read": true,
+        "skill": true
       }
     },
     "reviewer": {
       "description": "THE GATEKEEPER. Safety.",
-      "model": "zai-coding-plan/glm-4.7",
+      "model": "opencode/big-pickle",
       "mode": "subagent",
       "tools": {
         "git_blame": true,
         "read": true,
         "grep": true,
-        "lsp": true
+        "lsp": true,
+        "skill": true
       }
     },
     "giuzu": {
@@ -156,29 +174,8 @@
         "read": true,
         "write": true,
         "session": true,
-        "vibekanban_get_board": true
-      }
-    },
-    "starter": {
-      "description": "THE BOOTSTRAPPER. Quick project init.",
-      "model": "google/gemini-2.5-flash",
-      "mode": "subagent",
-      "tools": {
-        "read": true,
-        "write": true,
-        "bash": true,
-        "vibekanban_create_card": true
-      }
-    },
-    "workflow": {
-      "description": "THE AUTOMATOR. n8n/Flowise specialist.",
-      "model": "zai-coding-plan/glm-4.7",
-      "mode": "subagent",
-      "tools": {
-        "read": true,
-        "write": true,
-        "bash": true,
-        "vibekanban_create_card": true
+        "vibekanban_get_board": true,
+        "skill": true
       }
     },
     "vision": {
@@ -191,6 +188,42 @@
         "session": true
       }
     },
+    "workflow": {
+      "description": "THE AUTOMATOR. n8n/Flowise specialist.",
+      "model": "zai-coding-plan/glm-4.7",
+      "mode": "subagent",
+      "tools": {
+        "read": true,
+        "write": true,
+        "bash": true,
+        "vibekanban_create_card": true,
+        "skill": true
+      }
+    },
+    "starter": {
+      "description": "THE BOOTSTRAPPER. Quick project init.",
+      "model": "google/gemini-2.5-flash",
+      "mode": "subagent",
+      "tools": {
+        "read": true,
+        "write": true,
+        "bash": true,
+        "vibekanban_create_card": true,
+        "skill": true
+      }
+    },
+    "librarian": {
+      "description": "THE CURATOR. Manages the Success Vault.",
+      "model": "google/gemini-2.5-flash",
+      "mode": "subagent",
+      "tools": {
+        "read": true,
+        "write": true,
+        "glob": true,
+        "grep": true,
+        "skill": true
+      }
+    },
     "maia_premium": {
       "description": "THE GPT-5 ARCHITECT. Complex reasoning.",
       "model": "google/gemini-2.5-pro",
@@ -198,7 +231,8 @@
       "tools": {
         "read": true,
         "write": true,
-        "session": true
+        "session": true,
+        "skill": true
       }
     },
     "opencode": {
@@ -214,18 +248,8 @@
         "grep": true,
         "glob": true,
         "list": true,
-        "scan_for_redundancy": true
-      }
-    },
-    "librarian": {
-      "description": "THE CURATOR. Manages the Success Vault.",
-      "model": "google/gemini-2.5-flash",
-      "mode": "subagent",
-      "tools": {
-        "read": true,
-        "write": true,
-        "glob": true,
-        "grep": true
+        "scan_for_redundancy": true,
+        "skill": true
       }
     }
   }
