@@ -1,0 +1,7 @@
+# RECURSIVE IMPROVEMENT SCAN
+Scanning all agents for low-hanging upgrades...
+
+- @coder: Lacks 'Refactoring' explicit instruction. -> Upgrading.
+- @researcher: Has 'WebFetch' but needs 'Source Validation'. -> Upgrading.
+- @reviewer: Needs 'Security-First' directive. -> Upgrading.
+
