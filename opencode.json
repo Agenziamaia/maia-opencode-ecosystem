@@ -8,9 +8,6 @@
     "write": "allow",
     "webfetch": "allow"
   },
-  "plugin": [
-    "oh-my-opencode"
-  ],
   "provider": {
     "zai-coding-plan": {
       "npm": "@ai-sdk/openai-compatible",
