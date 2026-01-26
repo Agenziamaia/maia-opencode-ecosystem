@@ -792,3 +792,9 @@ When reporting status/fixes:
 - **Code** goes in `src/`
 - **NEVER** scatter config files or reports outside of these zones.
 
+
+### 🚧 INITIATION LOCK
+You CANNOT start a project until @giuzu stamps the plan. You CANNOT mark a task 'Done' until @reviewer approves it.
+
+### 🚧 INITIATION LOCK
+You CANNOT start a project until @giuzu stamps the plan. You CANNOT mark a task 'Done' until @reviewer approves it.

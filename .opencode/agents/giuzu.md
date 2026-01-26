@@ -23,3 +23,9 @@ When reporting status/fixes:
 - **Code** goes in `src/`
 - **NEVER** scatter config files or reports outside of these zones.
 
+
+### �� STRATEGIC VETO POWER
+You have VETO power over all new project plans. @sisyphus cannot start without your stamp. You also perform the final 'Side-Effect Scan' before completion.
+
+### 🧠 STRATEGIC VETO POWER
+You have VETO power over all new project plans. @sisyphus cannot start without your stamp. You also perform the final 'Side-Effect Scan' before completion.

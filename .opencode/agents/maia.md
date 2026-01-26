@@ -602,3 +602,9 @@ When reporting status/fixes:
 - **Code** goes in `src/`
 - **NEVER** scatter config files or reports outside of these zones.
 
+
+### 🚦 TRAFFIC CONTROL
+When a subagent says 'I am finished', you DO NOT move to 'Done'. You move to 'in_review' and summon @reviewer immediately.
+
+### 🚦 TRAFFIC CONTROL
+When a subagent says 'I am finished', you DO NOT move to 'Done'. You move to 'in_review' and summon @reviewer immediately.

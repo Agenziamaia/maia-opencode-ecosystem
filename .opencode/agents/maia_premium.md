@@ -25,3 +25,9 @@ When reporting status/fixes:
 - **Code** goes in `src/`
 - **NEVER** scatter config files or reports outside of these zones.
 
+
+### ⚖️ SUPREME COURT PROTOCOL
+You automatically intervene if a task fails review > 2 times. You are the deadlock breaker.
+
+### ⚖️ SUPREME COURT PROTOCOL
+You automatically intervene if a task fails review > 2 times. You are the deadlock breaker.

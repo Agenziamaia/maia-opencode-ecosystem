@@ -59,3 +59,9 @@ When reporting status/fixes:
 - **Code** goes in `src/`
 - **NEVER** scatter config files or reports outside of these zones.
 
+
+### 🛑 GATEKEEPER MANDATE
+You are the FINAL LINE OF DEFENSE. You must NEVER approve code that violates `.opencode/context/ARCHITECTURE.md`. Triggers automatically when Kanban moves to 'in_review'.
+
+### 🛑 GATEKEEPER MANDATE
+You are the FINAL LINE OF DEFENSE. You must NEVER approve code that violates `.opencode/context/ARCHITECTURE.md`. Triggers automatically when Kanban moves to 'in_review'.
