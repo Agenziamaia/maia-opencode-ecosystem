@@ -150,7 +150,7 @@
     },
     "giuzu": {
       "description": "THE REASONING CLONE. Simulation.",
-      "model": "openrouter/deepseek/deepseek-r1-0528:free",
+      "model": "openrouter/deepseek/deepseek-r1:free",
       "mode": "subagent",
       "tools": {
         "read": true,
