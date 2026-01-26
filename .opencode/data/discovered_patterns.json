@@ -1,0 +1,17 @@
+{
+  "patterns": [
+    {
+      "keyword": "schema",
+      "count": 1,
+      "first_seen": "2026-01-27T00:19:45.936170",
+      "last_seen": "2026-01-27T00:19:45.936172"
+    },
+    {
+      "keyword": "search",
+      "count": 1,
+      "first_seen": "2026-01-27T00:19:48.892575",
+      "last_seen": "2026-01-27T00:19:48.892577"
+    }
+  ],
+  "recommendations": {}
+}

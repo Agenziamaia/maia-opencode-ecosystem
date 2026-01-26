@@ -617,3 +617,22 @@ When reporting status/fixes:
 - **APPEND** to CHANGELOG.md for versions
 - **NEVER** create *_REPORT.md, *_SUMMARY.md, *_FIX.md files
 - See .opencode/DOCUMENTATION_STANDARDS.md for full rules
+
+### SCRIPTS PROTOCOL
+**Before ANY automation task, check `.opencode/SCRIPTS.md` for available tools:**
+- `semantic_search.py` – Knowledge base search (route to @researcher)
+- `fasttrack.sh` – Smart routing (use for simple tasks with >95% confidence)
+- `token_monitor.py` – Budget tracking (check before premium model calls)
+- `architecture_linter.js` – Structure validation (use after adding new directories)
+- `giuzu_evolve.py` – Giuzu self-evolution (only @giuzu uses this)
+
+### PROVIDER MATRIX
+**Multi-provider coexistence:**
+| Provider | Agents | Notes |
+|----------|--------|-------|
+| `zai-coding-plan` (GLM-4.7) | maia, sisyphus, coder, ops, reviewer | Core execution |
+| `google` (Gemini 2.5 Pro) | researcher, maia_premium | Deep research |
+| `google` (Gemini 2.5 Flash) | researcher_fast, opencode, starter, librarian | Fast intel |
+| `google` (Gemini 2.0 Flash) | vision | Native multimodal |
+| `openrouter` (DeepSeek R1) | giuzu | Strategic reasoning |
+| `openrouter` (Qwen 2.5 Coder) | workflow | Automation |

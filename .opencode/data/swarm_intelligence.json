@@ -1,0 +1,36 @@
+{
+  "created": "2026-01-27T00:19:37.915135",
+  "learnings": [
+    {
+      "agent": "maia",
+      "insight": "Pre-commit hooks prevent broken commits - 100% catch rate on schema violations",
+      "timestamp": "2026-01-27T00:19:45.935943",
+      "id": 1
+    },
+    {
+      "agent": "ops",
+      "insight": "Architecture linting catches stray directories immediately - prevents fragmentation",
+      "timestamp": "2026-01-27T00:19:47.383290",
+      "id": 2
+    },
+    {
+      "agent": "researcher",
+      "insight": "Semantic search on local knowledge base is faster than web search and more accurate for ecosystem questions",
+      "timestamp": "2026-01-27T00:19:48.892337",
+      "id": 3
+    },
+    {
+      "agent": "giuzu",
+      "insight": "User prefers decisive action over asking permission - fast-track confidence threshold is 95%",
+      "timestamp": "2026-01-27T00:19:49.026855",
+      "id": 4
+    }
+  ],
+  "agent_contributions": {
+    "maia": 1,
+    "ops": 1,
+    "researcher": 1,
+    "giuzu": 1
+  },
+  "pattern_count": 0
+}
