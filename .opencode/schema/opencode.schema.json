@@ -1,0 +1,149 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "https://maia.opencode/opencode.schema.json",
+    "title": "MAIA OpenCode Configuration",
+    "description": "Schema for validating opencode.json in the MAIA ecosystem",
+    "type": "object",
+    "required": [
+        "default_agent",
+        "model",
+        "agent"
+    ],
+    "properties": {
+        "$schema": {
+            "type": "string",
+            "description": "JSON Schema reference"
+        },
+        "default_agent": {
+            "type": "string",
+            "description": "The default agent to use when none specified",
+            "minLength": 1
+        },
+        "model": {
+            "type": "string",
+            "description": "Default model in format provider/model-id",
+            "pattern": "^[a-z0-9-]+/[a-z0-9.-]+$"
+        },
+        "permission": {
+            "type": "object",
+            "properties": {
+                "edit": {
+                    "enum": [
+                        "allow",
+                        "deny",
+                        "ask"
+                    ]
+                },
+                "bash": {
+                    "enum": [
+                        "allow",
+                        "deny",
+                        "ask"
+                    ]
+                },
+                "write": {
+                    "enum": [
+                        "allow",
+                        "deny",
+                        "ask"
+                    ]
+                },
+                "webfetch": {
+                    "enum": [
+                        "allow",
+                        "deny",
+                        "ask"
+                    ]
+                }
+            }
+        },
+        "provider": {
+            "type": "object",
+            "additionalProperties": {
+                "type": "object",
+                "required": [
+                    "name"
+                ],
+                "properties": {
+                    "npm": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "options": {
+                        "type": "object",
+                        "properties": {
+                            "baseURL": {
+                                "type": "string",
+                                "format": "uri"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "mcp": {
+            "type": "object",
+            "description": "MCP server configurations",
+            "additionalProperties": {
+                "type": "object",
+                "required": [
+                    "type",
+                    "command"
+                ],
+                "properties": {
+                    "type": {
+                        "enum": [
+                            "local",
+                            "remote"
+                        ]
+                    },
+                    "command": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "minItems": 1
+                    }
+                }
+            }
+        },
+        "agent": {
+            "type": "object",
+            "description": "Agent definitions",
+            "minProperties": 1,
+            "additionalProperties": {
+                "type": "object",
+                "required": [
+                    "description",
+                    "model",
+                    "mode"
+                ],
+                "properties": {
+                    "description": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 50
+                    },
+                    "model": {
+                        "type": "string",
+                        "pattern": "^[a-z0-9-]+/[a-z0-9.:/-]+$"
+                    },
+                    "mode": {
+                        "enum": [
+                            "primary",
+                            "subagent"
+                        ]
+                    },
+                    "tools": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "boolean"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

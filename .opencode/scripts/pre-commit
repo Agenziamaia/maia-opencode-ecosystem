@@ -1,0 +1,61 @@
+#!/bin/bash
+# 🛡️ MAIA ECOSYSTEM PRE-COMMIT HOOK
+# Prevents broken commits from entering the repository
+
+set -e
+
+echo "🔍 Running MAIA pre-commit checks..."
+
+# 1. Validate opencode.json
+if [ -f "opencode.json" ]; then
+    echo "  → Validating opencode.json..."
+    python3 .opencode/scripts/validate_config.py || {
+        echo "❌ opencode.json validation failed!"
+        exit 1
+    }
+fi
+
+# 2. Check that no orphan report files are being added
+ORPHAN_PATTERNS=(
+    '*_REPORT.md'
+    '*_SUMMARY.md'
+    '*_PLAN.md'
+    '*_FIX.md'
+)
+
+for pattern in "${ORPHAN_PATTERNS[@]}"; do
+    # Get staged files matching the pattern (excluding .archive)
+    staged_files=$(git diff --cached --name-only --diff-filter=A | grep -E "^[^/]*${pattern}$" 2>/dev/null || true)
+    if [ -n "$staged_files" ]; then
+        echo "❌ Blocked: Cannot add root-level report files"
+        echo "   Offending files: $staged_files"
+        echo "   → Move to .archive/old-reports/ or consolidate into STATUS.md"
+        exit 1
+    fi
+done
+
+# 3. Verify ARCHITECTURE.md contains required entries (if it exists)
+if [ -f ".opencode/context/ARCHITECTURE.md" ]; then
+    if ! grep -q "giuzu-training/" .opencode/context/ARCHITECTURE.md 2>/dev/null; then
+        echo "⚠️  Warning: ARCHITECTURE.md missing giuzu-training entry"
+    fi
+fi
+
+# 4. Lint Python scripts (if flake8 is available)
+if command -v flake8 &> /dev/null; then
+    echo "  → Linting Python scripts..."
+    flake8 .opencode/scripts/*.py --max-line-length=120 --ignore=E501,W503 2>/dev/null || true
+fi
+
+# 5. Check JSON syntax for critical config files
+for config in opencode.json package.json; do
+    if [ -f "$config" ]; then
+        python3 -c "import json; json.load(open('$config'))" 2>/dev/null || {
+            echo "❌ Invalid JSON syntax in $config"
+            exit 1
+        }
+    fi
+done
+
+echo "✅ Pre-commit checks passed!"
+exit 0

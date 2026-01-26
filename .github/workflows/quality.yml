@@ -43,6 +43,9 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Validate opencode.json
+        run: python3 .opencode/scripts/validate_config.py
+
   agent-metrics:
     name: Track Agent Performance
     runs-on: ubuntu-latest
