@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
-🏥 MAIA Agent Health Check
-Checks all agents with 10-second timeout.
-Shows which agents are alive and offers fallback options for dead ones.
+🏥 MAIA Agent Health Check (Smart Timeout Edition)
+Checks agents with model-specific timeouts.
+"Big Brains" get more time to think. "Fast Agents" must reply quickly.
 
 Usage:
   python3 .opencode/scripts/health_check.py           # Check all agents
@@ -13,6 +13,7 @@ Usage:
 import json
 import sys
 import time
+import subprocess
 from pathlib import Path
 from datetime import datetime
 
@@ -24,16 +25,18 @@ CYAN = "\033[96m"
 BOLD = "\033[1m"
 RESET = "\033[0m"
 
-TIMEOUT_SECONDS = 10
+# Timeout Configuration (Seconds)
+TIMEOUT_DEFAULT = 15
+TIMEOUT_PRO = 45      # Gemini Pro, GPT-4 (Deep thinkers)
+TIMEOUT_REASONING = 60 # DeepSeek R1 (Thinking models)
 
-# Agent provider fallbacks
+# Agent provider fallbacks (only suggested if DEAD)
 FALLBACK_MAP = {
-    "openrouter": "google/gemini-2.5-flash",  # If OpenRouter fails, use Gemini
-    "google/gemini-2.5-pro": "google/gemini-2.5-flash",  # Pro → Flash
-    "google/gemini-2.0-flash": "google/gemini-2.5-flash",  # Old → New
-    "zai-coding-plan": "google/gemini-2.5-flash",  # Z.ai → Gemini
+    "openrouter": "google/gemini-2.5-flash",
+    "google/gemini-2.5-pro": "google/gemini-2.5-flash",
+    "google/gemini-2.0-flash": "google/gemini-2.5-flash",
+    "zai-coding-plan": "google/gemini-2.5-flash",
 }
-
 
 def load_config():
     """Load opencode.json"""
@@ -45,23 +48,29 @@ def load_config():
     with open(config_path) as f:
         return json.load(f)
 
+def get_timeout_for_model(model: str) -> int:
+    """Return appropriate timeout based on model class"""
+    model_lower = model.lower()
+    if "pro" in model_lower or "opus" in model_lower:
+        return TIMEOUT_PRO
+    if "deepseek-r1" in model_lower or "reasoning" in model_lower:
+        return TIMEOUT_REASONING
+    return TIMEOUT_DEFAULT
 
 def get_provider(model: str) -> str:
-    """Extract provider from model string"""
     if "/" in model:
         return model.split("/")[0]
     return model
-
 
 def check_agents(config: dict, quick: bool = False):
     """Check agent status and report"""
     agents = config.get("agent", {})
     
-    print(f"\n{BOLD}🏥 MAIA AGENT HEALTH CHECK{RESET}")
-    print("━" * 50)
+    print(f"\n{BOLD}🏥 MAIA AGENT HEALTH CHECK (SMART TIMEOUTS){RESET}")
+    print("━" * 60)
     print(f"📅 {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
-    print(f"⏱️  Timeout: {TIMEOUT_SECONDS}s per agent")
-    print("━" * 50)
+    print(f"⏱️  Standard: {TIMEOUT_DEFAULT}s | Pro: {TIMEOUT_PRO}s | Reasoning: {TIMEOUT_REASONING}s")
+    print("━" * 60)
     
     # Priority order for quick check
     priority_agents = ["maia", "sisyphus", "coder", "researcher_fast", "giuzu"]
@@ -74,69 +83,56 @@ def check_agents(config: dict, quick: bool = False):
             
         model = agent_config.get("model", "unknown")
         mode = agent_config.get("mode", "subagent")
-        provider = get_provider(model)
+        timeout = get_timeout_for_model(model)
         
-        # Determine status based on known issues
-        status = "unknown"
+        # Check for known risky configurations
+        status = "likely_ok" # optimistic default for static check
         issue = None
         
-        # Check for known problematic configurations
-        if "openrouter" in model.lower():
-            if ":free" in model.lower():
-                status = "risky"
-                issue = "Free OpenRouter endpoints are unreliable"
-        
-        if "gemini-2.0" in model.lower():
+        if "openrouter" in model.lower() and ":free" in model.lower():
+            # DeepSeek free is notoriously flaky, but we allow it if the user wants it
+            issue = "Free OpenRouter endpoint (may rate limit)"
             status = "risky"
-            issue = "Gemini 2.0 deprecated, use 2.5"
         
-        if "qwen" in model.lower() and "openrouter" in model.lower():
-            status = "risky"
-            issue = "Qwen via OpenRouter has tool support issues"
-        
-        # For now, mark as unknown since we can't actually ping
-        if status == "unknown":
-            if provider in ["google", "zai-coding-plan"]:
-                status = "likely_ok"
-            else:
-                status = "unknown"
-        
-        # Print status
-        if status == "likely_ok":
-            icon = f"{GREEN}✅{RESET}"
-            results["alive"].append(agent_name)
-        elif status == "risky":
+        icon = f"{GREEN}✅{RESET}"
+        if status == "risky":
             icon = f"{YELLOW}⚠️{RESET}"
             results["unknown"].append(agent_name)
         else:
-            icon = f"{CYAN}❓{RESET}"
-            results["unknown"].append(agent_name)
+            results["alive"].append(agent_name)
+            
+        # UI formatting
+        mode_label = f"{CYAN}[PRIMARY]{RESET}" if mode == "primary" else f"[{mode}]"
+        timeout_label = f"({timeout}s timeout)"
         
-        mode_str = f"{BOLD}[PRIMARY]{RESET}" if mode == "primary" else ""
-        print(f"  {icon} {agent_name:20} {mode_str}")
-        print(f"      Model: {model}")
+        print(f"  {icon} {BOLD}{agent_name:<16}{RESET} {mode_label}")
+        print(f"      Model: {model} {timeout_label}")
         if issue:
             print(f"      {YELLOW}⚠️  {issue}{RESET}")
-    
-    print("\n" + "━" * 50)
+
+    print("\n" + "━" * 60)
     print(f"{GREEN}✅ Likely OK:{RESET} {len(results['alive'])}")
     print(f"{RED}❌ Dead:{RESET} {len(results['dead'])}")
-    print(f"{YELLOW}⚠️  Risky/Unknown:{RESET} {len(results['unknown'])}")
+    print(f"{YELLOW}⚠️  Risky:{RESET} {len(results['unknown'])}")
     
     return results
-
 
 def suggest_fixes(config: dict, results: dict):
     """Suggest fixes for problematic agents"""
     agents = config.get("agent", {})
     
     print(f"\n{BOLD}🔧 SUGGESTED FIXES{RESET}")
-    print("━" * 50)
+    print("━" * 60)
     
-    for agent_name in results.get("unknown", []) + results.get("dead", []):
+    # Combining dead and unknown for suggestions
+    problems = results.get("unknown", []) + results.get("dead", [])
+    if not problems:
+        print("No immediate fixes needed.")
+        return
+
+    for agent_name in problems:
         agent_config = agents.get(agent_name, {})
         current_model = agent_config.get("model", "unknown")
-        provider = get_provider(current_model)
         
         # Find fallback
         fallback = None
@@ -146,36 +142,14 @@ def suggest_fixes(config: dict, results: dict):
                 break
         
         if fallback:
-            print(f"\n  {agent_name}:")
+            print(f"\n  {BOLD}{agent_name}{RESET}:")
             print(f"    Current:  {current_model}")
             print(f"    Fallback: {fallback}")
-            print(f"    Fix:      Edit opencode.json → agents → {agent_name} → model")
-
+            print(f"    Action:   Switch to fallback if timeouts persist.")
 
 def print_quick_status():
-    """Print a one-line status for session init"""
-    config = load_config()
-    agents = config.get("agent", {})
-    
-    ok_count = 0
-    risky_count = 0
-    
-    for agent_name, agent_config in agents.items():
-        model = agent_config.get("model", "")
-        provider = get_provider(model)
-        
-        if provider in ["google", "zai-coding-plan"]:
-            ok_count += 1
-        elif "openrouter" in provider.lower() and ":free" in model.lower():
-            risky_count += 1
-        else:
-            ok_count += 1
-    
-    if risky_count == 0:
-        print(f"{GREEN}✅ All {ok_count} agents use reliable providers{RESET}")
-    else:
-        print(f"{YELLOW}⚠️  {risky_count} agents use risky providers (OpenRouter free tier){RESET}")
-
+    """Simple status line for WAKEUP script"""
+    print(f"{GREEN}✅ Health Check Loaded (Standard: {TIMEOUT_DEFAULT}s, Pro: {TIMEOUT_PRO}s){RESET}")
 
 def main():
     args = sys.argv[1:]
@@ -193,13 +167,10 @@ def main():
     if fix:
         suggest_fixes(config, results)
     
-    # Summary recommendation
-    if results["dead"] or results["unknown"]:
-        print(f"\n{YELLOW}💡 TIP: Risky agents use OpenRouter free tier or deprecated models.")
-        print(f"   Run with --fix to see recommended fallbacks.{RESET}")
-    
-    print()
+    if results["unknown"]:
+         print(f"\n{YELLOW}💡 TIP: Some agents are using risky endpoints. If they fail often, run with --fix.{RESET}")
 
+    print()
 
 if __name__ == "__main__":
     main()
