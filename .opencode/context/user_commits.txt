@@ -1,0 +1,20 @@
+feat: Final Polish of Agent Protocols
+feat: Deploy Hardened Gatekeeper Protocol
+feat: Deploy Semantic Map to Production
+feat: Deploy Doc Standards & Git Hooks
+refactor: Consolidated documentation - removed 15+ redundant files, created living STATUS.md
+docs: Add comprehensive system cleanup report
+fix: Full ecosystem cleanup - WAKEUP banner corrected, AGENT_BOARD updated, configs unified
+fix: Sync production with corrected 14-agent config
+fix: Deploy Results-Oriented Swarm
+feat: Deploy Native-First Vision and Ecosystem Oracle
+feat: Deploy Unified 14-Agent Config
+fix: 100% Correct Scoped Agent Config
+feat: Deploy Video Analysis and Best-in-Breed Models
+feat: Deploy Final Sharp Swarm to Production
+feat: Deploy God-Mode @opencode and Universal Logic
+feat: Deploy Platform Oracle to Production
+fix: Deploy 100% Health Config
+fix: Deploy Idempotent WAKEUP Protocol
+docs: Accurate Init Documentation
+feat: Deploy Strict Scoping to Production
