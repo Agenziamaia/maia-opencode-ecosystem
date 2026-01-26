@@ -8,6 +8,9 @@
     "write": "allow",
     "webfetch": "allow"
   },
+  "plugin": [
+    "oh-my-opencode"
+  ],
   "provider": {
     "zai-coding-plan": {
       "npm": "@ai-sdk/openai-compatible",
@@ -66,6 +69,7 @@
       "mode": "primary",
       "tools": {
         "vibekanban_*": true,
+        "discord_*": true,
         "session": true,
         "read": true,
         "write": true,
