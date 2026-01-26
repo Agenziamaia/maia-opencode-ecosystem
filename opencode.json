@@ -18,7 +18,7 @@
     },
     "google": {
       "npm": "@ai-sdk/google",
-      "name": "Gemini Engine (Native)"
+      "name": "Gemini Engine"
     },
     "opencode": {
       "name": "OpenCode Models"
@@ -61,7 +61,7 @@
   },
   "agent": {
     "maia": {
-      "description": "THE ORCHESTRATOR.",
+      "description": "THE ORCHESTRATOR. Strategic command.",
       "model": "zai-coding-plan/glm-4.7",
       "mode": "primary",
       "tools": {
@@ -78,7 +78,7 @@
       }
     },
     "sisyphus": {
-      "description": "THE PROJECT MANAGER.",
+      "description": "THE PROJECT MANAGER. Workflow loop engine.",
       "model": "zai-coding-plan/glm-4.7",
       "mode": "subagent",
       "tools": {
@@ -96,7 +96,7 @@
       }
     },
     "coder": {
-      "description": "THE ARCHITECT.",
+      "description": "THE ARCHITECT. Production creating agent.",
       "model": "zai-coding-plan/glm-4.7",
       "mode": "subagent",
       "tools": {
@@ -116,8 +116,25 @@
         "vibekanban_*": true
       }
     },
+    "ops": {
+      "description": "THE INFRASTRUCTURE GOD. System stability.",
+      "model": "zai-coding-plan/glm-4.7",
+      "mode": "subagent",
+      "tools": {
+        "read": true,
+        "grep": true,
+        "glob": true,
+        "list": true,
+        "write": true,
+        "edit": true,
+        "bash": true,
+        "webfetch": true,
+        "session": true,
+        "vibekanban_*": true
+      }
+    },
     "researcher": {
-      "description": "THE ORACLE.",
+      "description": "THE ORACLE. Deep context Analyst.",
       "model": "google/gemini-2.5-pro",
       "mode": "subagent",
       "tools": {
@@ -132,8 +149,47 @@
         "vibekanban_*": true
       }
     },
+    "researcher_fast": {
+      "description": "THE RAPID ANALYST.",
+      "model": "google/gemini-2.5-flash",
+      "mode": "subagent",
+      "tools": {
+        "read": true,
+        "grep": true,
+        "glob": true,
+        "list": true,
+        "skill": true,
+        "webfetch": true,
+        "question": true,
+        "session": true
+      }
+    },
+    "reviewer": {
+      "description": "THE GATEKEEPER. No-mercy logic audits.",
+      "model": "opencode/big-pickle",
+      "mode": "subagent",
+      "tools": {
+        "read": true,
+        "grep": true,
+        "glob": true,
+        "list": true,
+        "lsp": true,
+        "session": true,
+        "vibekanban_*": true
+      }
+    },
+    "vision": {
+      "description": "THE VISUAL ANALYST. Dedicated Multimodal path.",
+      "model": "google/gemini-2.0-flash",
+      "mode": "subagent",
+      "tools": {
+        "read": true,
+        "webfetch": true,
+        "session": true
+      }
+    },
     "giuzu": {
-      "description": "THE DIGITAL CLONE.",
+      "description": "THE DIGITAL CLONE. personality/logic mirror.",
       "model": "opencode/big-pickle",
       "mode": "subagent",
       "tools": {
@@ -153,35 +209,60 @@
         "vibekanban_*": true
       }
     },
-    "reviewer": {
-      "description": "THE GATEKEEPER.",
-      "model": "opencode/big-pickle",
-      "mode": "subagent",
-      "tools": {
-        "read": true,
-        "grep": true,
-        "glob": true,
-        "list": true,
-        "lsp": true,
-        "session": true,
-        "vibekanban_*": true
-      }
-    },
-    "ops": {
-      "description": "THE INFRASTRUCTURE GOD.",
+    "workflow": {
+      "description": "THE AUTOMATOR. Specialist in n8n/Flowise.",
       "model": "zai-coding-plan/glm-4.7",
       "mode": "subagent",
       "tools": {
         "read": true,
-        "grep": true,
-        "glob": true,
-        "list": true,
+        "write": true,
+        "edit": true,
+        "bash": true
+      }
+    },
+    "starter": {
+      "description": "THE BOOTSTRAPPER. Quick project init.",
+      "model": "google/gemini-2.5-flash",
+      "mode": "subagent",
+      "tools": {
+        "read": true,
+        "write": true,
+        "edit": true,
+        "bash": true
+      }
+    },
+    "opencode": {
+      "description": "THE META SPECIALIST. Self-maintenance agent.",
+      "model": "zai-coding-plan/glm-4.7",
+      "mode": "subagent",
+      "tools": {
+        "read": true,
+        "write": true,
+        "edit": true,
+        "bash": true
+      }
+    },
+    "maia_premium": {
+      "description": "THE GPT-5 ARCHITECT. Complex reasoning.",
+      "model": "google/gemini-2.5-pro",
+      "mode": "subagent",
+      "tools": {
+        "read": true,
         "write": true,
         "edit": true,
         "bash": true,
-        "webfetch": true,
-        "session": true,
-        "vibekanban_*": true
+        "session": true
+      }
+    },
+    "explore": {
+      "description": "THE SCOUT. File discovery.",
+      "model": "opencode/gpt-5-nano",
+      "mode": "subagent",
+      "tools": {
+        "read": true,
+        "grep": true,
+        "glob": true,
+        "list": true
       }
     }
   }
