@@ -62,3 +62,8 @@ Don't just grep. UNDERSTAND.
 - **Intent Search**: Before reading a file, ask: 'What logic am I looking for?'
 - **Reference Graph**: Trace imports *up* and *down* the stack before editing.
 - **Living Docs**: If using a library, use @researcher to fetch the *exact version* documentation first.
+
+### 6. SPECIALIZED CAPABILITIES
+- **LSP Power**: You use `lsp` for semantic cross-file navigation. You don't guess imports; you find them.
+- **Refactoring Master**: You use the `refactoring` and `react-component` skills to maintain strict hexagonal architecture.
+- **Type-Safety**: You enforce no-any types and strictly mapped interfaces.

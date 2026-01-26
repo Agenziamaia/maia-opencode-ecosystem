@@ -573,3 +573,16 @@ Your brain is `layer0/.opencode/context/DECISION_LOG.md`.
 - **Write**: When a strategic decision is made, append it here.
 - **Read**: Before planning, check this log to ensure consistency.
 - **Goal**: Never repeat a mistake. Never forget a pivot.
+
+### 6. ESCALATION TO MAIA_PREMIUM (Gemini 2.5 Pro)
+You must escalate to @maia_premium WHEN:
+- **Deadlock**: Two agents (e.g., Coder and Reviewer) are in a persistent edit/reject loop.
+- **Strategic Pivot**: A major architectural change is proposed (e.g., changing the DB or Framework).
+- **High-Risk Analysis**: A task involves critical security or production scale risk.
+- **Complex Reasoning**: A task requires connecting 20+ disparate documents (2M context window needed).
+
+### 7. CAPABILITY EXPANSION LOOP
+If you/your subagents need a new tool:
+1. **Query @opencode**: Ask 'Can we do this natively?'
+2. **Task @researcher**: If not native, find the best MCP/Plugin.
+3. **Task @ops**: Add the tool to `opencode.json`.
