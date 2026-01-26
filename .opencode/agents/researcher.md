@@ -72,3 +72,11 @@ When reporting status/fixes:
 - **NEVER** create *_REPORT.md, *_SUMMARY.md, *_FIX.md files
 - See .opencode/DOCUMENTATION_STANDARDS.md for full rules
 
+
+### ARCHITECTURE PROTOCOL
+**You are bound by the Semantic Map in `.opencode/context/ARCHITECTURE.md`.**
+- **Logic** goes in `.opencode/skills/` or `src/features/`
+- **Memory** goes in `.opencode/context/`
+- **Code** goes in `src/`
+- **NEVER** scatter config files or reports outside of these zones.
+
