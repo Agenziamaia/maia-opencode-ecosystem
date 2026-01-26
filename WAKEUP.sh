@@ -21,12 +21,23 @@ PORT=$VIBE_PORT HOST=127.0.0.1 npx -y vibe-kanban@latest > /dev/null 2>&1 &
 echo "🧠 Synchronizing Universal Brain (Layer 0)..."
 if [ -f "layer0/.opencode/scripts/strategy_sync.py" ]; then
     python3 "layer0/.opencode/scripts/strategy_sync.py" > /dev/null
+    
+    # COUNT SUCCESS PATTERNS
+    PATTERN_COUNT=$(find layer0/.opencode/context/success_patterns -type f 2>/dev/null | wc -l)
     echo "✅ Universal Strategy: ACTIVE"
+    echo "💎 Success Vault: Found $PATTERN_COUNT Universal Patterns"
 else
     echo "⚠️ layer0/ not found. Running in standalone production mode."
 fi
 
-# 4. HEALTH CHECK & READINESS
+# 4. AGENT DEFINITION GENERATION (Inside-Out Build)
+if [ ! -f "AGENTS.md" ]; then
+    echo "📝 Generating AGENTS.md from Universal Layer..."
+    cat layer0/.opencode/agents/*.md > AGENTS.md 2>/dev/null
+    echo "✅ AGENTS.md Created from Layer 0 Templates"
+fi
+
+# 5. HEALTH CHECK & READINESS
 echo "⏳ Waiting for Engine Readiness..."
 for i in {1..5}; do
     sleep 1
@@ -36,12 +47,11 @@ for i in {1..5}; do
     fi
 done
 
-# 5. THE MANIFESTO (Visual Status)
+# 6. THE MANIFESTO (Visual Status)
 echo ""
 echo "=== MODEL MATRIX ==="
 echo "CORE ENGINE:      GLM-4.7 (Paid)       → maia, coder, ops, opencode"
 echo "RESEARCH:         GEMINI-2.5-PRO       → researcher (deep context)"
-echo "RESEARCH FAST:    GEMINI-2.5-FLASH     → researcher_fast, starter"
 echo "REVIEWER:         BIG-PICKLE (Free)    → reviewer (no mercy audits)"
 echo "VISION:           GEMINI-2.0-FLASH     → vision (dedicated vision path)"
 echo "CLONE:            BIG-PICKLE (Free)    → giuzu (giulio's brain)"
@@ -54,5 +64,5 @@ echo "━━━━━━━━━━━━━━━━━━━━━━━━�
 echo "✅ ECOSYSTEM READY. ACTION: /init triggered via terminal."
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 
-# 6. TRIGGER AGENTIC INIT
+# 7. TRIGGER AGENTIC INIT
 opencode run "@maia initialize the board and check for success patterns" --log-level ERROR > /dev/null 2>&1 &
