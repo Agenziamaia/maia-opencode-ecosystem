@@ -24,25 +24,18 @@ else
     PORT=$VIBE_PORT HOST=127.0.0.1 npx -y vibe-kanban@latest > /dev/null 2>&1 &
 fi
 
-# 2. UNIVERSAL STRATEGY SYNC (Brain Sync)
-# This is safe to run repeatedly; it just refreshes logic.
-echo "🧠 Synchronizing Universal Brain (Layer 0)..."
-if [ -f "layer0/.opencode/scripts/strategy_sync.py" ]; then
-    python3 "layer0/.opencode/scripts/strategy_sync.py" > /dev/null
+# 2. BRAIN CHECK (Local Intelligence)
+echo "🧠 Verifying Local Brain..."
+if [ -d ".opencode" ]; then
+    AGENT_COUNT=$(ls .opencode/agents/*.md 2>/dev/null | wc -l)
+    echo "✅ Local Brain: ACTIVE ($AGENT_COUNT agents loaded)"
     
-    # COUNT SUCCESS PATTERNS
-    PATTERN_COUNT=$(find layer0/.opencode/context/success_patterns -type f 2>/dev/null | wc -l)
-    echo "✅ Universal Strategy: ACTIVE"
-    echo "💎 Success Vault: Found $PATTERN_COUNT Universal Patterns"
+    # Check Giuzu V2
+    if [ -f ".opencode/giuzu-training/brain.md" ]; then
+        echo "✅ Giuzu V2: ONLINE (Unified Brain detected)"
+    fi
 else
-    echo "⚠️ layer0/ not found. Running in standalone production mode."
-fi
-
-# 3. AGENT DEFINITION GENERATION (Inside-Out Build)
-if [ ! -f "AGENTS.md" ]; then
-    echo "📝 Generating AGENTS.md from Universal Layer..."
-    cat layer0/.opencode/agents/*.md > AGENTS.md 2>/dev/null
-    echo "✅ AGENTS.md Created from Layer 0 Templates"
+    echo "❌ CRITICAL: .opencode/ directory missing! System lobotomized."
 fi
 
 # 4. FINAL HEALTH CHECK

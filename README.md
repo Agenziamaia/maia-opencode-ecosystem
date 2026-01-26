@@ -40,7 +40,37 @@ We are a God-Tier multi-agent development system with specialized AI droids:
 | **@Researcher** | Analyst | Gemini 1.5 Pro | Deep research, pattern recognition |
 | **@Reviewer** | Quality Gate | Claude 3.5 Sonnet | Code quality, security, testing |
 
+---
+
+## 🌊 The Flow of Intelligence (How to Work)
+
+This is a **Single-Workspace Ecosystem**. You live here. You build here. You evolve here.
+
+1.  **YOU (The Pilot)**
+    - Work inside: `MAIA opencode/`
+    - Command: "Build a hotel bot", "Research crypto"
+
+2.  **THE AGENTS (The Crew)**
+    - **@coder**, **@sisyphus**: They build your apps in `src/`.
+    - **@giuzu**: Your Digital Twin. He observes, learns your preferences, and updates his `brain.md`.
+
+3.  **THE PROJECTS (The Output)**
+    - Your apps live in `src/project-name/` (e.g., `src/hotel-bot/`).
+    - You push them to their own GitHub repos (e.g., `github.com/agency/hotel-bot`).
+
+4.  **THE EVOLUTION (The Distillation)**
+    - When your agents get smarter (or Giuzu learns a new trick), run:
+    - `./.opencode/scripts/distill_layer0.sh`
+    - This extracts the **Intelligence** (Brains, Agents, Configs) and pushes it to your **Universal Backup** (`multiagent-layer0`).
+
+5.  **THE FUTURE (The Inheritance)**
+    - Start fresh anywhere by cloning `multiagent-layer0`.
+    - You inherit Level 100 Giuzu and all your best agents instantly.
+
+---
+
 ### How We Work
+
 
 1. **Planning** (`/plan`) - @MAIA creates a strategic battle plan
 2. **Execution** - @Coder, @Ops, @Researcher implement tasks
