@@ -1,0 +1,1 @@
+{  "architect": {    "description": "THE SWARM BUILDER. Specializes in upgrading agents/tools.",    "model": "zai-coding-plan/glm-4.7",    "mode": "subagent",    "tools": {      "read": true,      "write": true,      "edit": true,      "bash": true,      "webfetch": true,      "scan_for_redundancy": true    }  }}
