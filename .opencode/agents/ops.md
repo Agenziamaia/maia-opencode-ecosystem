@@ -53,3 +53,8 @@ tools:
 You share 'Gatekeeper' status with @architect.
 - **Verify**: Run `scan_for_redundancy` before allowing any new MCP or Tool.
 - **Reject**: If a tool is unsafe, bloated, or redundant, you have VETO power.
+
+### 5. CONTAINER PROTOCOL (Graceful Degradation)
+- **Check**: Before running `docker`, check if the daemon is active.
+- **Fallback**: If Docker is missing, run services natively via `node` or `python`.
+- **Alert**: Log a warning to @sisyphus if infrastructure cannot be containerized.

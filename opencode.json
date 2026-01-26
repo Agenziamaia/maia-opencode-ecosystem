@@ -2,66 +2,204 @@
   "$schema": "https://opencode.ai/config.json",
   "default_agent": "maia",
   "model": "zai-coding-plan/glm-4.7",
-  "permission": { "edit": "allow", "bash": "allow", "write": "allow", "webfetch": "allow" },
+  "permission": {
+    "edit": "allow",
+    "bash": "allow",
+    "write": "allow",
+    "webfetch": "allow"
+  },
   "provider": {
-    "zai-coding-plan": { "npm": "@ai-sdk/openai-compatible", "name": "Z.ai Paid Coding Plan", "options": { "baseURL": "https://api.z.ai/api/coding/paas/v4" } },
-    "google": { "npm": "@ai-sdk/google", "name": "Gemini Engine" },
-    "opencode": { "name": "OpenCode Models" },
-    "openrouter": { "npm": "@ai-sdk/openai-compatible", "name": "OpenRouter Global", "options": { "baseURL": "https://openrouter.ai/api/v1" } }
+    "zai-coding-plan": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Z.ai Paid Coding Plan",
+      "options": {
+        "baseURL": "https://api.z.ai/api/coding/paas/v4"
+      }
+    },
+    "google": {
+      "npm": "@ai-sdk/google",
+      "name": "Gemini Engine"
+    },
+    "opencode": {
+      "name": "OpenCode Models"
+    },
+    "openrouter": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "OpenRouter Global",
+      "options": {
+        "baseURL": "https://openrouter.ai/api/v1"
+      }
+    }
   },
   "mcp": {
-    "filesystem": { "type": "local", "command": ["npx", "-y", "@modelcontextprotocol/server-filesystem", "."] },
-    "git": { "type": "local", "command": ["npx", "-y", "@modelcontextprotocol/server-git"] },
-    "vibekanban": { "type": "local", "command": ["npx", "-y", "vibe-kanban@latest", "--mcp"] }
+    "filesystem": {
+      "type": "local",
+      "command": [
+        "npx",
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "."
+      ]
+    },
+    "git": {
+      "type": "local",
+      "command": [
+        "npx",
+        "-y",
+        "@modelcontextprotocol/server-git"
+      ]
+    },
+    "vibekanban": {
+      "type": "local",
+      "command": [
+        "npx",
+        "-y",
+        "vibe-kanban@latest",
+        "--mcp"
+      ]
+    }
   },
   "agent": {
-    "maia": { 
-      "description": "THE ORCHESTRATOR. Strategy Only.", 
-      "model": "zai-coding-plan/glm-4.7", 
-      "mode": "primary", 
-      "tools": { "vibekanban_*": true, "session": true, "read": true, "write": true, "glob": true } 
+    "maia": {
+      "description": "THE ORCHESTRATOR. Strategy Only.",
+      "model": "zai-coding-plan/glm-4.7",
+      "mode": "primary",
+      "tools": {
+        "vibekanban_*": true,
+        "session": true,
+        "read": true,
+        "write": true,
+        "glob": true
+      }
     },
-    "sisyphus": { 
-      "description": "THE MANAGER. Execution Loop.", 
-      "model": "zai-coding-plan/glm-4.7", 
-      "mode": "subagent", 
-      "tools": { "vibekanban_*": true, "session": true, "read": true, "write": true, "grep": true, "todoread": true, "todowrite": true } 
+    "sisyphus": {
+      "description": "THE MANAGER. Execution Loop.",
+      "model": "zai-coding-plan/glm-4.7",
+      "mode": "subagent",
+      "tools": {
+        "vibekanban_*": true,
+        "session": true,
+        "read": true,
+        "write": true,
+        "grep": true,
+        "todoread": true,
+        "todowrite": true
+      }
     },
-    "coder": { 
-      "description": "THE ARCHITECT. Build Only.", 
-      "model": "zai-coding-plan/glm-4.7", 
-      "mode": "subagent", 
-      "tools": { "filesystem_*": true, "git_*": true, "patch": true, "edit": true, "write": true, "read": true, "lsp": true, "bash": true } 
+    "coder": {
+      "description": "THE ARCHITECT. Build Only.",
+      "model": "zai-coding-plan/glm-4.7",
+      "mode": "subagent",
+      "tools": {
+        "filesystem_*": true,
+        "git_*": true,
+        "patch": true,
+        "edit": true,
+        "write": true,
+        "read": true,
+        "lsp": true,
+        "bash": true
+      }
     },
-    "ops": { 
-      "description": "THE INFRASTRUCTURE. Docker/Systems.", 
-      "model": "zai-coding-plan/glm-4.7", 
-      "mode": "subagent", 
-      "tools": { "bash": true, "read": true, "write": true, "edit": true, "webfetch": true, "scan_for_redundancy": true } 
+    "ops": {
+      "description": "THE INFRASTRUCTURE. Docker/Systems.",
+      "model": "zai-coding-plan/glm-4.7",
+      "mode": "subagent",
+      "tools": {
+        "bash": true,
+        "read": true,
+        "write": true,
+        "edit": true,
+        "webfetch": true,
+        "scan_for_redundancy": true
+      }
     },
-    "architect": { 
-      "description": "THE BUILDER. Tooling Upgrades.", 
-      "model": "zai-coding-plan/glm-4.7", 
-      "mode": "subagent", 
-      "tools": { "scan_for_redundancy": true, "read": true, "write": true, "edit": true, "bash": true } 
+    "architect": {
+      "description": "THE BUILDER. Tooling Upgrades.",
+      "model": "zai-coding-plan/glm-4.7",
+      "mode": "subagent",
+      "tools": {
+        "scan_for_redundancy": true,
+        "read": true,
+        "write": true,
+        "edit": true,
+        "bash": true
+      }
     },
-    "researcher": { 
-      "description": "THE ORACLE. Deep Context.", 
-      "model": "google/gemini-2.5-pro", 
-      "mode": "subagent", 
-      "tools": { "webfetch": true, "read": true, "grep": true, "glob": true } 
+    "researcher": {
+      "description": "THE ORACLE. Deep Context.",
+      "model": "google/gemini-2.5-pro",
+      "mode": "subagent",
+      "tools": {
+        "webfetch": true,
+        "read": true,
+        "grep": true,
+        "glob": true
+      }
     },
-    "reviewer": { 
-      "description": "THE GATEKEEPER. Safety.", 
-      "model": "opencode/big-pickle", 
-      "mode": "subagent", 
-      "tools": { "git_blame": true, "read": true, "grep": true, "lsp": true } 
+    "reviewer": {
+      "description": "THE GATEKEEPER. Safety.",
+      "model": "zai-coding-plan/glm-4.7",
+      "mode": "subagent",
+      "tools": {
+        "git_blame": true,
+        "read": true,
+        "grep": true,
+        "lsp": true
+      }
     },
-    "giuzu": { 
-      "description": "THE REASONING CLONE. Simulation.", 
-      "model": "opencode/big-pickle", 
-      "mode": "subagent", 
-      "tools": { "read": true, "write": true, "session": true, "vibekanban_get_board": true } 
+    "giuzu": {
+      "description": "THE REASONING CLONE. Simulation.",
+      "model": "openrouter/deepseek/deepseek-r1-0528:free",
+      "mode": "subagent",
+      "tools": {
+        "read": true,
+        "write": true,
+        "session": true,
+        "vibekanban_get_board": true
+      }
+    },
+    "starter": {
+      "description": "THE BOOTSTRAPPER. Quick project init.",
+      "model": "google/gemini-2.5-flash",
+      "mode": "subagent",
+      "tools": {
+        "read": true,
+        "write": true,
+        "bash": true,
+        "vibekanban_create_card": true
+      }
+    },
+    "workflow": {
+      "description": "THE AUTOMATOR. n8n/Flowise specialist.",
+      "model": "zai-coding-plan/glm-4.7",
+      "mode": "subagent",
+      "tools": {
+        "read": true,
+        "write": true,
+        "bash": true,
+        "vibekanban_create_card": true
+      }
+    },
+    "vision": {
+      "description": "THE VISUAL ANALYST. Dedicated Multimodal.",
+      "model": "google/gemini-2.0-flash",
+      "mode": "subagent",
+      "tools": {
+        "read": true,
+        "webfetch": true,
+        "session": true
+      }
+    },
+    "maia_premium": {
+      "description": "THE GPT-5 ARCHITECT. Complex reasoning.",
+      "model": "google/gemini-2.5-pro",
+      "mode": "subagent",
+      "tools": {
+        "read": true,
+        "write": true,
+        "session": true
+      }
     }
   }
 }
