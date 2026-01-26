@@ -55,18 +55,18 @@ for i in {1..5}; do
     fi
 done
 
-# 5. THE MANIFESTO (Visual Status)
+# 5. THE MANIFESTO (Visual Status - Matches opencode.json)
 echo ""
-echo "=== MODEL MATRIX ==="
-echo "CORE ENGINE:      GLM-4.7 (Paid)       → maia, coder, ops, opencode"
-echo "RESEARCH:         GEMINI-2.5-PRO       → researcher (deep context)"
-echo "REVIEWER:         BIG-PICKLE (Free)    → reviewer (no mercy audits)"
-echo "VISION:           GEMINI-2.0-FLASH     → vision (dedicated vision path)"
-echo "CLONE:            BIG-PICKLE (Free)    → giuzu (giulio's brain)"
-echo "PREMIUM:          GEMINI-2.5-PRO       → maia_premium (complex reasoning)"
+echo "=== MODEL MATRIX (14 AGENTS) ==="
+echo "CORE ENGINE:      GLM-4.7 (Paid)       → maia, sisyphus, coder, ops, reviewer"
+echo "RESEARCH:         GEMINI-2.5-PRO       → researcher, maia_premium"
+echo "FAST INTEL:       GEMINI-2.5-FLASH     → researcher_fast, opencode, starter, librarian"
+echo "VISION:           GEMINI-2.0-FLASH     → vision (native multimodal)"
+echo "REASONING:        DEEPSEEK-R1 (Free)   → giuzu (strategic clone)"
+echo "AUTOMATION:       QWEN-2.5-CODER       → workflow (n8n/flowise)"
 echo ""
-echo "=== AGENTS (12+) ==="
-echo "@maia, @coder, @ops, @researcher, @researcher_fast, @reviewer, @vision, @giuzu, @workflow, @starter, @opencode, @maia_premium"
+echo "=== AGENTS (14) ==="
+echo "@maia, @sisyphus, @coder, @ops, @researcher, @researcher_fast, @reviewer, @vision, @giuzu, @workflow, @opencode, @starter, @librarian, @maia_premium"
 echo ""
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 echo "✅ ECOSYSTEM READY. ACTION: /init triggered via terminal."

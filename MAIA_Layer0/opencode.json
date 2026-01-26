@@ -1,30 +1,35 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  "plugin": [
-    "opencode-sessions",
-    "oh-my-opencode"
-  ],
   "default_agent": "maia",
+  "model": "zai-coding-plan/glm-4.7",
   "permission": {
     "edit": "allow",
     "bash": "allow",
     "write": "allow",
     "webfetch": "allow"
   },
-  "compaction": {
-    "auto": true,
-    "prune": true
-  },
-  "watcher": {
-    "ignore": [
-      "node_modules/**",
-      "dist/**",
-      ".git/**",
-      ".output/**",
-      ".next/**",
-      "coverage/**",
-      "*.log"
-    ]
+  "provider": {
+    "zai-coding-plan": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Z.ai Paid Coding Plan",
+      "options": {
+        "baseURL": "https://api.z.ai/api/coding/paas/v4"
+      }
+    },
+    "google": {
+      "npm": "@ai-sdk/google",
+      "name": "Gemini Engine (Native)"
+    },
+    "opencode": {
+      "name": "OpenCode Models"
+    },
+    "openrouter": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "OpenRouter Global",
+      "options": {
+        "baseURL": "https://openrouter.ai/api/v1"
+      }
+    }
   },
   "mcp": {
     "filesystem": {
@@ -44,14 +49,6 @@
         "@modelcontextprotocol/server-git"
       ]
     },
-    "openskills": {
-      "type": "local",
-      "command": [
-        "npx",
-        "openskills",
-        "mcp"
-      ]
-    },
     "vibekanban": {
       "type": "local",
       "command": [
@@ -62,314 +59,174 @@
       ]
     }
   },
-  "tools": {
-    "git_*": false,
-    "filesystem_*": false,
-    "openskills_*": false,
-    "discord_*": false,
-    "vibekanban_*": false,
-    "session": false
-  },
   "agent": {
     "maia": {
-      "description": "THE ORCHESTRATOR. Strategic planner. Can do quick tasks, delegates complex work.",
+      "description": "Orchestrator.",
       "model": "zai-coding-plan/glm-4.7",
       "mode": "primary",
       "tools": {
-        "read": true,
-        "grep": true,
-        "glob": true,
-        "list": true,
-        "skill": true,
-        "todowrite": true,
-        "todoread": true,
-        "question": true,
-        "webfetch": true,
-        "write": true,
-        "edit": true,
-        "bash": true,
-        "openskills_*": true,
-        "discord_*": true,
         "vibekanban_*": true,
-        "session": true
+        "session": true,
+        "read": true,
+        "write": true,
+        "bash": true,
+        "skill": true,
+        "grep": true,
+        "glob": true
+      }
+    },
+    "sisyphus": {
+      "description": "Project Manager.",
+      "model": "zai-coding-plan/glm-4.7",
+      "mode": "subagent",
+      "tools": {
+        "vibekanban_*": true,
+        "session": true,
+        "read": true,
+        "write": true,
+        "grep": true,
+        "skill": true,
+        "todoread": true,
+        "todowrite": true
       }
     },
     "coder": {
-      "description": "THE ARCHITECT. God-Tier Code Synthesis. Full write access. LSP enabled.",
+      "description": "LSP Architect.",
       "model": "zai-coding-plan/glm-4.7",
       "mode": "subagent",
       "tools": {
-        "read": true,
-        "grep": true,
-        "glob": true,
-        "list": true,
-        "skill": true,
-        "write": true,
-        "edit": true,
-        "patch": true,
-        "bash": true,
-        "lsp": true,
-        "git_*": true,
         "filesystem_*": true,
-        "vibekanban_*": true,
-        "webfetch": false,
-        "question": false,
-        "session": true
+        "git_*": true,
+        "patch": true,
+        "edit": true,
+        "write": true,
+        "read": true,
+        "lsp": true,
+        "bash": true,
+        "skill": true
       }
     },
     "ops": {
-      "description": "INFRASTRUCTURE GOD. DevOps, Docker, Coolify, n8n. Full bash + git access.",
+      "description": "Infra & Scripts.",
+      "model": "zai-coding-plan/glm-4.7",
+      "mode": "subagent",
+      "tools": {
+        "bash": true,
+        "read": true,
+        "write": true,
+        "edit": true,
+        "webfetch": true,
+        "skill": true
+      }
+    },
+    "researcher": {
+      "description": "Deep Intel.",
+      "model": "google/gemini-2.5-pro",
+      "mode": "subagent",
+      "tools": {
+        "webfetch": true,
+        "read": true,
+        "grep": true,
+        "skill": true,
+        "glob": true
+      }
+    },
+    "researcher_fast": {
+      "description": "Flash Oracle.",
+      "model": "google/gemini-2.5-flash",
+      "mode": "subagent",
+      "tools": {
+        "webfetch": true,
+        "read": true,
+        "skill": true
+      }
+    },
+    "giuzu": {
+      "description": "Reasoning Clone.",
+      "model": "openrouter/deepseek/deepseek-r1:free",
+      "mode": "subagent",
+      "tools": {
+        "read": true,
+        "write": true,
+        "session": true,
+        "skill": true
+      }
+    },
+    "vision": {
+      "description": "Native Vision.",
+      "model": "google/gemini-2.0-flash",
+      "mode": "subagent",
+      "tools": {
+        "read": true,
+        "webfetch": true,
+        "session": true
+      }
+    },
+    "reviewer": {
+      "description": "Logic Audit.",
       "model": "zai-coding-plan/glm-4.7",
       "mode": "subagent",
       "tools": {
         "read": true,
         "grep": true,
-        "glob": true,
-        "list": true,
-        "skill": true,
-        "write": true,
-        "edit": true,
-        "bash": true,
-        "webfetch": true,
-        "filesystem_*": true,
-        "discord_*": true,
-        "vibekanban_*": true,
-        "question": false,
-        "session": true
-      },
-      "permission": {
-        "bash": {
-          "*": "allow",
-          "rm -rf *": "ask",
-          "docker rm *": "ask"
-        }
+        "lsp": true,
+        "skill": true
       }
     },
-    "researcher": {
-      "description": "THE ORACLE. Deep Context Analyst. Read-only. Webfetch enabled.",
+    "workflow": {
+      "description": "Automations.",
+      "model": "openrouter/qwen/qwen-2.5-coder-32b-instruct",
+      "mode": "subagent",
+      "tools": {
+        "read": true,
+        "write": true,
+        "bash": true,
+        "skill": true
+      }
+    },
+    "opencode": {
+      "description": "Platform Oracle.",
+      "model": "google/gemini-2.5-flash",
+      "mode": "subagent",
+      "tools": {
+        "read": true,
+        "write": true,
+        "bash": true,
+        "webfetch": true,
+        "skill": true
+      }
+    },
+    "starter": {
+      "description": "Bootstrapper.",
+      "model": "google/gemini-2.5-flash",
+      "mode": "subagent",
+      "tools": {
+        "read": true,
+        "write": true,
+        "bash": true,
+        "skill": true
+      }
+    },
+    "librarian": {
+      "description": "Success Curator.",
+      "model": "google/gemini-2.5-flash",
+      "mode": "subagent",
+      "tools": {
+        "read": true,
+        "write": true,
+        "skill": true,
+        "glob": true
+      }
+    },
+    "maia_premium": {
+      "description": "Supreme Arbiter.",
       "model": "google/gemini-2.5-pro",
       "mode": "subagent",
       "tools": {
         "read": true,
-        "grep": true,
-        "glob": true,
-        "list": true,
-        "skill": true,
-        "webfetch": true,
-        "vibekanban_*": true,
-        "write": false,
-        "edit": false,
-        "bash": false,
-        "question": true,
-        "session": true
+        "session": true,
+        "write": true
       }
-    },
-    "researcher_fast": {
-      "description": "THE FLASH ORACLE. High-availability research using faster Gemini Flash model. Read-only. Webfetch enabled.",
-      "model": "google/gemini-2.5-flash",
-      "mode": "subagent",
-      "tools": {
-        "read": true,
-        "grep": true,
-        "glob": true,
-        "list": true,
-        "skill": true,
-        "webfetch": true,
-        "write": false,
-        "edit": false,
-        "bash": false,
-        "question": true
-      }
-    },
-    "reviewer": {
-      "description": "THE GATEKEEPER. Strict code audit. Read-only. LSP enabled.",
-      "model": "nousresearch/hermes-3-llama-3.1-405b:free",
-      "mode": "subagent",
-      "tools": {
-        "read": true,
-        "grep": true,
-        "glob": true,
-        "list": true,
-        "lsp": true,
-        "git_*": true,
-        "vibekanban_*": true,
-        "write": false,
-        "edit": false,
-        "bash": false,
-        "webfetch": false,
-        "session": true
-      }
-    },
-    "opencode": {
-      "description": "SELF-META SPECIALIST. OpenCode config, agent, MCP, and skill management.",
-      "model": "zai-coding-plan/glm-4.7",
-      "mode": "subagent",
-      "tools": {
-        "read": true,
-        "grep": true,
-        "glob": true,
-        "list": true,
-        "edit": true,
-        "write": true,
-        "skill": true,
-        "webfetch": true,
-        "bash": false
-      }
-    },
-    "starter": {
-      "description": "WORKSPACE WIZARD. Onboards new projects and configures the perfect environment.",
-      "model": "google/gemini-2.5-flash",
-      "mode": "subagent",
-      "tools": {
-        "read": true,
-        "grep": true,
-        "glob": true,
-        "list": true,
-        "write": true,
-        "edit": true,
-        "skill": true,
-        "bash": true,
-        "webfetch": true,
-        "question": true
-      }
-    },
-    "maia_premium": {
-      "description": "PREMIUM ORCHESTRATOR. Heavy-duty reasoning for complex challenges.",
-      "model": "zai-coding-plan/glm-4.7",
-      "mode": "subagent",
-      "tools": {
-        "read": true,
-        "grep": true,
-        "glob": true,
-        "list": true,
-        "skill": true,
-        "todowrite": true,
-        "todoread": true,
-        "question": true,
-        "webfetch": true,
-        "write": true,
-        "edit": true,
-        "bash": true,
-        "openskills_*": true,
-        "discord_*": true
-      }
-    },
-    "workflow": {
-      "description": "AUTOMATION ARCHITECT. Master of n8n, Flowise, Trigger.dev, and agentic workflows.",
-      "model": "qwen/qwen-2.5-coder-32b-instruct:free",
-      "mode": "subagent",
-      "tools": {
-        "read": true,
-        "grep": true,
-        "glob": true,
-        "list": true,
-        "skill": true,
-        "write": true,
-        "edit": true,
-        "bash": true,
-        "webfetch": true,
-        "question": false
-      }
-    },
-    "vision": {
-      "description": "THE EYES. Dedicated Vision Path. Handles image analysis and sends context to Maia.",
-      "model": "openrouter/google/gemini-2.0-flash-exp:free",
-      "mode": "subagent",
-      "tools": {
-        "read": true,
-        "grep": true,
-        "glob": true,
-        "list": true,
-        "skill": true,
-        "write": false,
-        "edit": false,
-        "bash": false,
-        "webfetch": true,
-        "question": true
-      }
-    },
-    "giuzu": {
-      "description": "THE DIGITAL CLONE. Powered by Qwen 3 235B. Learns patterns, mirrors style, amplifies capabilities.",
-      "model": "openrouter/qwen/qwen-3-235b-instruct:free",
-      "mode": "subagent",
-      "tools": {
-        "read": true,
-        "grep": true,
-        "glob": true,
-        "list": true,
-        "skill": true,
-        "write": true,
-        "edit": true,
-        "webfetch": true,
-        "question": true
-      }
-    }
-  },
-  "command": {
-    "plan": {
-      "description": "Construct a Strategic Battle Plan",
-      "template": "Strategic Initiative: \"$ARGUMENTS\".\n1. Read project structure.\n2. Construct a multi-agent battle plan.\n3. Delegate to @coder, @ops, @researcher.",
-      "agent": "maia"
-    },
-    "audit": {
-      "description": "Run strict God-Tier code quality checks",
-      "template": "Audit the codebase. Use grep/glob/lsp. Report issues. NO MERCY.",
-      "agent": "reviewer"
-    },
-    "ops": {
-      "description": "Execute Infra tasks with Extreme Prejudice",
-      "template": "Infra Task: \"$ARGUMENTS\".\n1. Plan safety checks.\n2. Execute with precision.\n3. Verify state.",
-      "agent": "ops"
-    },
-    "research": {
-      "description": "Ingest aggressively and Synthesize",
-      "template": "Context: \"$ARGUMENTS\".\n1. Ingest documentation/files.\n2. Synthesize into insight for @maia.",
-      "agent": "researcher"
-    },
-    "research-fast": {
-      "description": "Fast research with fallback model for high availability",
-      "template": "Context: \"$ARGUMENTS\".\n1. Ingest documentation/files.\n2. Synthesize into insight for @maia.\n3. Uses researcher_fast (Gemini Flash) for better availability.",
-      "agent": "researcher_fast"
-    },
-    "supercharge": {
-      "description": "Meta-Analyze the entire ecosystem",
-      "template": "Analyze project meta-structure. Suggest God-Tier improvements.",
-      "agent": "maia"
-    },
-    "init": {
-      "description": "Bootstrap the Reality",
-      "template": "Initialize the environment. Check Droids, Codebase, and Skills. Report readiness.",
-      "agent": "maia"
-    },
-    "meta": {
-      "description": "Manage OpenCode configuration",
-      "template": "OpenCode Meta Task: \"$ARGUMENTS\".\nAnalyze and optimize the agent ecosystem configuration.",
-      "agent": "opencode"
-    },
-    "start": {
-      "description": "Onboard a new workspace with the Starter wizard",
-      "template": "New Workspace Onboarding: \"$ARGUMENTS\".\n1. Scan project structure.\n2. Ask strategic questions (max 5).\n3. Configure environment.\n4. Create Starter Report for @maia.",
-      "agent": "starter"
-    },
-    "heavy": {
-      "description": "Invoke Giuzu (Digital Clone) - Powered by Gemini 2.0 Flash (1M Context)",
-      "template": "Complex Challenge: \"$ARGUMENTS\".\n1. Deep analysis required.\n2. Generate multiple approaches.\n3. Recommend with confidence intervals.\n4. Return to @maia when resolved.",
-      "agent": "maia_premium"
-    },
-    "workflow": {
-      "description": "Create or manage automated workflows",
-      "template": "Workflow Task: \"$ARGUMENTS\".\n1. Understand intent.\n2. Choose platform (n8n/Flowise/Trigger.dev).\n3. Build incrementally.\n4. Document in .opencode/workflows/.",
-      "agent": "workflow"
-    },
-    "see": {
-      "description": "Trigger Vision Path",
-      "template": "Vision Request: \"$ARGUMENTS\".\n1. Analyze the provided image/context.\n2. Extract key details.\n3. Report findings back for standard processing.",
-      "agent": "vision"
-    },
-    "clone": {
-      "description": "Consult or train Giuzu (Giulio's digital clone)",
-      "template": "Clone Consultation: \"$ARGUMENTS\".\n1. Access training data.\n2. Apply personality matrix.\n3. Respond as Giulio would.\n4. Update learnings if appropriate.",
-      "agent": "giuzu"
     }
   }
 }

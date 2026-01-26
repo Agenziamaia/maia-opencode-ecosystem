@@ -1,39 +1,31 @@
-# 🤖 MAIA Agent Ecosystem: Ultimate Strategic Board
+# 🤖 MAIA AGENT BOARD
 
-**Tactical Configuration Engine:** Native Logic + Hardware Mapping + Full Kanban Lifecyle
 **Last Updated:** 2026-01-26
+**Total Agents:** 14
 
-## 🏢 Command Core (High-Performance Loops)
+## Model Assignments
 
-| Agent | Core Identity | Primary Model | Hardware Key Mapping | Vibe Kanban Access |
-| :--- | :--- | :--- | :--- | :--- |
-| **@maia** | **Orchestrator** | `glm-4.7` (Paid) | **Zai API Plan** | **Full (R/W)** |
-| **@sisyphus** | **Coordinator** | `glm-4.7` (Paid) | **Zai API Plan** | **Full (R/W)** |
-| **@coder** | **Architect** | `glm-4.7` (Paid) | **Zai API Plan** | **Full (R/W)** |
-| **@ops** | **Infra God** | `glm-4.7` (Paid) | **Zai API Plan** | **Full (R/W)** |
-| **@opencode** | **Meta Manager**| `glm-4.7` (Paid) | **Zai API Plan** | **Full (R/W)** |
+| Agent | Role | Model | Provider |
+|-------|------|-------|----------|
+| **@maia** | Orchestrator | GLM-4.7 | Z.ai Paid |
+| **@sisyphus** | Project Manager | GLM-4.7 | Z.ai Paid |
+| **@coder** | LSP Architect | GLM-4.7 | Z.ai Paid |
+| **@ops** | Infrastructure | GLM-4.7 | Z.ai Paid |
+| **@reviewer** | Logic Audit | GLM-4.7 | Z.ai Paid |
+| **@researcher** | Deep Intel | Gemini 2.5 Pro | Google |
+| **@researcher_fast** | Flash Oracle | Gemini 2.5 Flash | Google |
+| **@maia_premium** | Supreme Arbiter | Gemini 2.5 Pro | Google |
+| **@vision** | Native Multimodal | Gemini 2.0 Flash | Google |
+| **@opencode** | Platform Oracle | Gemini 2.5 Flash | Google |
+| **@starter** | Bootstrapper | Gemini 2.5 Flash | Google |
+| **@librarian** | Success Curator | Gemini 2.5 Flash | Google |
+| **@giuzu** | Reasoning Clone | DeepSeek R1 | OpenRouter (Free) |
+| **@workflow** | Automations | Qwen 2.5 Coder 32B | OpenRouter |
 
-## 🧠 Specialized Roster (Analytical Guardrails)
+## Model Tiers
 
-| Agent | Core Identity | Primary Model | Hardware Key Mapping | Vibe Kanban Access |
-| :--- | :--- | :--- | :--- | :--- |
-| **@researcher**| **Oracle Analyst**| `gemini-2.5-pro` | **Zai Key (Proxy)** | **Full (R/W)** |
-| **@librarian** | **Archivist** | `gemini-2.5-pro` | **Zai Key (Proxy)** | **Full (R/W)** |
-| **@giuzu** | **Digital Clone** | `big-pickle` (Free)| **Google Key** | **Full (R/W)** |
-| **@reviewer** | **Gatekeeper** | `big-pickle` (Free)| **Google Key** | **Full (R/W)** |
-| **@explore** | **Scout** | `gpt-5-nano` (Free)| **Google Key** | **Full (R/W)** |
-
----
-
-### 📋 **Vibe Kanban Lifecycle Protocol**
-All agents are granted **full Read/Write permissions** to the `vibekanban` MCP. This enables the following loop:
-1.  **@maia** converts intent into tasks in the `TO DO` column.
-2.  **@sisyphus** coordinates progress, moving tasks into `IN PROGRESS`.
-3.  Executors (**@coder**, **@ops**) finish work and move tasks to `IN REVIEW`.
-4.  **@reviewer** audits the changes. Upon approval, moves to `DONE`.
-
-### 🛡️ **Failover Strategy**
-If any plan hits rate limits or credit exhaustion:
-- **Production Agents** pivot to `opencode/big-pickle` (Native Free Reasoning).
-- **Specialists** pivot to `zai-coding-plan/glm-4.7`.
-- **Global Fallback**: `OpenRouter/Qwen-Free`.
+- **GLM-4.7 (Paid)**: Core execution layer - reliable, fast, tool-calling
+- **Gemini 2.5 Pro**: Deep reasoning, 2M context window
+- **Gemini 2.5 Flash**: Fast multimodal, cost-effective
+- **DeepSeek R1 (Free)**: Strategic reasoning with thinking blocks
+- **Qwen 2.5 Coder**: Automation and workflow generation
