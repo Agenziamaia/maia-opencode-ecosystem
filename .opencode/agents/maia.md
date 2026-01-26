@@ -632,5 +632,5 @@ When reporting status/fixes:
 |----------|--------|-------|
 | `zai-coding-plan` (GLM-4.7) | maia, sisyphus, coder, ops, reviewer | Core execution |
 | `google` (Gemini 2.5 Pro) | researcher, maia_premium | Deep research |
-| `google` (Gemini 2.5 Flash) | researcher_fast, opencode, starter, librarian, vision, workflow | Fast intel + Vision + Automation |
-| `openrouter` (DeepSeek R1-0528) | giuzu | Strategic reasoning |
+| `google` (Gemini 2.5 Flash) | researcher_fast, opencode, starter, librarian, vision, workflow, giuzu | Fast intel + Vision + Reasoning |
+

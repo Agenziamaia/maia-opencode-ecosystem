@@ -147,7 +147,7 @@
     },
     "giuzu": {
       "description": "Reasoning Clone.",
-      "model": "openrouter/deepseek/deepseek-r1-0528:free",
+      "model": "google/gemini-2.5-flash",
       "mode": "subagent",
       "tools": {
         "read": true,
