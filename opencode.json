@@ -8,6 +8,9 @@
     "write": "allow",
     "webfetch": "allow"
   },
+  "plugin": [
+    "oh-my-opencode"
+  ],
   "provider": {
     "zai-coding-plan": {
       "npm": "@ai-sdk/openai-compatible",
@@ -76,7 +79,7 @@
         "glob": true
       }
     },
-    "sisyphus": {
+    "project_manager": {
       "description": "PM - Reports to MAIA.",
       "model": "zai-coding-plan/glm-4.7",
       "mode": "subagent",
