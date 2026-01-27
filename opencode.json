@@ -79,8 +79,8 @@
         "glob": true
       }
     },
-    "project_manager": {
-      "description": "PM - Reports to MAIA.",
+    "sisyphus_pm": {
+      "description": "Project Manager - Reports to MAIA.",
       "model": "zai-coding-plan/glm-4.7",
       "mode": "subagent",
       "tools": {
