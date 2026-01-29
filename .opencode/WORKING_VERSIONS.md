@@ -4,69 +4,47 @@ This file tracks tested configurations that are known to work.
 
 ---
 
-## Snapshot: 2026-01-29 15:13 - "DUAL-ORCHESTRATION VERIFIED"
+## Snapshot: 2026-01-29 15:43 - "OPTIMIZED DREAM TEAM"
 
-**Status**: ✅ VERIFIED - All 20 agents configured and synced.
+**Status**: ✅ VERIFIED - Model lineup optimized for niche capabilities.
 
-### Architecture
+### Team Architecture & Model Roster
 
-```
-USER
-  └─ @maia (Supreme Orchestrator - GLM-4.7)
-       │
-       ├─ @sisyphus (PM - GLM-4.7, commands his own team)
-       │    ├─ @prometheus (Planner - Gemini Flash)
-       │    ├─ @oracle (Architect/Debugger - GLM-4.7)
-       │    ├─ @explore (Fast Scanner - Gemini Flash)
-       │    ├─ @librarian (Docs Research - Gemini Flash)
-       │    ├─ @frontend (UI/UX - Gemini Flash)
-       │    └─ @sisyphus_junior (Code Executor - GLM-4.7)
-       │
-       ├─ @giuzu (Strategic Advisor - DeepSeek R1)
-       ├─ @researcher / @researcher_fast (Intel)
-       ├─ @coder (LSP Architect - shared, GLM-4.7)
-       ├─ @ops (Infra - shared, GLM-4.7)
-       ├─ @reviewer (Quality Gate - shared, Big Pickle)
-       ├─ @github (GitHub Expert - GLM-4.7)
-       └─ @maia_premium (Supreme Arbiter - Gemini Pro)
-```
+| Agent | Role | Model | Why? |
+|-------|------|-------|------|
+| **@maia** | Supreme Orchestrator | **GLM-4.7** | Core reasoning, paid reliability |
+| **@sisyphus** | Project Manager | **GLM-4.7** | Task decomposition, reliability |
+| **@coder** | Architect/LSP | **GLM-4.7** | Precision coding |
+| **@ops** | Infrastructure | **GLM-4.7** | Precision ops commands |
+| **@reviewer** | Quality Gate | **Big Pickle** | Logic auditing |
+| **@giuzu** | Strategic Advisor | **DeepSeek R1** | Deep reasoning & strategy |
+| **@prometheus** | Planner | **DeepSeek R1** | Planning requires deep thinking |
+| **@workflow** | Auto Architect | **GLM-4.7** | JSON precision for n8n/Flowise |
+| **@frontend** | UI/UX Engineer | **GLM-4.7** | Complex React/Tailwind logic |
+| **@oracle** | Debugger | **GLM-4.7** | Deep system analysis |
+| **@sisyphus_junior** | Executor | **GLM-4.7** | Strict code execution |
+| **@github** | GitHub Expert | **GLM-4.7** | Git operations |
+| **@researcher** | Fast Intel | **Gemini Flash** | Speed & volume |
+| **@researcher_deep** | Deep Intel | **Gemini Pro** | 2M context for deep analysis |
+| **@maia_premium** | Supreme Arbiter | **Gemini Pro** | Complex decisions |
+| **@vision** | Visual Analyst | **Gemini 2.0** | Native multimodal |
+| **@explore** | Fast Scanner | **Gemini Flash** | Speed |
+| **@librarian** | Context Curator | **Gemini Flash** | Speed |
+| **@starter** | Bootstrapper | **Gemini Flash** | Speed |
+| **@opencode** | Meta Manager | **Gemini Flash** | Speed |
 
-### Model Distribution
+### Summary
+- **9x GLM-4.7** (Core & Coding)
+- **7x Gemini Flash** (Fast Utility)
+- **2x Gemini Pro** (Deep Context)
+- **2x DeepSeek R1** (Strategic Reasoning)
+- **1x Big Pickle** (Reviewer)
+- **1x Gemini 2.0 Flash** (Vision)
 
-| Model | Count | Agents |
-|-------|-------|--------|
-| GLM-4.7 | 7 | maia, sisyphus, coder, ops, oracle, sisyphus_junior, github |
-| Gemini 2.5 Flash | 7 | researcher_fast, opencode, starter, librarian, prometheus, explore, frontend |
-| Gemini 2.5 Pro | 2 | researcher, maia_premium |
-| Gemini 2.0 Flash | 1 | vision |
-| Big Pickle | 1 | reviewer |
-| DeepSeek R1 | 1 | giuzu |
-| Qwen Coder | 1 | workflow |
-
-### Files Synced
-
-- ✅ `opencode.json` - 20 agents
-- ✅ `.opencode/agents/*.md` - All 20 have MD files
-- ✅ `~/.config/opencode/opencode.json` - Global synced
-- ✅ `.opencode/oh-my-opencode.json` - Plugin override active
-- ✅ Git - Clean, pushed to origin/main
-
-### Health Check Results
-
-- ✅ OK: 16 agents (reliable providers)
-- ⏳ Slow: 2 agents (Gemini Pro models)
-- ⚠️ Risky: 2 agents (OpenRouter free tier)
-
----
-
-## Previous Snapshots
-
-### 2026-01-29 13:46 - "Verified Orchestration"
-- Fixed MAIA override from Big Pickle to GLM-4.7
-- 14 agents configured
-
-### 2026-01-29 13:36 - "Almost Working"
-- Initial tested config before hierarchy changes
+### Health
+- ✅ **16 OK** (paid/fast models)
+- ⏳ **2 Slow** (Deep context models)
+- ⚠️ **2 Risky** (Reasoning models - free tier, but functional)
 
 ---
 
@@ -74,7 +52,7 @@ USER
 
 ```bash
 # Restore from git
-git checkout db27985 -- opencode.json
+git checkout 86b71d8 -- opencode.json
 
 # Re-sync global
 cp opencode.json ~/.config/opencode/opencode.json

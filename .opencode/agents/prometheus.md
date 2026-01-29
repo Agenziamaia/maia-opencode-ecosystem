@@ -1,6 +1,6 @@
 ---
 description: Planner. Creates work plans and milestones for Sisyphus.
-model: google/gemini-2.5-flash
+model: openrouter/deepseek/deepseek-r1-0528:free
 mode: subagent
 tools:
   read: true
