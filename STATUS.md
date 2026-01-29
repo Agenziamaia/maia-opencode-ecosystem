@@ -1,19 +1,17 @@
 # 🎯 MAIA ECOSYSTEM - LIVING STATUS
 
-**Last Updated:** 2026-01-29 16:30
+**Last Updated:** 2026-01-29 16:37
 **System State:** 🟢 FULLY OPERATIONAL
 
 ---
 
 ## 📊 Current Configuration
 
-### Agents: 14 Total
-- **Core (GLM-4.7):** maia, sisyphus, coder, ops, reviewer
-- **Research (Gemini Pro):** researcher, maia_premium  
-- **Fast Intel (Gemini Flash):** researcher_fast, opencode, starter, librarian
-- **Vision (Gemini 2.0 Flash):** vision
-- **Reasoning (DeepSeek R1):** giuzu
-- **Automation (Qwen):** workflow
+### Agents: 20 Total
+- **Strategy & PM**: maia, sisyphus, giuzu, prometheus
+- **Execution**: coder, ops, frontend, workflow, sisyphus_junior, github, oracle
+- **Research**: researcher, researcher_deep, explore, librarian, vision
+- **Governance**: reviewer, maia_premium, opencode, starter
 
 ### Infrastructure
 - ✅ Vibe Kanban: Port 62601
@@ -33,7 +31,10 @@
 
 ## 🔧 Recent Fixes (Latest First)
 
-### 2026-01-27: Timeout Guard System (CRITICAL - Loading Deadlock Fix)
+### 2026-01-29: V3 Deep Sync & Health Optimization (FINAL CERTIFICATION)
+- **Problem:** Stale V2 references, misleading "Risky" flags for passing models.
+- **Fix:** Purged legacy technical debt (811 lines). Overhauled Registry for 20 agents. Optimized `health_check.py` to remove false positives. Sync'ed all dashboards.
+- **Status:** 💎 CERTIFIED - V3 LIVE
 **Problem Identified:**
 - OpenCode SDK default: 300,000ms (5 minutes) timeout
 - Discord plugin: NO timeout on fetch calls

@@ -28,17 +28,20 @@ npm run init
 
 ---
 
-## ⚡ The MAIA Droids Ecosystem
+## ⚡ The MAIA "Dream Team" (V3)
 
-We are a God-Tier multi-agent development system with specialized AI droids:
+We are a 20-agent engine optimized for strategy, execution, and research:
 
-| Droid | Role | Model | Strength |
-| :--- | :--- | :--- | :--- |
-| **@MAIA** | Orchestrator | GPT-4o | Strategic planning, delegation, vision |
-| **@Coder** | Architect | GLM-4 | Code synthesis, refactoring, logic |
-| **@Ops** | Infrastructure | GLM-4 | Docker, CI/CD, deployments |
-| **@Researcher** | Analyst | Gemini 1.5 Pro | Deep research, pattern recognition |
-| **@Reviewer** | Quality Gate | Claude 3.5 Sonnet | Code quality, security, testing |
+| Category | Headliner | Role |
+| :--- | :--- | :--- |
+| **Strategy** | **@MAIA** | Supreme Orchestrator (GLM-4.7) |
+| **PM** | **@Sisyphus** | Project Manager (GLM-4.7) |
+| **Logic** | **@Giuzu** | Strategic Advisor (DeepSeek R1) |
+| **Code** | **@Coder** | Lead Architect (GLM-4.7) |
+| **Quality** | **@Reviewer** | Quality Gate (Big Pickle) |
+| **Research** | **@Researcher** | Intel lead (Gemini Pro/Flash) |
+
+*Total: 20 Specialized agents registered in [opencode.json](file:///Users/g/Desktop/MAIA%20opencode/opencode.json).* 
 
 ---
 

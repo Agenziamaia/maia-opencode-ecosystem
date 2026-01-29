@@ -1,4 +1,5 @@
 # Technology Stack & Preferences
+**Version:** 3.0.0 (The Dream Team - 20 Agents)
 
 ## Core Philosophy
 The MAIA ecosystem is **STACK-AGNOSTIC**. Agents adapt to the project reality, not the other way around.
