@@ -148,27 +148,29 @@
       }
     },
     "giuzu": {
-      "description": "Strategic Clone.",
-      "model": "google/gemini-2.5-flash",
+      "description": "Reasoning Clone.",
+      "model": "openrouter/deepseek/deepseek-r1:free",
       "mode": "subagent",
       "tools": {
         "read": true,
         "write": true,
-        "session": true
+        "session": true,
+        "skill": true
       }
     },
     "vision": {
       "description": "Native Vision.",
-      "model": "google/gemini-2.5-flash",
+      "model": "google/gemini-2.0-flash",
       "mode": "subagent",
       "tools": {
         "read": true,
-        "webfetch": true
+        "webfetch": true,
+        "session": true
       }
     },
     "reviewer": {
       "description": "Logic Audit.",
-      "model": "zai-coding-plan/glm-4.7",
+      "model": "opencode/big-pickle",
       "mode": "subagent",
       "tools": {
         "read": true,
@@ -179,12 +181,13 @@
     },
     "workflow": {
       "description": "Automations.",
-      "model": "google/gemini-2.5-flash",
+      "model": "openrouter/qwen/qwen-2.5-coder-32b-instruct",
       "mode": "subagent",
       "tools": {
         "read": true,
         "write": true,
-        "bash": true
+        "bash": true,
+        "skill": true
       }
     },
     "opencode": {
@@ -223,7 +226,7 @@
     },
     "maia_premium": {
       "description": "Supreme Arbiter.",
-      "model": "zai-coding-plan/glm-4.7",
+      "model": "google/gemini-2.5-pro",
       "mode": "subagent",
       "tools": {
         "read": true,
