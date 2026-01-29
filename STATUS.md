@@ -48,6 +48,12 @@
 - Agent preferences had 10s fallback but wasn't used for main ops
 
 **Fixes Implemented:**
+### 2026-01-30: Ecosystem Deep Scan & Optimization
+- **Master Catalog**: Created `DOCS/MASTER_CATALOG.md` (SSOT). Audited 24 skills, 18 scripts.
+- **Protocol Fix**: Updated `/init` (WAKEUP.sh) to **actively fetch** Vibe Kanban tasks.
+- **Giuzu Brain**: Injected "Ecosystem Intelligence" (Tool awareness).
+- **Cleanup**: Consolidated `TOOLS.md` -> Symlink to Master Catalog.
+
 ### 2026-01-29: God Mode Browsing (MAJOR UPGRADE)
 - **Problem:** Agents were "blind" (no search) or required expensive tools.
 - **Fix:** Deployed `browser-use` MCP server (Python 3.14/uv).

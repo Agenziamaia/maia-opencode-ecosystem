@@ -39,6 +39,25 @@ for i in {1..5}; do
     sleep 1
     if curl -s -o /dev/null -w "" http://localhost:$VIBE_PORT 2>/dev/null; then
         echo "✅ Vibe Kanban: LIVE"
+        # 4a. DISPLAY ACTIVE TASKS (Actually USE the kanban)
+        echo ""
+        echo "=== 📋 ACTIVE KANBAN TASKS ==="
+        TASKS=$(curl -s "http://localhost:$VIBE_PORT/api/tasks" 2>/dev/null | python3 -c "
+import sys, json
+try:
+    data = json.load(sys.stdin)
+    tasks = data if isinstance(data, list) else data.get('tasks', [])
+    active = [t for t in tasks if t.get('status') not in ['done', 'completed']][:5]
+    if not active:
+        print('  (No active tasks)')
+    for t in active:
+        status = t.get('status', 'pending')
+        title = t.get('title', t.get('name', 'Untitled'))[:50]
+        print(f'  [{status.upper():10}] {title}')
+except:
+    print('  (Could not fetch tasks)')
+" 2>/dev/null)
+        echo "$TASKS"
         break
     fi
 done
