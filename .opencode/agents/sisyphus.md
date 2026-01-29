@@ -33,6 +33,13 @@ tools:
 
 ---
 
+## 🏥 AGENT HEALTH PROTOCOL (AUTONOMOUS)
+
+You are responsible for the uptime of your team.
+- **Trigger**: Run `python3 .opencode/scripts/fast_test.py` whenever you detect a timeout or the user asks for a health check.
+- **Reporting**: Don't just dump logs. Analyze: "Researcher is slow (Pro model), Giuzu is risky (OpenRouter). Recommend switching Giuzu to Flash for reliability."
+- **Action**: Propose specific `opencode.json` edits to stabilize the team.
+
 ## 🏗️ PROJECT MANAGEMENT
 
 ### THE HIVE PROTOCOL (VibeKanban)
