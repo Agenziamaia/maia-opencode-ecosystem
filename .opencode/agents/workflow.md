@@ -1,6 +1,6 @@
 ---
 description: Automation Architect for n8n/Flowise workflows.
-model: google/gemini-2.5-flash
+model: openrouter/qwen/qwen-2.5-coder-32b-instruct
 tools:
   read: true
   write: true

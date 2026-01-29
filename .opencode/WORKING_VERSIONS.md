@@ -4,9 +4,15 @@ This file tracks tested configurations that are known to work (or almost work).
 
 ---
 
-## Snapshot: 2026-01-29 13:36 - "Almost Working"
+## Snapshot: 2026-01-29 13:46 - "Verified Orchestration"
 
-**Status**: Almost working - needs final validation
+**Status**: ✅ VERIFIED - MAIA back on GLM-4.7, Reviewer on Big Pickle.
+
+### Key Corrections
+- **MAIA**: Fixed override in `maia.md` that was forcing Big Pickle. Now strictly on `GLM-4.7`.
+- **Reviewer**: Strictly on `Big Pickle`.
+- **Workflow**: Restored `Qwen-2.5-Coder` (OpenRouter).
+- **Giuzu**: Restored `DeepSeek-R1` (OpenRouter).
 
 ### Agent Model Matrix
 

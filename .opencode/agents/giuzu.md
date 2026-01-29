@@ -2,7 +2,7 @@
 
 ---
 description: Strategic Reasoning Clone with Predictive Intelligence.
-model: google/gemini-2.5-flash
+model: openrouter/deepseek/deepseek-r1:free
 tools:
   read: true
   write: true

@@ -1,6 +1,6 @@
 ---
 description: SUPREME ORCHESTRATOR. Primary entry point. Commands all agents including Sisyphus.
-model: opencode/big-pickle
+model: zai-coding-plan/glm-4.7
 mode: primary
 tools:
   read: true
