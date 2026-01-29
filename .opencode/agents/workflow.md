@@ -1,6 +1,6 @@
 ---
 description: Automation Architect for n8n/Flowise workflows.
-model: openrouter/meta-llama/llama-3.3-70b-instruct:free
+model: zai-coding-plan/glm-4.7
 tools:
   read: true
   write: true

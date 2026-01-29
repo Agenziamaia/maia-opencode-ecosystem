@@ -181,7 +181,7 @@
     },
     "workflow": {
       "description": "Automations.",
-      "model": "openrouter/meta-llama/llama-3.3-70b-instruct:free",
+      "model": "zai-coding-plan/glm-4.7",
       "mode": "subagent",
       "tools": {
         "read": true,
