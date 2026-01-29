@@ -230,8 +230,80 @@
       "mode": "subagent",
       "tools": {
         "read": true,
+        "write": true,
+        "edit": true,
+        "bash": true,
         "session": true,
-        "write": true
+        "skill": true,
+        "grep": true,
+        "glob": true,
+        "todoread": true,
+        "todowrite": true,
+        "vibekanban_*": true
+      }
+    },
+    "prometheus": {
+      "description": "Planner. Creates work plans and milestones.",
+      "model": "google/gemini-2.5-flash",
+      "mode": "subagent",
+      "tools": {
+        "read": true,
+        "grep": true,
+        "glob": true,
+        "skill": true,
+        "todowrite": true,
+        "todoread": true
+      }
+    },
+    "oracle": {
+      "description": "Architect & Debugger. Deep system analysis.",
+      "model": "zai-coding-plan/glm-4.7",
+      "mode": "subagent",
+      "tools": {
+        "read": true,
+        "grep": true,
+        "glob": true,
+        "lsp": true,
+        "bash": true,
+        "skill": true
+      }
+    },
+    "explore": {
+      "description": "Fast Scanner. Read-only codebase exploration.",
+      "model": "google/gemini-2.5-flash",
+      "mode": "subagent",
+      "tools": {
+        "read": true,
+        "grep": true,
+        "glob": true,
+        "list": true
+      }
+    },
+    "frontend": {
+      "description": "UI/UX Engineer. Frontend development specialist.",
+      "model": "google/gemini-2.5-flash",
+      "mode": "subagent",
+      "tools": {
+        "read": true,
+        "write": true,
+        "edit": true,
+        "bash": true,
+        "skill": true,
+        "webfetch": true
+      }
+    },
+    "sisyphus_junior": {
+      "description": "Code Executor.",
+      "model": "zai-coding-plan/glm-4.7",
+      "mode": "subagent",
+      "tools": {
+        "read": true,
+        "write": true,
+        "edit": true,
+        "bash": true,
+        "lsp": true,
+        "skill": true,
+        "git_*": true
       }
     }
   }
