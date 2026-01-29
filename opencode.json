@@ -1,6 +1,6 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  "default_agent": "sisyphus",
+  "default_agent": "maia",
   "model": "zai-coding-plan/glm-4.7",
   "permission": {
     "edit": "allow",
@@ -63,8 +63,8 @@
     }
   },
   "agent": {
-    "sisyphus": {
-      "description": "SUPREME ORCHESTRATOR (MAIA).",
+    "maia": {
+      "description": "SUPREME ORCHESTRATOR.",
       "model": "zai-coding-plan/glm-4.7",
       "mode": "primary",
       "tools": {
@@ -77,6 +77,21 @@
         "skill": true,
         "grep": true,
         "glob": true,
+        "todoread": true,
+        "todowrite": true
+      }
+    },
+    "sisyphus": {
+      "description": "Project Manager.",
+      "model": "zai-coding-plan/glm-4.7",
+      "mode": "subagent",
+      "tools": {
+        "vibekanban_*": true,
+        "session": true,
+        "read": true,
+        "write": true,
+        "grep": true,
+        "skill": true,
         "todoread": true,
         "todowrite": true
       }
@@ -206,7 +221,7 @@
         "glob": true
       }
     },
-    "arbiter": {
+    "maia_premium": {
       "description": "Supreme Arbiter.",
       "model": "zai-coding-plan/glm-4.7",
       "mode": "subagent",

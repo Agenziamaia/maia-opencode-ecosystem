@@ -1,0 +1,17 @@
+{
+    // oh-my-opencode configuration
+    // Override default agent to MAIA instead of Sisyphus
+    "default_agent": "maia",
+    "agents": {
+        "sisyphus": {
+            // Sisyphus is now a PM subagent, not the orchestrator
+            "role": "project_manager",
+            "model": "zai-coding-plan/glm-4.7"
+        },
+        "maia": {
+            // MAIA is the Supreme Orchestrator
+            "role": "orchestrator",
+            "model": "zai-coding-plan/glm-4.7"
+        }
+    }
+}
