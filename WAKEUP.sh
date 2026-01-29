@@ -29,8 +29,20 @@ echo "🧠 Verifying Local Brain..."
 if [ -d ".opencode" ]; then
     AGENT_COUNT=$(ls .opencode/agents/*.md 2>/dev/null | grep -v "README" | wc -l)
     echo "✅ Local Brain: ACTIVE ($AGENT_COUNT agents loaded)"
-else
     echo "❌ CRITICAL: .opencode/ directory missing! System lobotomized."
+fi
+
+# 2b. BROWSER HYDRATION (Auto-Install)
+# Ensures 'browser-use' works on new machines (Linux/VPS) without manual setup.
+if [ -d ".opencode/mcp-browser" ]; then
+    echo "🦅 Verifying Browser Agent..."
+    if [ ! -d ".opencode/mcp-browser/.venv" ]; then
+        echo "   🛠️  Hydrating Browser Engine (First Run found)..."
+        (cd .opencode/mcp-browser && uv sync) >/dev/null 2>&1
+        echo "   ✅ Browser Engine Installed."
+    else
+        echo "   ✅ Browser Engine Ready."
+    fi
 fi
 
 # 3. WAITING FOR ENGINE
