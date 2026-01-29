@@ -1,6 +1,6 @@
 ---
 description: Automation Architect for n8n/Flowise workflows.
-model: openrouter/qwen/qwen-2.5-coder-32b-instruct
+model: openrouter/meta-llama/llama-3.3-70b-instruct:free
 tools:
   read: true
   write: true

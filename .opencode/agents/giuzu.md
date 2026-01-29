@@ -2,7 +2,7 @@
 
 ---
 description: Strategic Reasoning Clone with Predictive Intelligence.
-model: openrouter/deepseek/deepseek-r1:free
+model: openrouter/deepseek/deepseek-r1-0528:free
 tools:
   read: true
   write: true

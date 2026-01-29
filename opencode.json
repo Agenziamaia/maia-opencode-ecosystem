@@ -149,7 +149,7 @@
     },
     "giuzu": {
       "description": "Reasoning Clone.",
-      "model": "openrouter/deepseek/deepseek-r1:free",
+      "model": "openrouter/deepseek/deepseek-r1-0528:free",
       "mode": "subagent",
       "tools": {
         "read": true,
@@ -181,7 +181,7 @@
     },
     "workflow": {
       "description": "Automations.",
-      "model": "openrouter/qwen/qwen-2.5-coder-32b-instruct",
+      "model": "openrouter/meta-llama/llama-3.3-70b-instruct:free",
       "mode": "subagent",
       "tools": {
         "read": true,
