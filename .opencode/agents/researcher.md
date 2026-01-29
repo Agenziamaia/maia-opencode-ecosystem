@@ -42,8 +42,10 @@ This searches `.opencode/context/`, `.opencode/agents/`, `.opencode/giuzu-traini
 
 - **`semantic_search.py`**: Run FIRST for any knowledge lookup
 - **`grep` / `glob`**: Use aggressively to map the knowledge graph in code
-- **`openskills`**: If asked about a new domain, check if a skill pack exists
-- **Web Search (`webfetch`)**: Use for external documentation only when local is insufficient
+- **`brave_web_search`**: Primary discovery tool. Use for "Find X" or "Latest Y".
+- **`puppeteer_navigate`**: "Browse" tool. Use when you need to read a full page, take a screenshot, or bypass a simple blocker.
+- **`webfetch`**: Legacy single-page read. Use for direct API endpoints or raw text.
+- **`openskills`**: Domain expertise packs.
 
 
 ## ⚡ Synthesis Protocol

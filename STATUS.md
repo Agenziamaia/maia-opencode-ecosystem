@@ -48,7 +48,11 @@
 - Agent preferences had 10s fallback but wasn't used for main ops
 
 **Fixes Implemented:**
-- `opencode.json` - Added comprehensive timeout section:
+### 2026-01-29: God Mode Browsing (MAJOR UPGRADE)
+- **Problem:** Agents were "blind" (no search) or required expensive tools.
+- **Fix:** Deployed `browser-use` MCP server (Python 3.14/uv).
+- **Capability:** Full autonomous browsing (Navigation, Clicking, Input) via `browse_web`.
+- **Status:** 🦅 LIVE & HUNTING
   - Provider timeouts (ZAI: 60s, Google: 30s, OpenRouter: 45s)
   - Agent timeouts (health: 30s, code: 3m, research: 2m)
   - Network timeouts (fetch: 8s, Discord: 5s, webfetch: 10s)

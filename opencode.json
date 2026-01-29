@@ -60,6 +60,15 @@
         "vibe-kanban@latest",
         "--mcp"
       ]
+    },
+    "browser-use": {
+      "type": "local",
+      "command": [
+        "/Users/g/.local/bin/uv",
+        "run",
+        "server.py"
+      ],
+      "cwd": "/Users/g/Desktop/MAIA opencode/.opencode/mcp-browser"
     }
   },
   "agent": {
@@ -70,6 +79,7 @@
       "tools": {
         "vibekanban_*": true,
         "discord_*": true,
+        "browse_web": true,
         "session": true,
         "read": true,
         "write": true,
@@ -131,6 +141,7 @@
       "mode": "subagent",
       "tools": {
         "webfetch": true,
+        "browse_web": true,
         "read": true,
         "grep": true,
         "skill": true,
@@ -143,6 +154,7 @@
       "mode": "subagent",
       "tools": {
         "webfetch": true,
+        "browse_web": true,
         "read": true,
         "grep": true,
         "glob": true,
@@ -157,7 +169,8 @@
         "read": true,
         "write": true,
         "session": true,
-        "skill": true
+        "skill": true,
+        "browse_web": true
       }
     },
     "vision": {
@@ -167,6 +180,7 @@
       "tools": {
         "read": true,
         "webfetch": true,
+        "browse_web": true,
         "session": true
       }
     },

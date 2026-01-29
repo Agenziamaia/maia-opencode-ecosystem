@@ -47,7 +47,7 @@ done
 echo ""
 echo "=== DREAM TEAM ROSTER (20 AGENTS) ==="
 echo "👑 GLM-4.7 (PAID)      → maia, sisyphus, coder, ops, oracle, sisyphus_junior, workflow, frontend, github"
-echo "⚡ GEMINI FLASH (FAST) → researcher, opencode, starter, librarian, prometheus, explore, librarian"
+echo "⚡ GEMINI FLASH (FAST) → researcher, opencode, starter, librarian, explore"
 echo "🧠 DEEPSEEK R1 (THINK) → giuzu, prometheus"
 echo "📚 GEMINI PRO (DEEP)   → researcher_deep, maia_premium"
 echo "🥒 BIG PICKLE          → reviewer"
