@@ -320,5 +320,42 @@
         "git_*": true
       }
     }
+  },
+  "command": {
+    "init": {
+      "description": "WAKEUP GOD MODE. Initialize the Dream Team.",
+      "template": "Execute WAKEUP.sh protocol. Verify all 20 agents. Report status.",
+      "agent": "maia"
+    },
+    "plan": {
+      "description": "Create a Project Plan",
+      "template": "Strategic Plan: \"$ARGUMENTS\". Delegate to @sisyphus + @prometheus.",
+      "agent": "maia"
+    },
+    "ops": {
+      "description": "Infrastructure Task",
+      "template": "Infra Task: \"$ARGUMENTS\". Execute with @ops.",
+      "agent": "ops"
+    },
+    "research": {
+      "description": "Deep Research",
+      "template": "Context: \"$ARGUMENTS\". Use @researcher_deep (Pro) for analysis.",
+      "agent": "researcher_deep"
+    },
+    "audit": {
+      "description": "Codebase Audit",
+      "template": "Audit the code. Use @reviewer (Big Pickle) for logic check.",
+      "agent": "reviewer"
+    },
+    "clone": {
+      "description": "Consult Giuzu",
+      "template": "Strategic Consult: \"$ARGUMENTS\". Use @giuzu (DeepSeek R1).",
+      "agent": "giuzu"
+    },
+    "workflow": {
+      "description": "Automation Architect",
+      "template": "Workflow Task: \"$ARGUMENTS\". Use @workflow (GLM-4.7) for n8n/Flowise.",
+      "agent": "workflow"
+    }
   }
 }

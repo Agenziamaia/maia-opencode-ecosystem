@@ -21,7 +21,7 @@ rsync -av --delete \
     "$TARGET_LAYER0/.opencode/agents/" \
     --exclude="project_specific_*"
 
-# B. Giuzu's Consciousness (The V2 Stack)
+# B. Giuzu's Consciousness (The V3 Stack)
 rsync -av --delete \
     "$SOURCE_ROOT/.opencode/giuzu-training/" \
     "$TARGET_LAYER0/.opencode/giuzu-training/"

@@ -1,24 +1,46 @@
 # MAIA Droid Registry
 
-## Agent Roster (11 Agents) - God-Tier Lineup
+## 🧠 The Brain Trust (Strategy & PM)
+| Droid | Role | Model | Provider |
+| :--- | :--- | :--- | :--- |
+| **@maia** | Supreme Orchestrator | GLM-4.7 | Z.ai (Paid) |
+| **@sisyphus** | Project Manager | GLM-4.7 | Z.ai (Paid) |
+| **@giuzu** | Strategic Advisor | DeepSeek R1 | OpenRouter (Free) |
+| **@prometheus** | Task Planner | DeepSeek R1 | OpenRouter (Free) |
 
-| Droid | Role | Model | Provider | Cost |
-| :--- | :--- | :--- | :--- | :--- |
-| **@maia** | Orchestrator | GLM-4.7 | Z.AI | 💚 Prepaid |
-| **@maia_premium** | Heavy Logic | GPT-5.2 | OpenAI | 🔴 Premium |
-| **@coder** | Architect | GLM-4.7 | Z.AI | 💚 Prepaid |
-| **@ops** | Infrastructure | GLM-4.7 | Z.AI | 💚 Prepaid |
-| **@researcher** | Deep Research | Gemini 2.5 Pro | Google | 🟡 Standard |
-| **@researcher_fast** | Fast Research | Gemini 2.5 Flash | Google | 💚 Low |
-| **@reviewer** | Code Audit | **Hermes 3 405B** | OpenRouter | 💚 Free (God-Tier) |
-| **@workflow** | Automation | **Qwen 2.5 Coder** | OpenRouter | 💚 Free (SOTA Code) |
-| **@opencode** | Meta-Config | GLM-4.7 | Z.AI | 💚 Prepaid |
-| **@starter** | Wizard | Gemini 2.5 Flash | Google | 💚 Low |
-| **@giuzu** | Clone | **v3 (God)** | OpenRouter | Unlimited |
+## 🛠️ The Builders (Execution)
+| Droid | Role | Model | Provider |
+| :--- | :--- | :--- | :--- |
+| **@coder** | Architect/LSP | GLM-4.7 | Z.ai (Paid) |
+| **@ops** | Infrastructure | GLM-4.7 | Z.ai (Paid) |
+| **@frontend** | UI/UX Engineer | GLM-4.7 | Z.ai (Paid) |
+| **@workflow** | Auto Architect | GLM-4.7 | Z.ai (Paid) |
+| **@sisyphus_junior** | Code Executor | GLM-4.7 | Z.ai (Paid) |
+| **@github** | GitHub Expert | GLM-4.7 | Z.ai (Paid) |
+| **@oracle** | Debugger | GLM-4.7 | Z.ai (Paid) |
 
-## Delegation Rules
-1. **@maia** is the default planner (GLM-4.7).
-2. **@reviewer** MUST sign off on critical changes (Llama 405B).
-3. **@workflow** handles all n8n/Flowise logic (Kimi K2).
-4. **@maia_premium** is for "impossible" problems.
-5. **@giuzu** is for when you need Giulio's intuition.
+## 🔍 The Intel (Research & Data)
+| Droid | Role | Model | Provider |
+| :--- | :--- | :--- | :--- |
+| **@researcher** | Fast Intel | Gemini Flash | Google |
+| **@researcher_deep** | Deep Research | Gemini Pro | Google |
+| **@explore** | Fast Scanner | Gemini Flash | Google |
+| **@librarian** | Context Curator | Gemini Flash | Google |
+| **@vision** | Visual Analyst | Gemini 2.0 | Google |
+
+## 🛡️ The Utility & Governance
+| Droid | Role | Model | Provider |
+| :--- | :--- | : :--- | :--- |
+| **@reviewer** | Quality Gate | Big Pickle | Custom |
+| **@maia_premium** | Supreme Arbiter | Gemini Pro | Google |
+| **@opencode** | Meta Manager | Gemini Flash | Google |
+| **@starter** | Bootstrapper | Gemini Flash | Google |
+
+---
+
+## 🏛️ Chain of Command
+1. **User** → **@maia** (Directs entire system)
+2. **@maia** → **@sisyphus** (Projects) or **@giuzu** (Strategy)
+3. **@sisyphus** → Team (@prometheus, @oracle, @frontend, @sisyphus_junior)
+4. **@ops / @coder / @workflow** → Shared resources for specific execution tasks.
+

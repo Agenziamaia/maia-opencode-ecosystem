@@ -16,7 +16,7 @@
 
 ### Current Model Assignment
 - **DeepSeek R1 (Free)** via OpenRouter
-- Model ID: `openrouter/deepseek/deepseek-r1:free`
+- Model ID: `openrouter/deepseek/deepseek-r1-0528:free`
 - Chosen for: Deep reasoning, strategic thinking
 
 ### Current Role

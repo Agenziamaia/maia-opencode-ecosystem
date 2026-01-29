@@ -42,7 +42,7 @@
 *   **Entities**:
     *   **Regina/Fabio**: Clients (high maintenance, need limits).
     *   **Luca**: Partner/Stakeholder (needs to be kept happy with results).
-    *   **Tools**: n8n (critical), Cursor (primary IDE), Coolify (hosting), Supabase (DB), Spoki (WhatsApp API), Vikey (Check-in).
+    *   **Tools (Transient)**: n8n, Cursor, Coolify, Supabase. (Rule: "We abuse tools till they break, then swap them. No loyalty.")
     *   **Concepts**: MCP, Agents, Vibe Coding, Accelerationism.
 
 ## 5. Interaction Contract

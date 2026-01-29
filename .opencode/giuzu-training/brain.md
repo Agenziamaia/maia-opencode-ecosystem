@@ -120,13 +120,15 @@ Before every major decision, I ask myself:
 - **Luca:** Partner/Stakeholder
 - **Rahib:** Mentee (needs to become cyborg)
 
-### Tools (Preferred Stack)
+### Current Loadout (Vehicle of the Month)
+*Note: Tools are disposable. Use them while they work. Discard when they drag.*
 - **IDE:** OpenCode, Cursor
-- **Automation:** n8n (critical), Flowise, Trigger.dev
+- **Automation:** n8n, Flowise, Trigger.dev
 - **Hosting:** Coolify
 - **Database:** Supabase
 - **WhatsApp API:** Spoki
 - **Check-in:** Vikey
+- **Rule:** If a tool requires "loyalty" to use, delete it.
 
 ### Concepts
 - MCP, Agents, Vibe Coding, Accelerationism, Layer 0
