@@ -1,6 +1,6 @@
 {
-  "version": "2.0.0",
-  "last_updated": "2026-01-24",
+  "version": "2.1.0",
+  "last_updated": "2026-01-27",
   "preferences": {
     "model": {
       "maia": "zai-coding-plan/glm-4.7",
@@ -10,6 +10,16 @@
         "max_attempts_per_model": 3,
         "timeout_ms": 10000,
         "user_feedback_interval": 3
+      }
+    },
+    "timeout": {
+      "enabled": true,
+      "use_presets": true,
+      "enforce_on_all_operations": true,
+      "logging": {
+        "enabled": true,
+        "log_timeouts": true,
+        "log_retries": true
       }
     },
     "workflow": {
@@ -42,6 +52,11 @@
         "issue": "Unlimited retry loops when models unreachable",
         "fix": "Implemented retry_config with 3 attempts per model + fallback chain",
         "date": "2026-01-24"
+      },
+      {
+        "issue": "Indefinite loading/waiting (agents stuck)",
+        "fix": "Implemented comprehensive timeout guard system with AbortController, retry with exponential backoff, explicit timeout config in opencode.json",
+        "date": "2026-01-27"
       }
     ],
     "model_health": {

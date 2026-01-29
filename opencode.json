@@ -1,6 +1,6 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  "default_agent": "maia",
+  "default_agent": "sisyphus",
   "model": "zai-coding-plan/glm-4.7",
   "permission": {
     "edit": "allow",
@@ -63,8 +63,8 @@
     }
   },
   "agent": {
-    "maia": {
-      "description": "SUPREME - Primary entry point.",
+    "sisyphus": {
+      "description": "SUPREME ORCHESTRATOR (MAIA).",
       "model": "zai-coding-plan/glm-4.7",
       "mode": "primary",
       "tools": {
@@ -76,20 +76,7 @@
         "bash": true,
         "skill": true,
         "grep": true,
-        "glob": true
-      }
-    },
-    "sisyphus_pm": {
-      "description": "Project Manager - Reports to MAIA.",
-      "model": "zai-coding-plan/glm-4.7",
-      "mode": "subagent",
-      "tools": {
-        "vibekanban_*": true,
-        "session": true,
-        "read": true,
-        "write": true,
-        "grep": true,
-        "skill": true,
+        "glob": true,
         "todoread": true,
         "todowrite": true
       }
@@ -146,7 +133,7 @@
       }
     },
     "giuzu": {
-      "description": "Reasoning Clone.",
+      "description": "Strategic Clone.",
       "model": "google/gemini-2.5-flash",
       "mode": "subagent",
       "tools": {
@@ -219,7 +206,7 @@
         "glob": true
       }
     },
-    "maia_premium": {
+    "arbiter": {
       "description": "Supreme Arbiter.",
       "model": "zai-coding-plan/glm-4.7",
       "mode": "subagent",

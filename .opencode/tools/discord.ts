@@ -24,6 +24,9 @@ export const DiscordPlugin: Plugin = async (ctx) => {
                     }
 
                     try {
+                        const controller = new AbortController();
+                        const timeoutId = setTimeout(() => controller.abort(), 5000);
+
                         const res = await fetch(`https://discord.com/api/v10/channels/${args.channel_id}/messages`, {
                             method: "POST",
                             headers: {
@@ -31,7 +34,10 @@ export const DiscordPlugin: Plugin = async (ctx) => {
                                 "Content-Type": "application/json",
                             },
                             body: JSON.stringify({ content: args.message.slice(0, 2000) }),
-                        })
+                            signal: controller.signal
+                        });
+
+                        clearTimeout(timeoutId);
 
                         if (res.ok) {
                             return `✅ Message sent to channel ${args.channel_id}`
@@ -40,6 +46,9 @@ export const DiscordPlugin: Plugin = async (ctx) => {
                             return `❌ Discord API Error: ${res.status} - ${JSON.stringify(err)}`
                         }
                     } catch (e) {
+                        if ((e as Error).name === 'AbortError') {
+                            return `❌ Timeout: Discord API request exceeded 5 seconds`;
+                        }
                         return `❌ Network Error: ${e}`
                     }
                 },
@@ -57,10 +66,16 @@ export const DiscordPlugin: Plugin = async (ctx) => {
                     }
 
                     try {
+                        const controller = new AbortController();
+                        const timeoutId = setTimeout(() => controller.abort(), 5000);
+
                         const limit = Math.min(args.limit || 10, 100)
                         const res = await fetch(`https://discord.com/api/v10/channels/${args.channel_id}/messages?limit=${limit}`, {
                             headers: { Authorization: `Bot ${token}` },
-                        })
+                            signal: controller.signal
+                        });
+
+                        clearTimeout(timeoutId);
 
                         if (!res.ok) {
                             const err = await res.json()
@@ -73,6 +88,9 @@ export const DiscordPlugin: Plugin = async (ctx) => {
                             .reverse()
                             .join("\n")
                     } catch (e) {
+                        if ((e as Error).name === 'AbortError') {
+                            return `❌ Timeout: Discord API request exceeded 5 seconds`;
+                        }
                         return `❌ Network Error: ${e}`
                     }
                 },
@@ -89,9 +107,15 @@ export const DiscordPlugin: Plugin = async (ctx) => {
                     }
 
                     try {
+                        const controller = new AbortController();
+                        const timeoutId = setTimeout(() => controller.abort(), 5000);
+
                         const res = await fetch(`https://discord.com/api/v10/guilds/${args.guild_id}/channels`, {
                             headers: { Authorization: `Bot ${token}` },
-                        })
+                            signal: controller.signal
+                        });
+
+                        clearTimeout(timeoutId);
 
                         if (!res.ok) {
                             const err = await res.json()
@@ -104,6 +128,9 @@ export const DiscordPlugin: Plugin = async (ctx) => {
                             .map((c) => `#${c.name} (ID: ${c.id})`)
                             .join("\n")
                     } catch (e) {
+                        if ((e as Error).name === 'AbortError') {
+                            return `❌ Timeout: Discord API request exceeded 5 seconds`;
+                        }
                         return `❌ Network Error: ${e}`
                     }
                 },

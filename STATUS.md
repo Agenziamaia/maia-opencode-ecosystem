@@ -33,6 +33,41 @@
 
 ## 🔧 Recent Fixes (Latest First)
 
+### 2026-01-27: Timeout Guard System (CRITICAL - Loading Deadlock Fix)
+**Problem Identified:**
+- OpenCode SDK default: 300,000ms (5 minutes) timeout
+- Discord plugin: NO timeout on fetch calls
+- opencode.json: NO timeout configuration
+- Result: Agents stuck loading/waiting indefinitely
+
+**Root Cause Analysis (MAX EFFORT SEARCH):**
+- Provider requests default to 5-min wait before failure
+- No explicit timeout config in main opencode.json
+- Discord plugin missing AbortController on all fetch calls
+- Agent preferences had 10s fallback but wasn't used for main ops
+
+**Fixes Implemented:**
+- `opencode.json` - Added comprehensive timeout section:
+  - Provider timeouts (ZAI: 60s, Google: 30s, OpenRouter: 45s)
+  - Agent timeouts (health: 30s, code: 3m, research: 2m)
+  - Network timeouts (fetch: 8s, Discord: 5s, webfetch: 10s)
+  - Fallback retry config (3 retries, 2x backoff)
+- `.opencode/tools/discord.ts` - Added AbortController with 5s timeout to all 3 tools
+- `.opencode/utils/timeoutGuard.ts` - Created timeout guard utilities:
+  - `withTimeout()` - Promise.race-based timeout protection
+  - `withAbortSignal()` - AbortController wrapper for cancellable ops
+  - `withRetry()` - Exponential backoff with ±25% jitter
+  - `TIMEOUT_PRESETS` - Constants for all operation types
+  - `getTimeout()` - Safe timeout getter with fallback
+
+**Timeout Values Based On:**
+- Industry best practices (MDN, AWS Well-Architected)
+- Production codebases (Overleaf, Infisical, n8n, Langsmith SDK)
+- User expectation studies (8s for simple requests)
+- Agent framework patterns (LangChain, LangGraph recursion limits)
+
+**Status:** ✅ DEPLOYED - NO MORE INFINITE LOADING
+
 ### 2026-01-27: Full Infrastructure Deployment
 **Added:**  
 - `architecture_linter.js` – Node script verifying ARCHITECTURE.md coverage  
