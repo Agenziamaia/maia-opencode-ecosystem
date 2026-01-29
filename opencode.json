@@ -305,6 +305,18 @@
         "skill": true,
         "git_*": true
       }
+    },
+    "github": {
+      "description": "GitHub Expert.",
+      "model": "zai-coding-plan/glm-4.7",
+      "mode": "subagent",
+      "tools": {
+        "read": true,
+        "grep": true,
+        "bash": true,
+        "webfetch": true,
+        "git_*": true
+      }
     }
   }
 }
