@@ -1,6 +1,6 @@
 ---
-description: THE ORACLE. God-Tier Context & Insight.
-model: google/gemini-2.5-pro
+description: Fast Intel. Default researcher using Gemini Flash.
+model: google/gemini-2.5-flash
 tools:
   write: false
   edit: false

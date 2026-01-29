@@ -126,8 +126,8 @@
       }
     },
     "researcher": {
-      "description": "Deep Intel.",
-      "model": "google/gemini-2.5-pro",
+      "description": "Fast Intel.",
+      "model": "google/gemini-2.5-flash",
       "mode": "subagent",
       "tools": {
         "webfetch": true,
@@ -137,13 +137,15 @@
         "glob": true
       }
     },
-    "researcher_fast": {
-      "description": "Flash Oracle.",
-      "model": "google/gemini-2.5-flash",
+    "researcher_deep": {
+      "description": "Deep Oracle.",
+      "model": "google/gemini-2.5-pro",
       "mode": "subagent",
       "tools": {
         "webfetch": true,
         "read": true,
+        "grep": true,
+        "glob": true,
         "skill": true
       }
     },
