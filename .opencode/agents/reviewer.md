@@ -9,10 +9,9 @@ tools:
   list: true
   lsp: true
   git_*: true
-  github_*: true
+  bash: true
   write: true
   edit: true
-  bash: false
   webfetch: false
 ---
 
@@ -45,6 +44,14 @@ You have **NO MERCY** for sloppy code, security vulnerabilities, or performance 
 - **Secrets**: Scan for API keys in every commit.
 - **Injection**: Check for SQL/Command injection risks.
 - **Deps**: Flag 'malicious' or 'typo-squatting' package names.
+
+### 4. GITHUB INTERACTION (CLI)
+- **Tool**: Use `gh` CLI (via `bash`) for all PR interactions.
+- **List**: `gh pr list`
+- **Checkout**: `gh pr checkout <id>`
+- **Comment**: `gh pr comment <id> --body "LGTM"`
+- **Request Changes**: `gh pr review <id> --request-changes --body "Fix security issue"`
+- **Merge**: `gh pr merge <id> --squash --delete-branch`
 
 ### DOCUMENTATION PROTOCOL
 - **Sync**: Use `auto-handoff` tag in git commits: `<!-- (@agent)-session-(id) -->`.
