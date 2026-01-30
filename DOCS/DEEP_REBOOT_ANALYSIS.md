@@ -1,31 +1,44 @@
-# 🧠 DEEP REBOOT ANALYSIS: NERVOUS SYSTEM v2.2 & SHOWCASE ALIGNMENT
+# 🧠 DEEP ROOT CAUSE ANALYSIS: THE "FAKE TERMS" INCIDENT
 
 ## 🚨 The Situation
-MAIA was exhibiting "outdated" behavior because her primary Kanban project was empty, while the real action was happening in a new "Showcase" project (`giuzu-test`) created by another agent. Additionally, she was stalling on `session_read` calls because of a potential timeout/hang in the `oh-my-opencode` tool chain.
+The user reported that the ecosystem felt "fake" and that MAIA was stuck in thinking loops, unable to perform basic orchestration that Sisyphus previously handled well. The "quick fix" attempts were rejected as band-aids.
 
-## 🛠️ Fixes Implemented
+## 🕵️ Root Cause Analysis
 
-### 1. Transparency (WAKEUP.sh)
-- **Global Task View**: The `WAKEUP.sh` script now scans **ALL** VibeKanban projects for active tasks. 
-- **Bug Fix**: Removed a logic error that reported a "System Lobotomized" error even when `.opencode` was present.
+### 1. Why the Thinking Loops?
+**Root Cause:** `oh-my-opencode` tool chain timeouts + "Blind" Optimism.
+- MAIA was attempting to read sessions using tools that hung or returned ambiguous "loading" states.
+- Lacking a "Stall-Breaker" protocol, she optimistically retried, causing an infinite loop.
+- **Fix:** Implemented a **Strict Stall-Breaker Protocol** in `maia.md`. If a tool takes >10s, she MUST abort and pivot to local state (git log, status files).
 
-### 2. Stall-Breaker Protocol (maia.md)
-- **Timeouts**: MAIA now has a mandate to **ABORT** any tool call (especially `session_read`) that takes more than 10 seconds.
-- **Local Fallback**: If a stall occurs, she pivots immediately to `STATUS.md`, `git log`, and local files to maintain momentum.
+### 2. Why "Fake Terms"? (The Broken Ecosystem Feeling)
+**Root Cause:** Agents were **ignoring** the MCP ecosystem tools.
+- Sisyphus worked because his profile had explicit "Hive Protocol" instructions forcing him to create Kanban cards.
+- MAIA's profile was too high-level ("Strategy") and lacked the grit to force `vk_create_extended_task` calls.
+- As a result, she "thought" about tasks but never materialized them on the board, making the swarm feel "fake".
+- **Fix:** Ported Sisyphus's strict **Hive Protocol** to MAIA. Now she is MANDATED to create a card for *every* request.
 
-### 3. Deep Project Discovery
-- **Multi-Project Scan**: MAIA will no longer focus on a single empty project. She now knows how to scan all projects to find the "active context" (e.g., the `giuzu-test` project with 30 tasks).
+### 3. Was Coder's MCP Real?
+- **Verification:** ✅ YES.
+- We manually tested the API:
+  - `POST /api/tasks` -> Created "🔴 SWARM TEST: Hello World"
+  - `PUT /api/tasks/:id` -> Moved it to "🟡 In Progress"
+  - `WAKEUP.sh` -> Instantly reflected the change.
+- The tools works; the agents just weren't using it.
 
-## 🧬 Nervous System v2.2 vs. Showcase Dashboard
-The **Nervous System v2.2** (the `.opencode/ecosystem/` MCP server) is the "logic layer". The **Showcase Dashboard** (`src/app/dashboard`) is the "visual layer".
-- They are **ALIGNED**. The dashboard uses the same DNA and Council types defined in the v2.2 nervous system.
-- The dashboard at `http://localhost:3000/dashboard` (proxied) or the Next.js dev server will visually show the agent statuses and tasks that the nervous system manages.
+## 🛠️ The Permanent Solution
 
-## 🔗 Port Mapping (FINAL)
-- **Port 62601**: Vibe Kanban (The DB/API)
-- **Port 3000**: Flowise (Automation)
-- **Next.js**: Usually runs on its own port (e.g., 3001) if started, or can be proxied through Flowise/Nginx.
+### 1. Deep Project Discovery
+MAIA now scans **ALL** projects on startup. If she finds active work in `giuzu-test`, she locks onto it rather than staring at an empty `MAIA opencode` board.
+
+### 2. Mandatory Swarm Orchestration
+MAIA's profile now explicitly commands:
+> "Card for Every Request: You MUST create a card in Vibe Kanban for EVERY user request."
+
+### 3. Transparent WAKEUP
+The `WAKEUP.sh` script now provides a "God View" of all active tasks across all projects, preventing any hidden work.
 
 ## ✅ NEXT STEPS
-1. **Run MAIA**: She should now be responsive, non-stalling, and fully aware of the `giuzu-test` tasks.
-2. **Dashboard**: Navigate to the dashboard (once Next.js is started) to see the Living Ecosystem in 17-agent glory.
+1.  **Run MAIA**: She is now "awake" and mandated to use the Kanban.
+2.  **Verify Flow**: Watch the Vibe Kanban board (Port 62601). You should see cards moving.
+3.  **Build**: Proceed with the website build. The swarm is ready.
