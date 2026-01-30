@@ -371,12 +371,21 @@ export const vk_create_extended_task = tool({
     pattern_id: tool.schema.string().optional().describe("DNA pattern ID"),
   },
   async execute(args) {
+    // 1. ADD AGENT BADGE (Living Card)
+    let finalTitle = args.title;
+    if (args.primary_agent) {
+      const badge = _getAgentBadge(args.primary_agent);
+      if (!finalTitle.includes("[")) {
+        finalTitle = `${badge} ${finalTitle}`;
+      }
+    }
+
     const res = await fetch(`${getBaseUrl()}/api/tasks`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         project_id: args.project_id,
-        title: args.title,
+        title: finalTitle,
         description: args.description,
         status: args.status || "todo",
       }),
@@ -412,6 +421,12 @@ export const vk_create_extended_task = tool({
         agent_interactions: [],
         learned_patterns: [],
       };
+    }
+
+    // 2. DNA INJECTION (Add metadata to description context)
+    if (args.pattern_id && args.description) {
+      // We could update the description here with a footer if the API supports it,
+      // or just rely on the badge for now.
     }
 
     const dnaTracker = getDNATracker();
