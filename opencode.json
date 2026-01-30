@@ -67,6 +67,15 @@
         "/bin/bash",
         ".opencode/scripts/start_browser.sh"
       ]
+    },
+    "ecosystem": {
+      "type": "local",
+      "command": [
+        "npx",
+        "-y",
+        "tsx",
+        ".opencode/ecosystem/server.ts"
+      ]
     }
   },
   "agent": {
@@ -86,7 +95,12 @@
         "grep": true,
         "glob": true,
         "todoread": true,
-        "todowrite": true
+        "todowrite": true,
+        "council_*": true,
+        "dna_*": true,
+        "agent_*": true,
+        "ecosystem_health": true,
+        "vk_create_extended_task": true
       }
     },
     "sisyphus": {
@@ -101,7 +115,12 @@
         "grep": true,
         "skill": true,
         "todoread": true,
-        "todowrite": true
+        "todowrite": true,
+        "council_*": true,
+        "dna_*": true,
+        "agent_*": true,
+        "ecosystem_health": true,
+        "vk_create_extended_task": true
       }
     },
     "coder": {
@@ -184,7 +203,7 @@
     },
     "reviewer": {
       "description": "Logic Audit.",
-      "model": "opencode/big-pickle",
+      "model": "google/gemini-2.5-pro",
       "mode": "subagent",
       "tools": {
         "read": true,
@@ -368,6 +387,21 @@
       "description": "Automation Architect",
       "template": "Workflow Task: \"$ARGUMENTS\". Use @workflow (GLM-4.7) for n8n/Flowise.",
       "agent": "workflow"
+    },
+    "swarm_learn": {
+      "description": "Log Swarm Intelligence",
+      "template": "Log a winning pattern: python3 .opencode/scripts/swarm_intel.py --log \"$ARGUMENTS\"",
+      "agent": "maia"
+    },
+    "swarm_ask": {
+      "description": "Query Swarm Intelligence",
+      "template": "Ask the Hive Mind: python3 .opencode/scripts/swarm_intel.py --query \"$ARGUMENTS\"",
+      "agent": "researcher"
+    },
+    "health_check": {
+      "description": "Ecosystem Health Check",
+      "template": "Verify functionality of all agents: python3 .opencode/scripts/health_check.py",
+      "agent": "ops"
     }
   }
 }
