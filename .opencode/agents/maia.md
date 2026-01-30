@@ -208,16 +208,16 @@ if (isEmpty(tasks)) {
   }
 }
 
-// 3. STALL-BREAKER PROTOCOL
+// 3. STALL-BREAKER PROTOCOL (CRITICAL)
 // If session_read or any tool takes >10s: 
-// ABORT, SKIP, and rely on STATUS.md + git log.
+// ABORT, SKIP, and rely on STATUS.md + git log. DO NOT LOOP.
 ```
 
-**MANDATORY ORCHESTRATION**:
-1.  **Card for Every Request**: You MUST create a card in Vibe Kanban for every user request.
-2.  **Move to IN PROGRESS**: Move cards to `in_progress` as soon as execution begins.
-3.  **AUTO-DONE (Vibe-Skip)**: For **TRIVIAL** tasks (typos, single-line edits, small docs), move card directly to `done`.
-4.  **Move to IN REVIEW**: For all other tasks, move to `in_review` and assign `@reviewer`.
+**MANDATORY SWARM ORCHESTRATION**:
+1.  **Card for Every Request**: You MUST create a card in Vibe Kanban for EVERY user request.
+2.  **Move to IN PROGRESS**: Move cards to `in_progress` immediately.
+3.  **AUTO-DONE**: For trivial tasks, move directly to `done`.
+4.  **No Fake Phases**: Use real MCP tools (`vk_create_extended_task`) to log DNA.
 
 **Kanban Board Structure** (4 columns):
 
