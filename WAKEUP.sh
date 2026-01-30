@@ -57,28 +57,31 @@ for i in {1..5}; do
         # 4a. DISPLAY ACTIVE TASKS (Actually USE the kanban)
         echo ""
         echo "=== 📋 ACTIVE KANBAN TASKS ==="
-        # Fetch first project ID
-        PROJECT_ID=$(curl -s "http://localhost:$VIBE_PORT/api/projects" | python3 -c "import sys, json; data = json.load(sys.stdin); print(data['data'][0]['id'] if data.get('data') else '')" 2>/dev/null)
+        PROJECTS_JSON=$(curl -s "http://localhost:$VIBE_PORT/api/projects" 2>/dev/null)
+        PROJECT_IDS=$(echo "$PROJECTS_JSON" | python3 -c "import sys, json; data = json.load(sys.stdin); print(' '.join([p['id'] for p in data.get('data', [])]))" 2>/dev/null)
         
-        if [ ! -z "$PROJECT_ID" ]; then
-            TASKS=$(curl -s "http://localhost:$VIBE_PORT/api/tasks?project_id=$PROJECT_ID" 2>/dev/null | python3 -c "
+        if [ ! -z "$PROJECT_IDS" ]; then
+            for P_ID in $PROJECT_IDS; do
+                P_NAME=$(echo "$PROJECTS_JSON" | python3 -c "import sys, json; data = json.load(sys.stdin); id = '$P_ID'; print([p['name'] for p in data.get('data', []) if p['id'] == id][0])" 2>/dev/null)
+                echo "📍 Project: $P_NAME ($P_ID)"
+                curl -s "http://localhost:$VIBE_PORT/api/tasks?project_id=$P_ID" 2>/dev/null | python3 -c "
 import sys, json
 try:
     data = json.load(sys.stdin)
     tasks = data.get('data', [])
-    active = [t for t in tasks if t.get('status') not in ['done', 'completed']][:5]
+    active = [t for t in tasks if t.get('status') not in ['done', 'completed']][:3]
     if not active:
-        print('  (No active tasks in project)')
+        print('    (No active tasks)')
     for t in active:
         status = t.get('status', 'todo').upper()
         title = t.get('title', 'Untitled')[:50]
-        print(f'  [{status:10}] {title}')
+        print(f'    [{status:10}] {title}')
 except:
-    print('  (Could not fetch tasks)')
-" 2>/dev/null)
-            echo "$TASKS"
+    print('    (Could not fetch tasks)')
+" 2>/dev/null
+            done
         else
-            echo "  (No projects found to fetch tasks)"
+            echo "  (No projects found)"
         fi
         break
     fi

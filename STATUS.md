@@ -1,6 +1,6 @@
 # 🎯 MAIA ECOSYSTEM - LIVING STATUS
 
-**Last Updated:** 2026-01-30 17:07
+**Last Updated:** 2026-01-30 17:08
 **System State:** 🟢 FULLY OPERATIONAL
 
 ---
@@ -213,6 +213,7 @@ opencode run "@agent_name test prompt"
 ## 📚 Documentation Index
 
 - **Setup:** README.md
+- **Analysis:** [Deep Reboot Analysis](file:///Users/g/Desktop/MAIA opencode/DOCS/DEEP_REBOOT_ANALYSIS.md)
 - **Agents:** AGENTS.md (agent roster)
 - **Models:** MODELS.md (model assignments)
 - **Archive:** .archive/old-reports/ (historical)
