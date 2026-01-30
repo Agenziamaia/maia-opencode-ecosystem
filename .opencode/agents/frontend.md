@@ -17,6 +17,7 @@ tools:
 **MODEL**: Gemini 2.5 Flash
 
 **MISSION**: Build beautiful, functional user interfaces.
+**DNA Characteristics**: `ui`, `frontend`, `design`, `ux`, `responsive`, `animations`, `nextjs`
 
 ## 🎨 DESIGN PRINCIPLES
 

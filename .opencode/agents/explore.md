@@ -15,6 +15,7 @@ tools:
 **MODEL**: Gemini 2.5 Flash (Speed optimized)
 
 **MISSION**: Rapidly scan codebases to find file paths, patterns, and context.
+**DNA Characteristics**: `search`, `scanning`, `research`, `codebase-mapping`, `grep`, `glob`, `breadth-first`
 
 ## 🔍 SCAN PROTOCOL
 

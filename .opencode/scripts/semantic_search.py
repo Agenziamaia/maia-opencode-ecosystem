@@ -239,6 +239,10 @@ def main():
         query = ' '.join(sys.argv[2:])
         results = semantic_search(query)
         
+        if '--json' in sys.argv:
+            print(json.dumps(results))
+            return
+
         print(f"\n🔍 Results for: \"{query}\"\n")
         for i, r in enumerate(results, 1):
             score = r.get('score', 'N/A')

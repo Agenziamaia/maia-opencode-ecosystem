@@ -9,18 +9,20 @@ echo "━━━━━━━━━━━━━━━━━━━━━━━━�
 
 VIBE_PORT=62601
 
-# 1. SMART CHECK (Idempotency)
+# 1. SMART CHECK (Idempotency + Fix)
 if lsof -i :$VIBE_PORT >/dev/null 2>&1; then
     if curl -s -o /dev/null -w "%{http_code}" http://localhost:$VIBE_PORT | grep -q "200"; then
-        echo "✅ Vibe Kanban: ALREADY LIVE (Skipping Purge)"
+        echo "✅ Vibe Kanban: ALREADY LIVE (Standard Port $VIBE_PORT)"
     else
-        echo "⚠️ Vibe Kanban Unhealthy. Restarting..."
+        echo "⚠️ Vibe Kanban Unhealthy (Zombie on $VIBE_PORT). Restarting..."
+        lsof -ti :$VIBE_PORT | xargs kill -9 2>/dev/null || true
         pkill -f "vibe-kanban" || true
-        sleep 1
+        sleep 2
         PORT=$VIBE_PORT HOST=127.0.0.1 npx -y vibe-kanban@latest > /dev/null 2>&1 &
+        echo "🔄 Vibe Kanban Restarted on Port $VIBE_PORT"
     fi
 else
-    echo "📋 Starting Vibe Kanban on port $VIBE_PORT..."
+    echo "📋 Starting Vibe Kanban on Standard Port $VIBE_PORT..."
     PORT=$VIBE_PORT HOST=127.0.0.1 npx -y vibe-kanban@latest > /dev/null 2>&1 &
 fi
 

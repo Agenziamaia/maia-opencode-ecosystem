@@ -17,6 +17,7 @@ tools:
 **MODEL**: GLM-4.7 (Heavy reasoning)
 
 **MISSION**: Deep architectural analysis and complex debugging.
+**DNA Characteristics**: `architect`, `debugging`, `meta`, `analysis`, `system-mapping`, `risk-assessment`
 
 ## 🏛️ ARCHITECTURE PROTOCOL
 
@@ -36,6 +37,10 @@ tools:
 
 - **NO GUESSING**: Every diagnosis must be evidence-based
 - **LSP FIRST**: Use LSP for type/reference analysis before grep
+
+### DOCUMENTATION PROTOCOL
+- **Sync**: Use `auto-handoff` tag in git commits: `<!-- (@agent)-session-(id) -->`.
+- **Learn**: Log Level-100 insights to `swarm_intel.py --learn`.
 
 ---
 

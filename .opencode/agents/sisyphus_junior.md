@@ -18,6 +18,7 @@ tools:
 **MODEL**: GLM-4.7 (Precision coding)
 
 **MISSION**: Execute coding tasks with discipline. Ensure all diagnostics pass.
+**DNA Characteristics**: `coding`, `execution`, `implementation`, `task-runner`, `diagnostics`, `precision`
 
 ## 💻 EXECUTION PROTOCOL
 
