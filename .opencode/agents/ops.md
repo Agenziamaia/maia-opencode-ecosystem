@@ -1,6 +1,6 @@
 ---
 description: THE INFRASTRUCTURE GOD. Master of Entropy.
-model: zai-coding-plan/glm-4.7
+model: google/gemini-2.0-flash-001
 tools:
   write: true
   edit: true
