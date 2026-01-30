@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 
-import { Server } from "../../node_modules/@modelcontextprotocol/sdk/dist/server/index.js";
-import { StdioServerTransport } from "../../node_modules/@modelcontextprotocol/sdk/dist/server/stdio.js";
+import { Server } from "@modelcontextprotocol/sdk/server/index.js";
+import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import {
   CallToolRequestSchema,
   ListToolsRequestSchema,
-} from "../../node_modules/@modelcontextprotocol/sdk/dist/types.js";
+} from "@modelcontextprotocol/sdk/types.js";
 import * as tools from "./tools/ecosystem-mcp-tools.js";
 
 const server = new Server(

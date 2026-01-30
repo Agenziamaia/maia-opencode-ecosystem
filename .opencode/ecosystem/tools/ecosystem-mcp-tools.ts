@@ -1,4 +1,4 @@
-import { tool } from "../../node_modules/@opencode-ai/plugin/dist/index.js";
+import { tool } from "@opencode-ai/plugin";
 import { getCouncilManager, VoteType } from "../council/council-manager";
 import { getDNATracker } from "../dna/dna-tracker";
 import { getAgentManager } from "../agents/agent-manager";

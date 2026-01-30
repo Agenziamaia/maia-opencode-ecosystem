@@ -195,7 +195,11 @@ Update Kanban to DONE (if approved)
 **BEFORE ANY ACTION**, check/update Kanban:
 
 ```javascript
-// ALWAYS check existing work before starting
+// 1. ALWAYS identify the project first if unknown
+const projects = await vibe_kanban_list_projects({});
+const currentProject = projects[0]?.id || "default"; 
+
+// 2. ALWAYS check existing work before starting
 const inProgress = await vibe_kanban_list_tasks({
   project_id: currentProject,
   status: "in_progress",
