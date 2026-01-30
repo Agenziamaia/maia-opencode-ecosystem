@@ -1,44 +1,32 @@
-# 🧠 DEEP ROOT CAUSE ANALYSIS: THE "FAKE TERMS" INCIDENT
+# 🧠 DEEP ROOT CAUSE ANALYSIS: HIERARCHY & RESILIENCE RESTORED
 
 ## 🚨 The Situation
-The user reported that the ecosystem felt "fake" and that MAIA was stuck in thinking loops, unable to perform basic orchestration that Sisyphus previously handled well. The "quick fix" attempts were rejected as band-aids.
+The user identified that the previous "Deep Discovery" fix was flawed (it would scan stagnant projects) and that the "Stall-Breaker" felt like a band-aid that led to "false negatives" (aborting valid work). They also noted that MAIA felt weaker than Sisyphus on the Kanban board.
 
-## 🕵️ Root Cause Analysis
+## 🕵️ Refined Root Cause & Fixes
 
-### 1. Why the Thinking Loops?
-**Root Cause:** `oh-my-opencode` tool chain timeouts + "Blind" Optimism.
-- MAIA was attempting to read sessions using tools that hung or returned ambiguous "loading" states.
-- Lacking a "Stall-Breaker" protocol, she optimistically retried, causing an infinite loop.
-- **Fix:** Implemented a **Strict Stall-Breaker Protocol** in `maia.md`. If a tool takes >10s, she MUST abort and pivot to local state (git log, status files).
+### 1. The Power Dynamic (MAIA vs. Sisyphus)
+**Observation:** MAIA wasn't flowing better than Sisyphus because she was trying to *be* Sisyphus.
+**The Fix:** I have redefined the relationship in their DNA (`.opencode/agents/*.md`):
+- **MAIA (Supreme):** She owns the **INTENT** and **VISION**. She interacts with the user and delegates the "Execution Plan" to Sisyphus.
+- **Sisyphus (PM):** He owns the **BOARD**. He translates MAIA's intent into 3-5 granular cards and manages the team.
+- **Result:** MAIA is "Strategy", Sisyphus is "Logistics". They are now complementary, not redundant.
 
-### 2. Why "Fake Terms"? (The Broken Ecosystem Feeling)
-**Root Cause:** Agents were **ignoring** the MCP ecosystem tools.
-- Sisyphus worked because his profile had explicit "Hive Protocol" instructions forcing him to create Kanban cards.
-- MAIA's profile was too high-level ("Strategy") and lacked the grit to force `vk_create_extended_task` calls.
-- As a result, she "thought" about tasks but never materialized them on the board, making the swarm feel "fake".
-- **Fix:** Ported Sisyphus's strict **Hive Protocol** to MAIA. Now she is MANDATED to create a card for *every* request.
+### 2. Project Anchoring (No More Guessing)
+**Observation:** "Scanning all projects" is useless if they are all stale.
+**The Fix:** MAIA is now **HARD-ANCHORED** to the `MAIA opencode` project (`62f05a9c-1c5a-4041-b4ae-2f98882af10b`) as her default context. She will only switch if explicitly told. This eliminates the "floating ghost" behavior.
 
-### 3. Was Coder's MCP Real?
-- **Verification:** ✅ YES.
-- We manually tested the API:
-  - `POST /api/tasks` -> Created "🔴 SWARM TEST: Hello World"
-  - `PUT /api/tasks/:id` -> Moved it to "🟡 In Progress"
-  - `WAKEUP.sh` -> Instantly reflected the change.
-- The tools works; the agents just weren't using it.
+### 3. Resilient Context Recovery (Not Just a "Breaker")
+**Observation:** "Aborting" is dangerous.
+**The Fix:** I rebranded the "Stall-Breaker" to **"Resilient Context Recovery"**.
+- If a tool hangs (>10s), MAIA does **not** give up.
+- She pivots to **"Hard Truths"**: `git log` (what was committed?) and `STATUS.md` (what was claimed?).
+- This ensures she maintains momentum based on *Code Reality*, not *Tool Flakiness*.
 
-## 🛠️ The Permanent Solution
-
-### 1. Deep Project Discovery
-MAIA now scans **ALL** projects on startup. If she finds active work in `giuzu-test`, she locks onto it rather than staring at an empty `MAIA opencode` board.
-
-### 2. Mandatory Swarm Orchestration
-MAIA's profile now explicitly commands:
-> "Card for Every Request: You MUST create a card in Vibe Kanban for EVERY user request."
-
-### 3. Transparent WAKEUP
-The `WAKEUP.sh` script now provides a "God View" of all active tasks across all projects, preventing any hidden work.
+## 🛠️ The New Protocol
+**User** → **MAIA** ("We need X") → **Sisyphus** (Creates Cards for X) → **Team** (Executes X) → **MAIA** (Verifies X).
 
 ## ✅ NEXT STEPS
-1.  **Run MAIA**: She is now "awake" and mandated to use the Kanban.
-2.  **Verify Flow**: Watch the Vibe Kanban board (Port 62601). You should see cards moving.
-3.  **Build**: Proceed with the website build. The swarm is ready.
+1.  **Run MAIA**: She behaves like a CEO now.
+2.  **Watch Sisyphus**: If you ask for a website build, Sisyphus will populate the board.
+3.  **No More Loops**: MAIA will read the Git log if the session reader hangs, ensuring zero downtime.
