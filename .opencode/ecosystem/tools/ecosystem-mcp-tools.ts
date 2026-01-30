@@ -467,3 +467,18 @@ export const ecosystem_health = tool({
     return `🌱 Living Ecosystem Health\n\n🤖 Agents:\n  Available: ${availableAgents.length}\n  Total: ${Object.keys(loadStats).length}\n\n🗳️ Council:\n  Active decisions: ${activeDecisions.length}\n\n🧬 DNA:\n  Learned patterns: ${patterns.length}\n\n📊 Overall: ${availableAgents.length > 0 && patterns.length > 0 ? "✅ Healthy" : "⚠️ Needs attention"}`;
   },
 });
+
+function _getAgentBadge(agentId: string): string {
+  const map: Record<string, string> = {
+    maia: "[👑 @maia]",
+    sisyphus: "[🛡️ @sisyphus]",
+    coder: "[🤖 @coder]",
+    ops: "[🔥 @ops]",
+    researcher: "[⚡ @researcher]",
+    reviewer: "[🧐 @reviewer]",
+    giuzu: "[🧠 @giuzu]",
+    frontend: "[🎨 @frontend]",
+    vision: "[👁️ @vision]",
+  };
+  return map[agentId] || `[👾 @${agentId}]`;
+}
