@@ -31,6 +31,7 @@ echo "🧠 Verifying Local Brain..."
 if [ -d ".opencode" ]; then
     AGENT_COUNT=$(ls .opencode/agents/*.md 2>/dev/null | grep -v "README" | wc -l)
     echo "✅ Local Brain: ACTIVE ($AGENT_COUNT agents loaded)"
+else
     echo "❌ CRITICAL: .opencode/ directory missing! System lobotomized."
 fi
 
@@ -56,22 +57,29 @@ for i in {1..5}; do
         # 4a. DISPLAY ACTIVE TASKS (Actually USE the kanban)
         echo ""
         echo "=== 📋 ACTIVE KANBAN TASKS ==="
-        TASKS=$(curl -s "http://localhost:$VIBE_PORT/api/tasks" 2>/dev/null | python3 -c "
+        # Fetch first project ID
+        PROJECT_ID=$(curl -s "http://localhost:$VIBE_PORT/api/projects" | python3 -c "import sys, json; data = json.load(sys.stdin); print(data['data'][0]['id'] if data.get('data') else '')" 2>/dev/null)
+        
+        if [ ! -z "$PROJECT_ID" ]; then
+            TASKS=$(curl -s "http://localhost:$VIBE_PORT/api/tasks?project_id=$PROJECT_ID" 2>/dev/null | python3 -c "
 import sys, json
 try:
     data = json.load(sys.stdin)
-    tasks = data if isinstance(data, list) else data.get('tasks', [])
+    tasks = data.get('data', [])
     active = [t for t in tasks if t.get('status') not in ['done', 'completed']][:5]
     if not active:
-        print('  (No active tasks)')
+        print('  (No active tasks in project)')
     for t in active:
-        status = t.get('status', 'pending')
-        title = t.get('title', t.get('name', 'Untitled'))[:50]
-        print(f'  [{status.upper():10}] {title}')
+        status = t.get('status', 'todo').upper()
+        title = t.get('title', 'Untitled')[:50]
+        print(f'  [{status:10}] {title}')
 except:
     print('  (Could not fetch tasks)')
 " 2>/dev/null)
-        echo "$TASKS"
+            echo "$TASKS"
+        else
+            echo "  (No projects found to fetch tasks)"
+        fi
         break
     fi
 done

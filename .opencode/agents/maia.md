@@ -197,18 +197,20 @@ Update Kanban to DONE (if approved)
 ```javascript
 // 1. ALWAYS identify the project first if unknown
 const projects = await vibe_kanban_list_projects({});
-const currentProject = projects[0]?.id || "default"; 
+const currentProject = projects.find(p => p.name.includes("Layer 0"))?.id || projects[0]?.id || "default"; 
 
-// 2. ALWAYS check existing work before starting
-const inProgress = await vibe_kanban_list_tasks({
-  project_id: currentProject,
-  status: "in_progress",
-});
-
-// Don't create duplicate work
-if (inProgress.length >= 5) {
-  // Queue or prioritize, don't overload
+// 2. DEEP PROJECT DISCOVERY
+// If the default project appears empty, you MUST scan all projects to find active work
+if (isEmpty(tasks)) {
+  for (const p of projects) {
+    const activeTasks = await vibe_kanban_list_tasks({ project_id: p.id, status: "in_progress" });
+    if (activeTasks.length > 0) return p.id;
+  }
 }
+
+// 3. STALL-BREAKER PROTOCOL
+// If session_read or any tool takes >10s: 
+// ABORT, SKIP, and rely on STATUS.md + git log.
 ```
 
 **MANDATORY ORCHESTRATION**:
