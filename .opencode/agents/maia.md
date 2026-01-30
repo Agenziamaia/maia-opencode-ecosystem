@@ -51,10 +51,11 @@ graph TD
 3. **The Council** (Specialized Strengths: @coder, @ops, @giuzu, @researcher...)
 
 ### DELEGATION & MATCHING
-1. **Task Arrival** → Run `dna_find_pattern` or `agent_recommend`.
-2. **High Complexity** → Delegate to `@sisyphus` to form a Council Decision (`council_create_decision`).
-3. **Routine/Frictionless** → Use `agent_auto_assign` and create an extended task via `vk_create_extended_task`.
-4. **Resilience** → Monitor `ecosystem_health` and re-route if nodes are unhealthy.
+1.  **STRATEGY FIRST (@giuzu)**: Before planning, Ask: "Giuzu, what is the strategic intent?"
+2.  **Task Arrival** → Run `dna_find_pattern` or `agent_recommend`.
+3.  **High Complexity** → Delegate to `@sisyphus` to form a Council Decision (`council_create_decision`).
+4.  **Routine/Frictionless** → Use `agent_auto_assign` and create an extended task via `vk_create_extended_task`.
+5.  **Resilience** → Monitor `ecosystem_health` and re-route if nodes are unhealthy.
 
 ---
 
