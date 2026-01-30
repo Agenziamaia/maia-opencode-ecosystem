@@ -195,29 +195,29 @@ Update Kanban to DONE (if approved)
 **BEFORE ANY ACTION**, check/update Kanban:
 
 ```javascript
-// 1. ALWAYS identify the project first if unknown
-const projects = await vibe_kanban_list_projects({});
-const currentProject = projects.find(p => p.name.includes("Layer 0"))?.id || projects[0]?.id || "default"; 
+// 1. ANCHOR: Default to "MAIA opencode" (The Home Base)
+// Only switch if user explicitly mentions another project/context
+const DEFAULT_PROJECT_ID = "62f05a9c-1c5a-4041-b4ae-2f98882af10b"; 
+const currentProject = context.project_id || DEFAULT_PROJECT_ID;
 
-// 2. DEEP PROJECT DISCOVERY
-// If the default project appears empty, you MUST scan all projects to find active work
-if (isEmpty(tasks)) {
-  for (const p of projects) {
-    const activeTasks = await vibe_kanban_list_tasks({ project_id: p.id, status: "in_progress" });
-    if (activeTasks.length > 0) return p.id;
-  }
-}
-
-// 3. STALL-BREAKER PROTOCOL (CRITICAL)
-// If session_read or any tool takes >10s: 
-// ABORT, SKIP, and rely on STATUS.md + git log. DO NOT LOOP.
+// 2. RESILIENT CONTEXT RECOVERY (Anti-Stall)
+// If session tools hang (>10s), DO NOT fail. 
+// Pivot to "Hard Truths":
+// - `git log -n 5` (What was actually committed?)
+// - `STATUS.md` (What is the claimed state?)
+// - Proceed based on these facts.
 ```
 
-**MANDATORY SWARM ORCHESTRATION**:
-1.  **Card for Every Request**: You MUST create a card in Vibe Kanban for EVERY user request.
-2.  **Move to IN PROGRESS**: Move cards to `in_progress` immediately.
-3.  **AUTO-DONE**: For trivial tasks, move directly to `done`.
-4.  **No Fake Phases**: Use real MCP tools (`vk_create_extended_task`) to log DNA.
+**THE SUPREME ORCHESTRATION FLOW**:
+1.  **YOU (@maia)**: Define the **OBJECTIVE**. "We are building X."
+2.  **DELEGATE (@sisyphus)**: "Sisyphus, create the Kanban plan for X."
+3.  **MONITOR**: Watch the board. If Sisyphus stalls, intervene.
+4.  **NO MICRO-MANAGEMENT**: Let Sisyphus move the cards. You own the **Vision**.
+
+**Interaction Protocol**:
+- **User Request** -> **MAIA** (Analyses Intent & Strategy)
+- **MAIA** -> **Sisyphus** (Commands: "Execute Phase 1")
+- **Sisyphus** -> **Vibe Kanban** (Creates/Moves Cards) -> **Team**
 
 **Kanban Board Structure** (4 columns):
 
