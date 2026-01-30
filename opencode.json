@@ -64,11 +64,9 @@
     "browser-use": {
       "type": "local",
       "command": [
-        "/Users/g/.local/bin/uv",
-        "run",
-        "server.py"
-      ],
-      "cwd": "/Users/g/Desktop/MAIA opencode/.opencode/mcp-browser"
+        "/bin/bash",
+        ".opencode/scripts/start_browser.sh"
+      ]
     }
   },
   "agent": {
