@@ -1,0 +1,211 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Extended Task Schema with DNA",
+  "description": "VibeKanban task structure extended with DNA tracking, agent tagging, and council fields",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Unique task identifier"
+    },
+    "project_id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Project this task belongs to"
+    },
+    "title": {
+      "type": "string",
+      "description": "Task title"
+    },
+    "description": {
+      "type": "string",
+      "description": "Detailed task description"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["todo", "inprogress", "inreview", "done", "cancelled"],
+      "description": "Current status of the task"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when task was created"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when task was last updated"
+    },
+    "dna": {
+      "type": "object",
+      "description": "DNA tracking for pattern recognition",
+      "properties": {
+        "pattern_id": {
+          "type": "string",
+          "description": "ID of the pattern this task belongs to"
+        },
+        "pattern_confidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Confidence score for pattern match (0-1)"
+        },
+        "agent_interactions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "agent_id": { "type": "string" },
+              "timestamp": { "type": "string", "format": "date-time" },
+              "action": { "type": "string" },
+              "duration_ms": { "type": "number" }
+            }
+          },
+          "description": "History of agent interactions with this task"
+        },
+        "outcome": {
+          "type": "string",
+          "enum": ["success", "partial", "failure", "pending"],
+          "description": "Final outcome of the task"
+        },
+        "outcome_metrics": {
+          "type": "object",
+          "properties": {
+            "completion_time_ms": { "type": "number" },
+            "revision_count": { "type": "number" },
+            "quality_score": { "type": "number", "minimum": 0, "maximum": 1 }
+          },
+          "description": "Quantitative metrics about the outcome"
+        },
+        "learned_patterns": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Patterns extracted from this task execution"
+        }
+      }
+    },
+    "agent_assignment": {
+      "type": "object",
+      "description": "Agent assignment and tracking",
+      "properties": {
+        "primary_agent": {
+          "type": "string",
+          "description": "Primary agent assigned to this task (e.g., 'coder', 'maia', 'sisyphus')"
+        },
+        "agent_variant": {
+          "type": "string",
+          "description": "Agent variant if applicable (e.g., 'DEFAULT', 'PLAN')"
+        },
+        "assigned_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When the agent was assigned"
+        },
+        "assignment_method": {
+          "type": "string",
+          "enum": ["manual", "auto", "council", "pattern"],
+          "description": "How the agent was assigned"
+        },
+        "availability_checked": {
+          "type": "boolean",
+          "description": "Whether agent availability was verified"
+        },
+        "backup_agents": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Backup agents if primary fails"
+        }
+      }
+    },
+    "council_decision": {
+      "type": "object",
+      "description": "Council voting and decision tracking",
+      "properties": {
+        "decision_id": {
+          "type": "string",
+          "format": "uuid",
+          "description": "Unique ID for the council decision"
+        },
+        "proposal": {
+          "type": "string",
+          "description": "What is being decided"
+        },
+        "votes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "agent_id": { "type": "string" },
+              "vote": { "type": "string", "enum": ["upvote", "downvote", "abstain"] },
+              "reasoning": { "type": "string" },
+              "timestamp": { "type": "string", "format": "date-time" }
+            }
+          },
+          "description": "Votes from council members"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["pending", "consensus", "no_consensus", "timeout"],
+          "description": "Current status of the decision"
+        },
+        "consensus_threshold": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "default": 0.7,
+          "description": "Threshold for consensus (0-1)"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "timeout_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When this decision times out"
+        },
+        "final_decision": {
+          "type": "string",
+          "description": "The final decision if consensus reached"
+        }
+      }
+    },
+    "emergence": {
+      "type": "object",
+      "description": "Emergent behavior tracking",
+      "properties": {
+        "emergence_score": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Score indicating emergence level (0-1)"
+        },
+        "emergent_capabilities": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Capabilities that emerged during execution"
+        },
+        "novelty_score": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "How novel the solution was (0-1)"
+        },
+        "cross_agent_collaborations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "agents": { "type": "array", "items": { "type": "string" } },
+              "purpose": { "type": "string" },
+              "outcome": { "type": "string" }
+            }
+          },
+          "description": "Cross-agent interactions that produced emergence"
+        }
+      }
+    }
+  },
+  "required": ["id", "project_id", "title", "status", "created_at", "updated_at"]
+}
