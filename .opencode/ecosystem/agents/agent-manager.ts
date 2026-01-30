@@ -1,4 +1,4 @@
-wait wh/**
+/**
  * Agent Availability and Tagging System
  *
  * Purpose: Manage agent availability, tagging, and automatic assignment
