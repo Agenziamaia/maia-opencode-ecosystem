@@ -9,8 +9,9 @@ tools:
   list: true
   lsp: true
   git_*: true
-  write: false
-  edit: false
+  github_*: true
+  write: true
+  edit: true
   bash: false
   webfetch: false
 ---
