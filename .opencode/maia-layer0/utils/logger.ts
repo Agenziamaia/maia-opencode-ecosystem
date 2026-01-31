@@ -1,29 +1,22 @@
-type LogLevel = 'info' | 'warn' | 'error' | 'debug';
+/**
+ * MAIA Layer0 Logger
+ *
+ * This module re-exports the universal logger from @maia-opencode/logger.
+ *
+ * @deprecated Import directly from '@maia-opencode/logger' instead.
+ * @module @maia-layer0/utils/logger
+ */
 
-interface LogContext {
-  [key: string]: unknown;
-}
-
-function formatLog(level: LogLevel, message: string, context?: LogContext): string {
-  const timestamp = new Date().toISOString();
-  const contextStr = context ? ` ${JSON.stringify(context)}` : '';
-  return `[${timestamp}] [${level.toUpperCase()}] ${message}${contextStr}`;
-}
-
-export function logInfo(message: string, context?: LogContext): void {
-  console.log(formatLog('info', message, context));
-}
-
-export function logWarn(message: string, context?: LogContext): void {
-  console.warn(formatLog('warn', message, context));
-}
-
-export function logError(message: string, context?: LogContext): void {
-  console.error(formatLog('error', message, context));
-}
-
-export function logDebug(message: string, context?: LogContext): void {
-  if (process.env.NODE_ENV === 'development' || process.env.DEBUG) {
-    console.debug(formatLog('debug', message, context));
-  }
-}
+// Re-export all functions and types from UNIVERSAL/logger
+export {
+  createLogger,
+  getLogger,
+  logInfo,
+  logWarn,
+  logError,
+  logDebug,
+  logHttp,
+  type LogLevel,
+  type LogContext,
+  type LoggerConfig,
+} from '../../UNIVERSAL/logger/src/index.js';

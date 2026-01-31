@@ -1,0 +1,25 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# Validate commit message format
+# Supports: Conventional Commits and MAIA-specific formats
+
+commit_msg=$(cat "$1")
+
+# Check minimum length
+if [ $(echo "$commit_msg" | wc -c) -lt 10 ]; then
+    echo "❌ Commit message too short (minimum 10 characters)"
+    exit 1
+fi
+
+# Check for MAIA agent attribution (encouraged but not required)
+if echo "$commit_msg" | grep -qE "@(maia|coder|sisyphus|giuzu|researcher|reviewer|ops)"; then
+    echo "✅ Agent attribution detected in commit message"
+fi
+
+# Check for conventional commit format (optional but encouraged)
+if echo "$commit_msg" | grep -qE "^(feat|fix|docs|style|refactor|test|chore|perf|ci|build|revert)(\(.+\))?: "; then
+    echo "✅ Conventional commit format detected"
+fi
+
+exit 0

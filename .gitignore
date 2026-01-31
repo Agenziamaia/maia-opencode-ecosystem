@@ -1,8 +1,24 @@
+# System & Deps
 node_modules/
+**/node_modules/
 .DS_Store
 .env
-.next/
+.env.*
+.venv/
+venv/
+env/
 dist/
 build/
+.next/
+
+# OpenCode Internals
 .opencode/sessions/
 .opencode/cache/
+.opencode/exec/
+.opencode/execution/
+.opencode/gym/.venv/
+.opencode/gym/__pycache__/
+.opencode/ecosystem/execution/.opencode/
+
+# Large Archives (Optional, but safe)
+ARCHIVE/

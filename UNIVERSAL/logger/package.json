@@ -1,0 +1,42 @@
+{
+  "name": "@maia-opencode/logger",
+  "version": "1.0.0",
+  "description": "Unified logging system for the MAIA OpenCode ecosystem",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "import": "./src/index.ts",
+      "require": "./src/index.ts"
+    }
+  },
+  "keywords": [
+    "maia",
+    "logger",
+    "logging",
+    "winston",
+    "console"
+  ],
+  "author": "MAIA OpenCode",
+  "license": "MIT",
+  "peerDependencies": {
+    "winston": "^3.0.0",
+    "winston-daily-rotate-file": "^4.0.0"
+  },
+  "peerDependenciesMeta": {
+    "winston": {
+      "optional": true
+    },
+    "winston-daily-rotate-file": {
+      "optional": true
+    }
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "files": [
+    "src/**/*"
+  ]
+}

@@ -6,7 +6,20 @@ import {
   CallToolRequestSchema,
   ListToolsRequestSchema,
 } from "@modelcontextprotocol/sdk/types.js";
-import * as tools from "./tools/ecosystem-mcp-tools.js";
+import * as ecosystemTools from "./tools/ecosystem-mcp-tools.js";
+import * as sessionTools from "./tools/session-tools.js";
+import * as vibekanbanTools from "./tools/vibekanban-tools.js";
+import * as memoryTools from "./tools/memory-tools.js";
+import * as executionTools from "./execution/execution-tools.js";
+
+// Combine all tools
+const tools = {
+  ...ecosystemTools,
+  ...sessionTools,
+  ...vibekanbanTools,
+  ...memoryTools,
+  ...executionTools,
+};
 
 const server = new Server(
   {

@@ -9,16 +9,20 @@
 ## 🚀 Quick Start
 
 ```bash
-# Install dependencies
+# 1. Copy environment template and configure
+cp .env.example .env
+# Edit .env with your API keys and configuration
+
+# 2. Install dependencies
 npm install
 
-# Start development server
+# 3. Start development server
 npm run dev
 
-# Run tests
+# 4. Run tests
 npm test
 
-# Check code quality
+# 5. Check code quality
 npm run lint
 npm run typecheck
 
@@ -130,7 +134,39 @@ npm run init
 │   └── test/              # Test utilities and setup
 ├── AGENTS.md              # Complete agent instructions
 ├── opencode.json          # Agent and command configuration
-└── package.json           # Dependencies and scripts
+├── package.json           # Dependencies and scripts
+├── .env.example           # Environment variables template
+└── README.md              # This file
+```
+
+### UNIVERSAL Directory
+
+The `UNIVERSAL/` directory contains shared packages used across the entire ecosystem:
+
+```
+UNIVERSAL/
+├── logger/                # Unified logging system
+│   ├── src/index.ts      # Logger implementation (simple + Winston)
+│   ├── package.json      # Package configuration
+│   └── README.md         # Logger documentation
+├── config/                # Shared build configurations
+│   ├── eslint.js         # ESLint configuration
+│   ├── .prettierrc       # Prettier configuration
+│   ├── tsconfig.base.json # TypeScript base config
+│   └── README.md         # Config documentation
+├── context/              # Shared context files
+├── skills/               # Loadable skill modules (25+ skills)
+└── tools/                # Universal tool implementations
+```
+
+#### Using UNIVERSAL Packages
+
+```bash
+# Use the unified logger
+import { logInfo, logError, createLogger } from '../../../UNIVERSAL/logger/src/index.js';
+
+// Use shared configs in package.json
+"eslintConfig": "require('@maia-opencode/config/eslint.js')"
 ```
 
 ---
@@ -161,6 +197,62 @@ npm run init
 - **Testing**: Vitest + React Testing Library
 - **Quality**: ESLint + Prettier + TypeScript Compiler
 - **Agentic**: Multi-model AI collaboration (GPT-4o, GLM-4, Gemini, Claude)
+
+---
+
+## 🔑 Environment Configuration
+
+The ecosystem uses a single `.env` file for configuration. Copy `.env.example` to get started:
+
+```bash
+cp .env.example .env
+```
+
+### Required Environment Variables
+
+| Variable | Purpose | Get it from |
+|----------|---------|-------------|
+| `OPENAI_API_KEY` | GPT-4 access | platform.openai.com |
+| `GEMINI_API_KEY` | Google AI | aistudio.google.com |
+| `OPENROUTER_API_KEY` | Multi-model router | openrouter.ai |
+| `DISCORD_BOT_TOKEN` | Discord integration | discord.com/developers |
+
+### Optional Environment Variables
+
+- `LOG_LEVEL` - Logging level (debug, info, warn, error)
+- `USE_WINSTON` - Enable file logging with Winston
+- `LOG_DIR` - Directory for log files (default: ./logs)
+- `PORT` - Application port (default: 3000)
+- `VIBE_KANBAN_URL` - Task management integration
+
+See `.env.example` for the complete list of available variables.
+
+---
+
+## 📝 Logging
+
+The ecosystem uses a unified logging system from `UNIVERSAL/logger`:
+
+```typescript
+// Simple console logging (default)
+import { logInfo, logWarn, logError, logDebug } from './utils/logger';
+
+logInfo('Application started');
+logError('Database connection failed', { host: 'localhost' });
+
+// Winston file logging (production)
+import { createLogger } from './utils/logger';
+
+const logger = createLogger({
+  useWinston: true,
+  enableFile: true,
+  level: 'debug',
+});
+
+logger.info('Server started', { port: 3000 });
+```
+
+**Note**: The linter will warn about `console.log` - use the logger instead!
 
 ---
 

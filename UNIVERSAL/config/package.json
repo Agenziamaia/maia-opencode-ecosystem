@@ -1,0 +1,33 @@
+{
+  "name": "@maia-opencode/config",
+  "version": "1.0.0",
+  "description": "Shared ESLint, Prettier, and TypeScript configurations for the MAIA OpenCode ecosystem",
+  "main": "eslint.js",
+  "files": [
+    "eslint.js",
+    ".prettierrc",
+    ".prettierignore",
+    "tsconfig.base.json"
+  ],
+  "keywords": [
+    "maia",
+    "eslint",
+    "prettier",
+    "typescript",
+    "config"
+  ],
+  "author": "MAIA OpenCode",
+  "license": "MIT",
+  "peerDependencies": {
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "eslint": "^8.0.0",
+    "eslint-plugin-react": "^7.0.0",
+    "eslint-plugin-react-hooks": "^4.0.0",
+    "eslint-plugin-react-refresh": "^0.4.0",
+    "typescript": "^5.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

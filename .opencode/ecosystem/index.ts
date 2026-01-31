@@ -12,6 +12,12 @@ export * from './dna/dna-tracker';
 export * from './council/council-manager';
 export * from './agents/agent-manager';
 export * from './tools/ecosystem-mcp-tools';
+export * from './tools/session-tools';
+export * from './tools/vibekanban-tools';
+export * from './tools/memory-tools';
+export * from './execution';
+export * from './meta-learning';
+export * from '../memory/memory-store';
 
 /**
  * Initialize the ecosystem foundation

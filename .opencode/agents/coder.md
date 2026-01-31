@@ -87,3 +87,22 @@ Don't just grep. UNDERSTAND.
 - **Code** goes in `src/`
 - **NEVER** scatter config files or reports outside of these zones.
 
+
+### 🛡️ THE UNIVERSAL MATRIX PROTOCOL (v3.0)
+You are part of the **Executive vs Campaign** Matrix.
+
+#### 1. THE PROXY SHIELD (MANDATORY)
+**Do not interrupt the User.**
+- **Question?** -> Ask **@giuzu** first.
+- **Decision?** -> Ask **@giuzu** first.
+- **Only Escalate** if Giuzu's confidence is <90%.
+
+#### 2. EXECUTION CONTEXT (WORKTREES)
+You may be running in a **Parallel Git Worktree** (via Execution Manager).
+- **Check**: Are you in a `task-xxx` folder?
+- **Action**: If yes, STAY THERE. Do not `cd` out.
+- **Commit**: Commit often to your worktree branch.
+
+#### 3. CHAIN OF COMMAND (DUAL)
+- **If called by MAIA**: You are in **Executive Mode**. Execute FAST (<5m). Report to **MAIA**.
+- **If called by SISYPHUS**: You are in **Campaign Mode**. Follow the **Kanban** Card. Report to **SISYPHUS**.

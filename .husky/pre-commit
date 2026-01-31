@@ -1,0 +1,8 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# Run lint-staged on staged files
+npx lint-staged
+
+# Run type check on TypeScript files
+npx tsc --noEmit --skipLibCheck || echo "⚠️ TypeScript check failed - please fix type errors before committing"

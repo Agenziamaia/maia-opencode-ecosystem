@@ -1,0 +1,12 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# Run integration tests before pushing
+echo "🧪 Running integration tests..."
+cd ecosystem/tests && npm run test:run || echo "⚠️ Integration tests failed - please fix before pushing"
+
+# Run type check
+echo "🔍 Running type check..."
+npx tsc --noEmit || echo "⚠️ TypeScript check failed"
+
+echo "✅ Pre-push checks complete"
