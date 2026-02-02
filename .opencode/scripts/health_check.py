@@ -217,10 +217,15 @@ def main():
              print(f"{GREEN}✅ Core Pulse Verified.{RESET}")
         except subprocess.CalledProcessError:
              print(f"{RED}❌ Agent Ping Failed. Some agents are unresponsive.{RESET}")
-             if fix_mode:
-                print(f"{YELLOW}🔧 Auto-Fix: Applying fallback models to core agents...{RESET}")
-                # Apply fallbacks logic here or just warn
-                # For now, we flag it in results
+        
+        # 0b. MEMORY CHECK
+        print(f"{BOLD}🧠 Verifying Memory Systems...{RESET}")
+        mem_path = Path(".opencode/persistence")
+        if mem_path.exists():
+             count = len(list(mem_path.glob("*.json")))
+             print(f"{GREEN}✅ Memory Persistence Active ({count} shards found).{RESET}")
+        else:
+             print(f"{YELLOW}⚠️ Memory Persistence Empty (Will initialize on first run).{RESET}")
     
     for agent_name, agent_config in agents.items():
         model = agent_config.get("model", "unknown")
