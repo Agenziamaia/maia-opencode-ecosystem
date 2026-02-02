@@ -15,13 +15,17 @@ export async function GET(request: NextRequest) {
       data: data.data || [],
     });
   } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    const isConnectionError = message.includes('ECONNREFUSED') || message.includes('fetch failed');
+
     return NextResponse.json(
       {
         success: false,
-        error: 'Failed to fetch tasks',
-        error_data: error instanceof Error ? error.message : String(error),
+        error: isConnectionError ? 'VibeKanban service is offline' : 'Failed to fetch tasks',
+        error_data: message,
+        data: [],
       },
-      { status: 500 }
+      { status: isConnectionError ? 503 : 500 }
     );
   }
 }

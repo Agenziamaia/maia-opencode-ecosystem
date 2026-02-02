@@ -6,9 +6,11 @@
  */
 
 import { tool } from "@opencode-ai/plugin";
-import { createLogger } from "../../../../UNIVERSAL/logger/src/index.js";
-
-const logger = createLogger({ useWinston: true });
+// Hardcoded logger removed. Using console.
+const logger = {
+  info: (msg: string, meta?: any) => console.log(`[VibeKanban] ${msg}`, meta || ''),
+  error: (msg: string, meta?: any) => console.error(`[VibeKanban] ${msg}`, meta || ''),
+};
 
 const getBaseUrl = () => process.env.VIBE_KANBAN_URL || `http://${process.env.VIBE_KANBAN_HOST || '127.0.0.1'}:${process.env.VIBE_KANBAN_PORT || '62601'}`;
 

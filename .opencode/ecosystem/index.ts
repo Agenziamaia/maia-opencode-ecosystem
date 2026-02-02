@@ -38,13 +38,19 @@ export * from './constitution/index.js';
 // META-LEARNING
 // ============================================================================
 
-export * from './meta-learning/index.js';
+export * from './meta-learning.js';
+
+// ============================================================================
+// ORCHESTRATOR
+// ============================================================================
+
+export * from './orchestrator/index.js';
 
 // ============================================================================
 // MEMORY
 // ============================================================================
 
-export * from '../memory/memory-store.js';
+// export * from '../memory/memory-store.js'; // Removed to prevent circular dependency with memory-tools
 
 // ============================================================================
 // TOOLS
@@ -58,8 +64,24 @@ export * from './tools/swarm-tools.js';
 
 /**
  * Initialize the ecosystem foundation
+ * Starts the daemon, loads persisted state, and activates governance
  */
-export function initializeEcosystem(): void {
+export async function initializeEcosystem(): Promise<void> {
+  const { getMaiaDaemon } = await import('./execution/maia-daemon.js');
+  const { loadState } = await import('./persistence.js');
+
+  // Load persisted state (DNA patterns, council decisions, etc.)
+  try {
+    await loadState();
+    console.log('🌱 Ecosystem: Persisted state loaded');
+  } catch {
+    console.log('🌱 Ecosystem: No persisted state found, starting fresh');
+  }
+
+  // Start the daemon (heartbeat, event binding)
+  const daemon = getMaiaDaemon();
+  await daemon.wakeUp();
+
   console.log('🌱 Living Ecosystem Foundation initialized');
   console.log('   - DNA Tracking: Active');
   console.log('   - Council Voting: Ready');
@@ -68,4 +90,5 @@ export function initializeEcosystem(): void {
   console.log('   - Predictive Engine: Anticipating');
   console.log('   - OpenCode Integration: Connected');
   console.log('   - Swarm Intelligence: Collective');
+  console.log('   - Orchestrator: Standby');
 }

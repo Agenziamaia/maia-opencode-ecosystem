@@ -741,14 +741,18 @@ export class MaiaOrchestrator extends EventEmitter {
    * Assign an agent to a single task
    */
   private async assignAgent(task: SubTask): Promise<AssignedTask> {
-    let agentId: AgentId;
-    let assignmentMethod: AssignedTask['assignmentMethod'];
-    let assignmentReason: string;
+    let agentId: AgentId = 'maia';
+    let assignmentMethod: AssignedTask['assignmentMethod'] = 'auto';
+    let assignmentReason: string = 'Default assignment to MAIA';
     let backupAgents: AgentId[] = [];
 
     // 1. Check DNA pattern match first
     if (this.config.enableDNALearning && task.dnaPatternMatch) {
-      const patternAgents = task.dnaPatternMatch.pattern.recommended_agents;
+      // Look up full pattern from DNA tracker by patternId
+      const fullPattern = this.dna.getAllPatterns().find(
+        p => p.id === task.dnaPatternMatch!.patternId
+      );
+      const patternAgents = fullPattern?.recommended_agents ?? [];
       if (patternAgents.length > 0) {
         // Find first available agent from pattern
         for (const patternAgent of patternAgents) {
@@ -763,7 +767,7 @@ export class MaiaOrchestrator extends EventEmitter {
     }
 
     // 2. Use auto-assignment if DNA didn't assign
-    if (!agentId) {
+    if (agentId === 'maia' && assignmentMethod === 'auto' && assignmentReason.startsWith('Default')) {
       const assignment = this.agents.autoAssign(task.title, task.description);
       if (assignment) {
         agentId = assignment.primary_agent;
@@ -773,14 +777,7 @@ export class MaiaOrchestrator extends EventEmitter {
       }
     }
 
-    // 3. Fallback to MAIA if no assignment
-    if (!agentId) {
-      agentId = 'maia';
-      assignmentMethod = 'auto';
-      assignmentReason = 'Fallback to MAIA (orchestrator)';
-    }
-
-    // 4. Health check the assigned agent
+    // 3. Health check the assigned agent
     const isHealthy = await this.agents.healthCheck(agentId);
     if (!isHealthy && backupAgents.length > 0) {
       // Try backup agents
@@ -944,7 +941,10 @@ export class MaiaOrchestrator extends EventEmitter {
 
     try {
       // Use MaiaDaemon to dispatch the task
-      const executionTask = await this.daemon.dispatch(task.description, task.assignedAgent);
+      const executionTask = await this.daemon.dispatch(task.description, {
+        preferredAgent: task.assignedAgent,
+        context: { orchestratorTaskId: task.id },
+      });
       task.executionTaskId = executionTask.id;
 
       // Wait for task completion with timeout
@@ -1453,11 +1453,12 @@ export class MaiaOrchestrator extends EventEmitter {
       this.emit('task:completed', task);
     });
 
-    // Handle agent health changes
+    // Handle agent health changes (store original reference to avoid infinite recursion)
+    const originalGetAgent = this.agents.getAgent.bind(this.agents);
     this.agents.getAgent = (agentId) => {
       // Emit health status changes
       this.emit('agent:health', { agentId, healthy: this.agents.isAvailable(agentId) });
-      return this.agents.getAgent(agentId);
+      return originalGetAgent(agentId);
     };
   }
 

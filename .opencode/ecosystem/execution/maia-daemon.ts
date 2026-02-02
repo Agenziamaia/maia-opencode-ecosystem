@@ -166,24 +166,30 @@ export class MaiaDaemon extends EventEmitter {
     // ============================================================
     if (!options.skipConstitution) {
       try {
-        const action: AgentAction = {
-          type: 'task_dispatch',
-          agent: options.requestingAgent || 'unknown',
+        const action: any = { // Temporary any cast until AgentAction type is aligned
+          actionType: 'task_dispatch',
+          agentId: options.requestingAgent || 'unknown',
+          target: 'system',
           description: instruction,
           context: options.context || {},
+          timestamp: new Date().toISOString()
         };
 
-        const ruling = evaluateAction(action);
+        const result = evaluateAction(action);
         governance.constitutionChecked = true;
-        governance.constitutionRuling = ruling;
+        governance.constitutionRuling = result.ruling;
 
-        if (!ruling.canProceed) {
-          console.log(`⚖️ CONSTITUTION BLOCKED: ${ruling.reason}`);
-          throw new Error(`Constitution blocked this action: ${ruling.reason}`);
+        if (!result.canProceed) {
+          // Derive reason from violated principles
+          const reason = result.ruling.violatedPrinciples.length > 0
+            ? result.ruling.violatedPrinciples[0].explanation
+            : 'Action violates constitutional principles';
+          console.log(`⚖️ CONSTITUTION BLOCKED: ${reason}`);
+          throw new Error(`Constitution blocked this action: ${reason}`);
         }
 
-        if (ruling.alternatives && ruling.alternatives.length > 0) {
-          console.log(`⚖️ Constitution suggests ${ruling.alternatives.length} alternative(s)`);
+        if (result.ruling.suggestions && result.ruling.suggestions.length > 0) {
+          console.log(`⚖️ Constitution suggests ${result.ruling.suggestions.length} improvement(s)`);
         }
       } catch (e) {
         // If Constitution check actually fails (not just a ruling), re-throw
@@ -201,6 +207,7 @@ export class MaiaDaemon extends EventEmitter {
     // STEP 2: DNA-AWARE AGENT SELECTION
     // ============================================================
     let agentId = options.preferredAgent;
+    let proposalId: string | undefined;
 
     if (!agentId) {
       agentId = await this.decideAgentWithDNA(instruction, options);
@@ -265,7 +272,7 @@ export class MaiaDaemon extends EventEmitter {
         console.log(`🏛️ Council APPROVED: ${result.reason}`);
 
         // Store proposal ID for later feedback
-        (task as any).councilProposalId = result.proposal.id;
+        proposalId = result.proposal.id;
 
       } catch (e) {
         // If it's a Council rejection error, re-throw it
@@ -305,6 +312,7 @@ export class MaiaDaemon extends EventEmitter {
         priority: 'normal',
         metadata: {
           governance,
+          councilProposalId: proposalId,
           requestingAgent: options.requestingAgent,
         },
       }
@@ -559,18 +567,41 @@ export class MaiaDaemon extends EventEmitter {
 
   /**
    * RESILIENCE: Monitor for stalls
+   * Checks task health at intervals and escalates if stalled
    */
-  private async monitorTaskHealth(taskId: string) {
-    setTimeout(async () => {
+  private monitorTaskHealth(taskId: string, intervalMs: number = 30000) {
+    const checkHealth = () => {
       const task = this.execution.getTask(taskId);
-      if (task && task.status === 'running') {
-        console.log(`🦅 DAEMON RESILIENCE: Task ${taskId} still running, checking git...`);
-        try {
-          // Check if any commits happened
-          // In full implementation, use git log
-        } catch (e) { /* ignore */ }
+
+      if (!task) {
+        console.log(`🦅 DAEMON: Task ${taskId} no longer exists, stopping monitor`);
+        return; // Task was deleted, stop monitoring
       }
-    }, 10000);
+
+      if (task.status === 'completed' || task.status === 'failed') {
+        console.log(`🦅 DAEMON: Task ${taskId} finished with status ${task.status}`);
+        return; // Task finished, stop monitoring
+      }
+
+      if (task.status === 'running') {
+        const startTime = task.startedAt ? new Date(task.startedAt).getTime() : Date.now();
+        const runningFor = Date.now() - startTime;
+        const runningMinutes = Math.floor(runningFor / 60000);
+
+        if (runningMinutes >= 5) {
+          console.log(`⚠️ DAEMON RESILIENCE: Task ${taskId} running for ${runningMinutes}min - potential stall`);
+          // Could escalate here: notify council, reassign agent, etc.
+        } else {
+          console.log(`🦅 DAEMON: Task ${taskId} still running (${runningMinutes}min)`);
+        }
+
+        // Schedule next check
+        setTimeout(checkHealth, intervalMs);
+      }
+    };
+
+    // Start monitoring after initial delay
+    setTimeout(checkHealth, intervalMs);
   }
 
   /**

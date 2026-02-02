@@ -65,36 +65,110 @@ export class SoulMutator {
     }
 
     /**
-     * Calculate "Information Entropy"
-     * Simple heuristic: Line count + redundancy check
+     * Calculate "Information Entropy" using TF-IDF semantic analysis
+     *
+     * Splits the profile into sections (by headings) and measures
+     * cross-section similarity. High similarity between sections means
+     * redundant content. This catches semantic repetition that simple
+     * term counting misses.
      */
     private calculateEntropy(content: string): { score: number; lines: number; redundancy: number } {
         const lines = content.split('\n');
-        const validLines = lines.filter(l => l.trim().length > 5);
+        const stopwords = new Set([
+            'the', 'and', 'for', 'are', 'but', 'not', 'you', 'all', 'can', 'had',
+            'her', 'was', 'one', 'our', 'out', 'has', 'have', 'that', 'this', 'with',
+            'from', 'they', 'been', 'will', 'each', 'make', 'like', 'when', 'than',
+            'them', 'some', 'only', 'then', 'into', 'just', 'your', 'what', 'most',
+            'also', 'should', 'must', 'agent', 'always', 'never', 'every', 'about',
+        ]);
 
-        // Check for redundancy (repeated terms)
-        const terms = content.toLowerCase().match(/\w+/g) || [];
+        // Split content into logical sections (by markdown headings)
+        const sections: string[] = [];
+        let currentSection = '';
+        for (const line of lines) {
+            if (line.startsWith('#')) {
+                if (currentSection.trim().length > 50) {
+                    sections.push(currentSection);
+                }
+                currentSection = '';
+            }
+            currentSection += line + ' ';
+        }
+        if (currentSection.trim().length > 50) {
+            sections.push(currentSection);
+        }
+
+        // Build TF vectors for each section
+        const sectionVectors: Map<string, number>[] = sections.map(section => {
+            const terms = section.toLowerCase().match(/\b[a-z]{4,}\b/g) || [];
+            const tf = new Map<string, number>();
+            for (const t of terms) {
+                if (stopwords.has(t)) continue;
+                tf.set(t, (tf.get(t) || 0) + 1);
+            }
+            // Normalize
+            const max = Math.max(...tf.values(), 1);
+            for (const [k, v] of tf) tf.set(k, v / max);
+            return tf;
+        });
+
+        // Compute pairwise cosine similarity between sections
+        let totalSimilarity = 0;
+        let pairCount = 0;
+        for (let i = 0; i < sectionVectors.length; i++) {
+            for (let j = i + 1; j < sectionVectors.length; j++) {
+                totalSimilarity += this.cosineSimilarity(sectionVectors[i], sectionVectors[j]);
+                pairCount++;
+            }
+        }
+
+        const avgSimilarity = pairCount > 0 ? totalSimilarity / pairCount : 0;
+
+        // Also compute basic term redundancy as fallback
+        const allTerms = content.toLowerCase().match(/\b[a-z]{4,}\b/g) || [];
         const termCounts: Record<string, number> = {};
         let repeats = 0;
-
-        terms.forEach(t => {
-            if (t.length < 4) return; // ignore small words
+        allTerms.forEach(t => {
+            if (stopwords.has(t)) return;
             termCounts[t] = (termCounts[t] || 0) + 1;
             if (termCounts[t] > 5) repeats++;
         });
+        const termRedundancy = allTerms.length > 0 ? repeats / allTerms.length : 0;
 
-        // Score calculation
-        // 1.0 is the "Review Threshold"
-        // > 500 lines OR > 20% redundancy triggers review
-        const redundancyScore = repeats / terms.length;
-        let score = lines.length / ENTROPY_THRESHOLD_LINES;
-        score += redundancyScore * 2; // Penalize redundancy heavily
+        // Combined score: size + semantic redundancy + term redundancy
+        const sizeScore = lines.length / ENTROPY_THRESHOLD_LINES;
+        const semanticScore = avgSimilarity * 3; // High cross-section similarity is bad
+        const termScore = termRedundancy * 2;
+
+        const score = sizeScore * 0.4 + semanticScore * 0.4 + termScore * 0.2;
 
         return {
             score,
             lines: lines.length,
-            redundancy: redundancyScore
+            redundancy: Math.max(avgSimilarity, termRedundancy)
         };
+    }
+
+    /**
+     * Cosine similarity between two TF vectors
+     */
+    private cosineSimilarity(a: Map<string, number>, b: Map<string, number>): number {
+        let dotProduct = 0;
+        let normA = 0;
+        let normB = 0;
+
+        for (const [term, weight] of a) {
+            normA += weight * weight;
+            if (b.has(term)) {
+                dotProduct += weight * b.get(term)!;
+            }
+        }
+        for (const weight of b.values()) {
+            normB += weight * weight;
+        }
+
+        const denom = Math.sqrt(normA) * Math.sqrt(normB);
+        return denom > 0 ? dotProduct / denom : 0;
     }
 
     /**
@@ -128,10 +202,20 @@ export class SoulMutator {
             await this.council.propose({
                 title: `Soul Mutation: ${proposal.type.toUpperCase()} for @${proposal.agent}`,
                 description: `${proposal.reason}. ${proposal.suggestedAction}`,
-                author: 'system.soul-mutator',
-                category: 'architectural',
-                magnitude: 'minor',
-                tags: ['mutation', proposal.agent, proposal.type]
+                proposalType: 'architectural', // Correct mapped type
+                proposedBy: 'system.soul-mutator', // Correct field
+                expertiseWeights: true, // Required
+                vetoPower: true, // Required
+                consensusThreshold: 0.6, // Required
+                estimatedImpact: 'low', // Map 'minor' -> 'low'
+                expiresAt: new Date(Date.now() + 86400000).toISOString(), // 24h expiry
+                context: {
+                    risks: ['Agents becoming too specialized', 'Loss of broad capabilities'],
+                    benefits: ['Reduced redundancy', 'Clearer agent responsibilities'],
+                    alternatives: ['Do nothing', 'Manual refactor'],
+                    affectedAgents: [proposal.agent],
+                    affectedSystems: ['agent-profile']
+                }
             });
             console.log(`🦅 SOUL MUTATOR: Submitted ${proposal.type} proposal for @${proposal.agent}`);
         } catch (error) {

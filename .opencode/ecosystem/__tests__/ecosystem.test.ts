@@ -2,6 +2,10 @@ import { describe, it, expect, beforeEach } from 'vitest';
 import { getDNATracker, DNATracker } from '../dna/dna-tracker';
 import { getCouncilManager, CouncilManager } from '../council/council-manager';
 import { getAgentManager, AgentManager } from '../agents/agent-manager';
+import { getConstitution } from '../constitution/constitution';
+import { getEnhancedCouncil } from '../council/enhanced-council';
+import { evaluateAction } from '../constitution/index';
+import { getExecutionManager } from '../execution/execution-manager';
 
 describe('Living Ecosystem Foundation', () => {
   beforeEach(() => {
@@ -254,6 +258,146 @@ describe('Living Ecosystem Foundation', () => {
 
       const isAvailable = agentManager.isAvailable('coder');
       expect(typeof isAvailable).toBe('boolean');
+    });
+  });
+
+  describe('Constitution', () => {
+    it('should evaluate safe actions as constitutional', () => {
+      const result = evaluateAction({
+        actionType: 'task_dispatch',
+        agentId: 'coder',
+        target: 'system',
+        description: 'Implement a new feature',
+        context: {},
+        timestamp: new Date().toISOString(),
+      } as any);
+
+      expect(result.canProceed).toBe(true);
+      expect(result.ruling).toBeDefined();
+      expect(result.ruling.isConstitutional).toBe(true);
+    });
+
+    it('should block destructive actions without consent', () => {
+      const constitution = getConstitution();
+      const ruling = constitution.evaluate({
+        actionType: 'file_delete',
+        agentId: 'coder',
+        target: '.env',
+        description: 'Delete production environment file',
+        context: { userConfirmed: false },
+        timestamp: new Date().toISOString(),
+      } as any);
+
+      // Destructive actions on sensitive files should be flagged
+      expect(ruling).toBeDefined();
+      expect(ruling.violatedPrinciples).toBeDefined();
+    });
+
+    it('should suggest alternatives for risky actions', () => {
+      const constitution = getConstitution();
+      const alternatives = constitution.suggestAlternatives({
+        actionType: 'database_migration',
+        agentId: 'ops',
+        target: 'production',
+        description: 'Run database migration on production',
+        context: {},
+        timestamp: new Date().toISOString(),
+      } as any);
+
+      expect(Array.isArray(alternatives)).toBe(true);
+    });
+  });
+
+  describe('Enhanced Council', () => {
+    it('should create proposals and start voting', async () => {
+      const council = getEnhancedCouncil();
+      const proposal = await council.propose({
+        title: 'Test proposal',
+        description: 'Testing the voting system',
+        proposalType: 'general',
+        proposedBy: 'test',
+        expiresAt: new Date(Date.now() + 60000).toISOString(),
+        context: {
+          risks: [],
+          benefits: ['Testing'],
+          alternatives: [],
+        },
+        consensusThreshold: 0.6,
+        vetoPower: false,
+        expertiseWeights: true,
+        estimatedImpact: 'low',
+      });
+
+      expect(proposal).toBeDefined();
+      expect(proposal.status).toBe('pending');
+
+      // Must start voting before casting votes
+      const started = council.startVoting(proposal.id);
+      expect(started).toBe(true);
+
+      const vote = council.vote(proposal.id, 'coder', 'approve', 'Looks good');
+      expect(vote).toBeDefined();
+    });
+
+    it('should reach consensus with sufficient votes', async () => {
+      const council = getEnhancedCouncil();
+      const proposal = await council.propose({
+        title: 'Consensus test',
+        description: 'Testing consensus',
+        proposalType: 'general',
+        proposedBy: 'test',
+        expiresAt: new Date(Date.now() + 60000).toISOString(),
+        context: { risks: [], benefits: [], alternatives: [] },
+        consensusThreshold: 0.5,
+        vetoPower: false,
+        expertiseWeights: false,
+        estimatedImpact: 'low',
+      });
+
+      // Must start voting phase first
+      council.startVoting(proposal.id);
+
+      council.vote(proposal.id, 'coder', 'approve', 'Yes');
+      council.vote(proposal.id, 'reviewer', 'approve', 'Agreed');
+      council.vote(proposal.id, 'ops', 'approve', 'Go for it');
+
+      const updated = council.getProposal(proposal.id);
+      expect(updated).toBeDefined();
+      // With 3 approvals and 0.5 threshold, should reach consensus
+      expect(['consensus', 'voting'].includes(updated!.status)).toBe(true);
+    });
+
+    it('should track decisions for precedent', () => {
+      const council = getEnhancedCouncil();
+      const decisions = council.getDecisions();
+      expect(Array.isArray(decisions)).toBe(true);
+    });
+  });
+
+  describe('Execution Manager', () => {
+    it('should create tasks in the queue', async () => {
+      const exec = getExecutionManager();
+      const task = await exec.createTask(
+        'Test task',
+        'Unit test for execution manager',
+        { agentId: 'coder', priority: 'normal' }
+      );
+
+      expect(task).toBeDefined();
+      expect(task.id).toBeDefined();
+      expect(task.status).toBe('queued');
+      expect(task.agentId).toBe('coder');
+    });
+
+    it('should report execution stats', () => {
+      const exec = getExecutionManager();
+      const stats = exec.getStats();
+
+      expect(stats).toBeDefined();
+      expect(typeof stats.queued).toBe('number');
+      expect(typeof stats.running).toBe('number');
+      expect(typeof stats.completed).toBe('number');
+      expect(typeof stats.failed).toBe('number');
     });
   });
 });

@@ -725,11 +725,71 @@ export class PredictiveEngine {
   detectRisks(workflow: Workflow, context: UserContext): Risk[] {
     const risks: Risk[] = [];
 
-    // Check for timeout risks
+    // Check for timeout risks using DNA history
+    const dna = getDNATracker();
     for (const task of workflow.tasks) {
-      if (task.status === 'running') {
-        // Check if task is running too long
-        // In production, would compare with actual start time
+      if (task.status === 'running' && task.startedAt) {
+        const runningMs = Date.now() - new Date(task.startedAt).getTime();
+        // Use DNA to find historical average for similar tasks
+        const match = dna.findPattern(task.title, task.description);
+        const expectedMs = match?.pattern.avg_completion_time_ms || 300000; // 5min default
+
+        if (runningMs > expectedMs * 2) {
+          risks.push({
+            id: `risk_${Date.now()}_timeout_${task.id}`,
+            severity: runningMs > expectedMs * 3 ? 'error' : 'warning',
+            category: 'timeout',
+            title: `Task ${task.id} exceeding expected duration`,
+            description: `Running for ${Math.floor(runningMs / 60000)}min, expected ~${Math.floor(expectedMs / 60000)}min based on ${match ? 'DNA pattern' : 'default estimate'}`,
+            probability: 0.7,
+            timeframe: 'Now',
+            mitigation: [
+              {
+                strategy: 'Check task progress',
+                description: 'Verify if the agent is making progress or stalled',
+                type: 'reactive',
+                effort: 'low',
+                effectiveness: 0.8
+              },
+              {
+                strategy: 'Reassign to backup agent',
+                description: `Consider reassigning from @${task.assignedAgent || 'unknown'}`,
+                type: 'reactive',
+                effort: 'medium',
+                effectiveness: 0.7
+              }
+            ],
+            detectedAt: new Date().toISOString(),
+            status: 'detected'
+          });
+        }
+      }
+
+      // Check for quality risks using DNA agent performance
+      if (task.assignedAgent) {
+        const agentPerf = dna.analyzeAgentPerformance(task.assignedAgent);
+        if (agentPerf.successRate < 0.5 && agentPerf.taskCount >= 3) {
+          risks.push({
+            id: `risk_${Date.now()}_quality_${task.id}`,
+            severity: 'warning',
+            category: 'quality',
+            title: `Low success rate for @${task.assignedAgent}`,
+            description: `Agent has ${(agentPerf.successRate * 100).toFixed(0)}% success rate over ${agentPerf.taskCount} tasks`,
+            probability: 0.8,
+            timeframe: 'Soon',
+            mitigation: [
+              {
+                strategy: 'Assign backup agent',
+                description: 'Route to a higher-performing agent for this task type',
+                type: 'preventive',
+                effort: 'low',
+                effectiveness: 0.9
+              }
+            ],
+            detectedAt: new Date().toISOString(),
+            status: 'detected'
+          });
+        }
       }
     }
 

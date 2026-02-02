@@ -353,9 +353,9 @@
     }
   },
   "command": {
-    "init": {
+    "start": {
       "description": "WAKEUP GOD MODE. Initialize the Dream Team.",
-      "template": "Execute WAKEUP.sh protocol. Verify all 20 agents. Report status.",
+      "template": "Execute .agent/workflows/start.md. Ignite Infrastructure and Verify Agents.",
       "agent": "maia"
     },
     "plan": {

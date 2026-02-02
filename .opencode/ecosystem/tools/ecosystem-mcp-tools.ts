@@ -3,6 +3,7 @@ import { getCouncilManager, VoteType } from "../council/council-manager";
 import { getDNATracker } from "../dna/dna-tracker";
 import { getAgentManager } from "../agents/agent-manager";
 import { getSemanticService } from "../utils/semantic-service";
+import { getMaiaOrchestrator } from "../orchestrator/maia-orchestrator";
 
 const getBaseUrl = () =>
   process.env.VIBE_KANBAN_URL || "http://localhost:62601";
@@ -465,6 +466,47 @@ export const ecosystem_health = tool({
     const availableAgents = agentManager.getAvailableAgents();
 
     return `🌱 Living Ecosystem Health\n\n🤖 Agents:\n  Available: ${availableAgents.length}\n  Total: ${Object.keys(loadStats).length}\n\n🗳️ Council:\n  Active decisions: ${activeDecisions.length}\n\n🧬 DNA:\n  Learned patterns: ${patterns.length}\n\n📊 Overall: ${availableAgents.length > 0 && patterns.length > 0 ? "✅ Healthy" : "⚠️ Needs attention"}`;
+  },
+});
+
+/**
+ * Orchestrator tools
+ */
+export const orchestrate_objective = tool({
+  description: "Orchestrate a multi-agent workflow from a natural language objective. Decomposes complex tasks into subtasks, assigns agents, and executes the workflow.",
+  args: {
+    objective: tool.schema.string().describe("The objective to accomplish (e.g. 'Build a REST API with authentication')"),
+  },
+  async execute(args) {
+    const orchestrator = getMaiaOrchestrator();
+
+    try {
+      const deliverable = await orchestrator.orchestrate(args.objective);
+
+      return `🎯 Orchestration Complete\n\n**Objective**: ${deliverable.objective}\n\n**Summary**:\n${deliverable.summary}\n\n**Metrics**:\n  Tasks: ${deliverable.metrics.completedTasks}/${deliverable.metrics.totalTasks}\n  Success rate: ${(deliverable.metrics.successRate * 100).toFixed(1)}%\n  Duration: ${(deliverable.metrics.totalDuration / 1000).toFixed(1)}s\n  Agents: ${deliverable.metrics.agentsInvolved.map(a => `@${a}`).join(', ')}\n\n${deliverable.nextActions && deliverable.nextActions.length > 0 ? `**Next Actions**:\n${deliverable.nextActions.map(a => `  - ${a}`).join('\n')}` : ''}`;
+    } catch (error) {
+      return `❌ Orchestration failed: ${error instanceof Error ? error.message : String(error)}`;
+    }
+  },
+});
+
+export const orchestrate_plan = tool({
+  description: "Create an execution plan for an objective without executing it. Returns the plan, subtasks, and agent assignments for review.",
+  args: {
+    objective: tool.schema.string().describe("The objective to plan"),
+  },
+  async execute(args) {
+    const orchestrator = getMaiaOrchestrator();
+
+    const plan = await orchestrator.createPlan(args.objective);
+    const subtasks = await orchestrator.decomposeTasks(plan);
+    const assigned = await orchestrator.assignAgents(subtasks);
+
+    const taskList = assigned.map(t =>
+      `  - ${t.title} -> @${t.assignedAgent} (${t.assignmentMethod}: ${t.assignmentReason})`
+    ).join('\n');
+
+    return `📋 Execution Plan\n\n**Objective**: ${plan.objective}\n**Type**: ${plan.objectiveType}\n**Strategy**: ${plan.strategy}\n**Confidence**: ${(plan.confidence * 100).toFixed(1)}%\n**Reasoning**: ${plan.reasoning}\n\n**Tasks** (${assigned.length}):\n${taskList}`;
   },
 });
 
