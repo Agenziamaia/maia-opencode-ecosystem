@@ -22,3 +22,12 @@ build/
 
 # Large Archives (Optional, but safe)
 ARCHIVE/
+tsconfig.tsbuildinfo
+.DS_Store
+**/.DS_Store
+!/Users/g/Desktop/MAIA opencode/.opencode/archive_summaries/
+
+# Runtime-generated ecosystem files
+.opencode/persistence/
+.opencode/agents/*/WORKING.md
+.opencode/swarm/data/

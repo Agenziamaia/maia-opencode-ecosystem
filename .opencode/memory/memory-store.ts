@@ -13,9 +13,14 @@
 
 import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'fs';
 import { join } from 'path';
-import { createLogger } from '../../../UNIVERSAL/logger/src/index.js';
 
-const logger = createLogger({ useWinston: true });
+// Mock Logger to remove dependency on broken UNIVERSAL path
+const logger = {
+  info: (msg: string, data?: any) => console.log(`[INFO] ${msg}`, data || ''),
+  error: (msg: string, data?: any) => console.error(`[ERROR] ${msg}`, data || ''),
+  warn: (msg: string, data?: any) => console.warn(`[WARN] ${msg}`, data || ''),
+  debug: (msg: string, data?: any) => console.debug(`[DEBUG] ${msg}`, data || ''),
+};
 
 const MEMORY_DIR = '.opencode/memory';
 
@@ -294,6 +299,94 @@ class MemoryStore {
 
     logger.info('Memories pruned', { count: pruned });
     return pruned;
+  }
+  /**
+   * Archive memories to disk
+   */
+  private async archiveMemories(memories: Memory[]): Promise<boolean> {
+    if (memories.length === 0) return true;
+
+    const archiveDir = join(process.cwd(), '.opencode', 'archive', 'memory');
+    if (!existsSync(archiveDir)) {
+      mkdirSync(archiveDir, { recursive: true });
+    }
+
+    const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+    const archivePath = join(archiveDir, `archive-${timestamp}.json`);
+
+    try {
+      const data = JSON.stringify(memories, null, 2);
+      writeFileSync(archivePath, data);
+      logger.info(`Archived ${memories.length} memories to ${archivePath}`);
+      return true;
+    } catch (error) {
+      logger.error('Failed to archive memories', { error });
+      return false;
+    }
+  }
+
+  /**
+   * Consolidate repetitive memories into a pattern
+   */
+  async consolidate(tag: string, minCount: number = 5): Promise<string | null> {
+    const memories = this.getByTag(tag);
+    if (memories.length < minCount) return null;
+
+    // Successful consolidation candidate
+    const successMemories = memories.filter(m => m.type === 'success');
+    if (successMemories.length >= minCount) {
+      // Create synthesis
+      const patternTitle = `Consolidated: ${tag}`;
+      const patternContent = `Synthesized from ${successMemories.length} successful tasks tagged '${tag}'.\n\n` +
+        `Common approach: Tasks generally followed standard ${tag} implementation patterns.\n` +
+        `Consolidated on: ${new Date().toISOString()}`;
+
+      // Store pattern
+      const patternId = this.store({
+        type: 'pattern',
+        agent: 'system',
+        title: patternTitle,
+        content: patternContent,
+        tags: ['consolidated', tag],
+        confidence: 1.0
+      });
+
+      // Archive and remove originals
+      const archived = await this.archiveMemories(successMemories);
+      if (archived) {
+        successMemories.forEach(m => this.delete(m.id));
+        logger.info(`Consolidated ${successMemories.length} memories into pattern ${patternId}`);
+        return patternId;
+      }
+    }
+    return null;
+  }
+
+  /**
+   * Check entropy and trigger cleanup if needed
+   */
+  async checkEntropy(threshold: number = 1000): Promise<void> {
+    if (this.memories.size < threshold) return;
+
+    logger.info('Memory entropy threshold reached. Starting consolidation...');
+
+    // Find top tags
+    const stats = this.getStats();
+    for (const { tag } of stats.topTags) {
+      await this.consolidate(tag);
+    }
+
+    // If still over threshold, archive oldest low-confidence memories
+    if (this.memories.size > threshold) {
+      const extra = this.memories.size - threshold;
+      const candidates = Array.from(this.memories.values())
+        .filter(m => (m.confidence || 0) < 0.8 && m.type !== 'pattern')
+        .sort((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime())
+        .slice(0, extra + 50); // clear a buffer
+
+      await this.archiveMemories(candidates);
+      candidates.forEach(m => this.delete(m.id));
+    }
   }
 }
 

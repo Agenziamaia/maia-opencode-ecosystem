@@ -1,0 +1,126 @@
+{
+  "memories": {
+    "mem_1770031277803_9pkkcreu1": {
+      "type": "failure",
+      "agent": "maia",
+      "title": "Failure: God Mode Validation Task",
+      "content": "Task failed.\n\nReason: TypeError: Failed to parse URL from /session\nCharacteristics: ",
+      "tags": [
+        "failure",
+        "failure_pattern_general_1770031277802",
+        "maia"
+      ],
+      "id": "mem_1770031277803_9pkkcreu1",
+      "timestamp": "2026-02-02T11:21:17.803Z"
+    },
+    "mem_1770031278897_ufzg14mll": {
+      "type": "failure",
+      "agent": "maia",
+      "title": "Failure: God Mode Validation Task",
+      "content": "Task failed.\n\nReason: TypeError: Failed to parse URL from /session\nCharacteristics: ",
+      "tags": [
+        "failure",
+        "failure_pattern_general_1770031278897",
+        "maia"
+      ],
+      "id": "mem_1770031278897_ufzg14mll",
+      "timestamp": "2026-02-02T11:21:18.897Z"
+    },
+    "mem_1770031333122_yvr5xw1xa": {
+      "type": "failure",
+      "agent": "maia",
+      "title": "Failure: God Mode Validation Task",
+      "content": "Task failed.\n\nReason: TypeError: Cannot read properties of undefined (reading 'status')\nCharacteristics: ",
+      "tags": [
+        "failure",
+        "failure_pattern_general_1770031333122",
+        "maia"
+      ],
+      "id": "mem_1770031333122_yvr5xw1xa",
+      "timestamp": "2026-02-02T11:22:13.122Z"
+    },
+    "mem_1770031334156_208x7gebd": {
+      "type": "failure",
+      "agent": "maia",
+      "title": "Failure: God Mode Validation Task",
+      "content": "Task failed.\n\nReason: TypeError: Cannot read properties of undefined (reading 'status')\nCharacteristics: ",
+      "tags": [
+        "failure",
+        "failure_pattern_general_1770031334156",
+        "maia"
+      ],
+      "id": "mem_1770031334156_208x7gebd",
+      "timestamp": "2026-02-02T11:22:14.156Z"
+    },
+    "mem_1770031336161_otycrt8zt": {
+      "type": "failure",
+      "agent": "coder",
+      "title": "Failure: Wake Up: god-mode-test-pattern Updated",
+      "content": "Task failed.\n\nReason: TypeError: Cannot read properties of undefined (reading 'status')\nCharacteristics: test",
+      "tags": [
+        "failure",
+        "failure_pattern_test_1770031336161",
+        "test",
+        "coder"
+      ],
+      "id": "mem_1770031336161_otycrt8zt",
+      "timestamp": "2026-02-02T11:22:16.161Z"
+    },
+    "mem_1770031338165_wtffnkht4": {
+      "type": "failure",
+      "agent": "coder",
+      "title": "Failure: Wake Up: god-mode-test-pattern Updated",
+      "content": "Task failed.\n\nReason: TypeError: Cannot read properties of undefined (reading 'status')\nCharacteristics: test",
+      "tags": [
+        "failure",
+        "failure_pattern_test_1770031338165",
+        "test",
+        "coder"
+      ],
+      "id": "mem_1770031338165_wtffnkht4",
+      "timestamp": "2026-02-02T11:22:18.165Z"
+    }
+  },
+  "index": {
+    "failure": [
+      "mem_1770031277803_9pkkcreu1",
+      "mem_1770031278897_ufzg14mll",
+      "mem_1770031333122_yvr5xw1xa",
+      "mem_1770031334156_208x7gebd",
+      "mem_1770031336161_otycrt8zt",
+      "mem_1770031338165_wtffnkht4"
+    ],
+    "failure_pattern_general_1770031277802": [
+      "mem_1770031277803_9pkkcreu1"
+    ],
+    "maia": [
+      "mem_1770031277803_9pkkcreu1",
+      "mem_1770031278897_ufzg14mll",
+      "mem_1770031333122_yvr5xw1xa",
+      "mem_1770031334156_208x7gebd"
+    ],
+    "failure_pattern_general_1770031278897": [
+      "mem_1770031278897_ufzg14mll"
+    ],
+    "failure_pattern_general_1770031333122": [
+      "mem_1770031333122_yvr5xw1xa"
+    ],
+    "failure_pattern_general_1770031334156": [
+      "mem_1770031334156_208x7gebd"
+    ],
+    "failure_pattern_test_1770031336161": [
+      "mem_1770031336161_otycrt8zt"
+    ],
+    "test": [
+      "mem_1770031336161_otycrt8zt",
+      "mem_1770031338165_wtffnkht4"
+    ],
+    "coder": [
+      "mem_1770031336161_otycrt8zt",
+      "mem_1770031338165_wtffnkht4"
+    ],
+    "failure_pattern_test_1770031338165": [
+      "mem_1770031338165_wtffnkht4"
+    ]
+  }
+}

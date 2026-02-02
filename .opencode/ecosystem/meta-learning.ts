@@ -14,8 +14,11 @@
  * - Outputs actionable insights: "Change @coder's prompt to include Z"
  */
 
-import { getMemoryStore, type Memory, type MemoryType } from '../memory/memory-store';
-import { getDNATracker, type Pattern, type TaskDNA } from './dna/dna-tracker';
+// CJS Interop for Memory Store
+import MemoryStorePkg from '../memory/memory-store.js';
+const { getMemoryStore } = MemoryStorePkg;
+import type { Memory, MemoryType } from '../memory/memory-store.js';
+import { getDNATracker, type Pattern, type TaskDNA } from './dna/dna-tracker.js';
 
 /**
  * Agent performance statistics
@@ -473,8 +476,8 @@ export class MetaLearningEngine {
     return `Weekly Learning Sync Summary:\n` +
       `- ${agentCount} agents analyzed\n` +
       `- Average success rate: ${(avgSuccessRate * 100).toFixed(0)}%\n` +
-           `- ${highPriorityInsights} high-priority insights to act on\n` +
-           `- ${this.avoidList.size} failure patterns to avoid`;
+      `- ${highPriorityInsights} high-priority insights to act on\n` +
+      `- ${this.avoidList.size} failure patterns to avoid`;
   }
 
   /**

@@ -18,6 +18,8 @@ import { spawn } from 'child_process';
 import { promises as fs } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
+import { EventEmitter } from 'events';
+import { executeAgentSession } from './opencode-client.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -101,7 +103,7 @@ export interface ExecutionManagerConfig {
 /**
  * Main Execution Manager Class
  */
-export class ExecutionManager {
+export class ExecutionManager extends EventEmitter {
   private mode: ExecutionMode;
   private maxParallelTasks: number;
   private worktreeBasePath: string;
@@ -126,6 +128,7 @@ export class ExecutionManager {
   private processInterval: NodeJS.Timeout | null;
 
   constructor(config: ExecutionManagerConfig = {}) {
+    super();
     // Read execution mode from environment or config (default: SEQUENTIAL for safety)
     this.mode = config.mode ||
       (process.env.EXECUTION_MODE?.toUpperCase() as ExecutionMode) ||
@@ -226,6 +229,8 @@ export class ExecutionManager {
 
   /**
    * Create a new task
+   * - PARALLEL mode: Starts execution immediately (fire-and-forget)
+   * - SEQUENTIAL mode: Adds to queue for later execution
    */
   async createTask(
     title: string,
@@ -251,13 +256,17 @@ export class ExecutionManager {
 
     this.tasks.set(task.id, task);
 
-    // In PARALLEL mode, prepare worktree immediately if we have a git repo
-    if (this.mode === 'PARALLEL' && this.gitRoot) {
-      await this.prepareParallelTask(task);
-    }
-
-    // In SEQUENTIAL mode, add to queue
-    if (this.mode === 'SEQUENTIAL') {
+    if (this.mode === 'PARALLEL') {
+      // In PARALLEL mode, prepare worktree and start execution immediately
+      if (this.gitRoot) {
+        await this.prepareParallelTask(task);
+      }
+      // Fire and forget - don't await, let it run in parallel
+      this.startTask(task.id).catch(err => {
+        console.error(`[ExecutionManager] Parallel task failed to start:`, err);
+      });
+    } else {
+      // In SEQUENTIAL mode, add to queue for later processing
       this.enqueueTask(task);
     }
 
@@ -363,7 +372,7 @@ export class ExecutionManager {
   }
 
   /**
-   * Start executing a task
+   * Start executing a task - ACTUALLY EXECUTES THE AGENT
    */
   async startTask(taskId: string): Promise<boolean> {
     const task = this.tasks.get(taskId);
@@ -390,7 +399,69 @@ export class ExecutionManager {
     task.startedAt = new Date().toISOString();
     this.runningTasks.add(taskId);
 
-    return true;
+    // ACTUALLY EXECUTE THE AGENT
+    console.log(`[ExecutionManager] Starting task execution: ${task.id} - ${task.title}`);
+
+    try {
+      // PERISTENT FOCUS (God Mode): Write the task to the agent's working memory
+      if (task.agentId) {
+        await this.writeWorkingMemory(task.agentId, task);
+      }
+
+      // Execute the agent session
+      const result = await executeAgentSession({
+        agentId: task.agentId,
+        prompt: task.description,
+        timeout: task.metadata?.timeout || 300000, // 5 minutes default
+      });
+
+      console.log(`[ExecutionManager] Task ${task.id} completed with status: ${result.status}`);
+
+      // Handle completion based on result status
+      if (result.status === 'completed') {
+        await this.completeTask(taskId, true);
+        return true;
+      } else if (result.status === 'timeout') {
+        await this.completeTask(taskId, false, 'Task execution timed out');
+        return false;
+      } else {
+        await this.completeTask(taskId, false, `Task completed with unexpected status: ${result.status}`);
+        return false;
+      }
+    } catch (error) {
+      console.error(`[ExecutionManager] Task ${task.id} failed:`, error);
+      await this.completeTask(taskId, false, String(error));
+      return false;
+    }
+  }
+
+  /**
+   * GOD MODE: Write task context to WORKING.md
+   */
+  private async writeWorkingMemory(agentId: string, task: ExecutionTask): Promise<void> {
+    try {
+      const agentDir = join(process.cwd(), '.opencode', 'agents', agentId);
+      await fs.mkdir(agentDir, { recursive: true });
+
+      const workingPath = join(agentDir, 'WORKING.md');
+      const content = `# CURRENT FOCUS
+**Task ID**: ${task.id}
+**Started**: ${new Date().toISOString()}
+**Priority**: ${task.priority.toUpperCase()}
+
+## Objective
+${task.title}
+
+## Context
+${task.description}
+
+## Status
+IN_PROGRESS (PID: ${process.pid})
+`;
+      await fs.writeFile(workingPath, content);
+    } catch (error) {
+      console.warn(`Failed to write WORKING.md for ${agentId}:`, error);
+    }
   }
 
   /**
@@ -420,7 +491,10 @@ export class ExecutionManager {
       }
     }
 
-    // Cleanup worktree in parallel mode
+    // Emit completion event for the Orchestrator/Daemon
+    this.emit('taskCompleted', task);
+
+    // Cleanup worktree if auto-cleanup is enabled
     if (this.mode === 'PARALLEL' && this.autoCleanupWorktrees && task.worktreePath) {
       await this.cleanupWorktree(task);
     }
@@ -524,7 +598,8 @@ export class ExecutionManager {
   }
 
   /**
-   * Process the next task in the queue
+   * Process the next task in the queue (SEQUENTIAL mode)
+   * Executes tasks one at a time, waiting for completion before starting next
    */
   private async processQueue(): Promise<void> {
     if (this.isProcessing) {
@@ -548,11 +623,12 @@ export class ExecutionManager {
     this.isProcessing = true;
 
     const task = item.task;
+    console.log(`[ExecutionManager] Starting queued task: ${task.id} - ${task.title}`);
+
+    // startTask now actually executes the agent and awaits completion
     await this.startTask(task.id);
 
-    // Mark task as ready for agent to work on
-    // The actual completion will be called when the agent finishes
-    console.log(`Started task: ${task.id} - ${task.title}`);
+    console.log(`[ExecutionManager] Task finished: ${task.id}`);
 
     this.isProcessing = false;
   }

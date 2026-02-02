@@ -1,0 +1,50 @@
+# Claude temp files (don't pollute git)
+.claude/
+.claude-logs/
+.claude-tmp/
+
+# Token logs and conversation history (too large for git)
+conversation-history/
+token-logs/
+
+# Build artifacts (already tracked, but be explicit)
+dist/
+build/
+.next/
+*.log
+
+# Large files that shouldn't be in my context
+*.mp4
+*.mov
+*.zip
+*.tar.gz
+*.db
+*.sqlite
+
+# Node modules (keep them, but don't load into LLM context)
+node_modules/
+
+# Archive (external)
+ARCHIVE/
+ARCHIVE_*/
+
+# Test coverage (too large, use summary files instead)
+coverage/
+.nyc_output/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+
+# IDE (keep configs, exclude temp)
+.vscode/.marketplace
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db

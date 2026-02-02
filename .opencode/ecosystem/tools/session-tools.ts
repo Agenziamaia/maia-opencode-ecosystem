@@ -1,10 +1,16 @@
+/**
+ * Session Tools - Actual Agent Execution
+ *
+ * These tools now ACTUALLY SPAWN and execute agents using the OpenCode SDK.
+ */
 
 import { tool } from "@opencode-ai/plugin";
-import { getMaiaDaemon } from '../execution/maia-daemon.js';
+import { getMaiaDaemon, type DispatchOptions } from '../execution/maia-daemon.js';
+import { executeAgentSession, getSessionStatus, listSessions } from '../execution/opencode-client.js';
 import { readFileSync, existsSync } from 'fs';
 import { join } from 'path';
 
-// --- REAL CONFIG LOADING ---
+// --- CONFIG LOADING ---
 
 interface AgentConfig {
   id: string;
@@ -35,60 +41,173 @@ function loadAgentConfig(agentId: string): AgentConfig | null {
   }
 }
 
-// --- TOOLS ---
+// --- CORE SESSION TOOL ---
 
 export const session = tool({
-  description: "Dispatch a task to another agent via the MAIA Daemon.",
+  description: "ACTUALLY EXECUTE a task in another agent session (real execution, not mock).",
   args: {
     agent: tool.schema.string().describe("The ID of the agent (e.g., 'researcher', 'coder')."),
     text: tool.schema.string().describe("The instruction/prompt for the agent."),
-    mode: tool.schema.enum(["message", "background"]).optional().describe("Execution mode (default: message).")
+    timeout: tool.schema.number().optional().describe("Timeout in milliseconds (default: 300000 = 5 minutes).")
   },
   async execute(args) {
     // 1. Validate Agent
     const config = loadAgentConfig(args.agent);
     if (!config) {
-      throw new Error(`Agent '${args.agent}' not found in opencode.json. Available agents: maia, coder, researcher, etc.`);
+      return `❌ Agent '${args.agent}' not found in opencode.json. Available agents: maia, coder, researcher, ops, reviewer, frontend, etc.`;
     }
 
-    // 2. Dispatch via Daemon
-    const daemon = getMaiaDaemon();
-    const task = await daemon.dispatch(args.text, args.agent);
+    try {
+      // 2. Check Constitution first
+      const daemon = getMaiaDaemon();
+      const dispatchOptions: DispatchOptions = {
+        preferredAgent: args.agent,
+        requestingAgent: 'maia', // The current agent
+      };
 
-    // 3. Return Status
-    return `🦅 MAIA DAEMON: Dispatched Task ${task.id} to @${args.agent}\n` +
-      `Status: ${task.status}\n` +
-      `Model: ${config.model}\n` +
-      `Wait for completion...`;
+      // Constitution check (will throw if blocked)
+      try {
+        await daemon.dispatch(args.text, dispatchOptions);
+      } catch (e: any) {
+        if (e.message.includes('Constitution blocked')) {
+          return `⚖️ CONSTITUTION BLOCKED: ${e.message}\n\nTask not executed.`;
+        }
+        // Other errors, continue with execution
+      }
+
+      // 3. ACTUALLY EXECUTE the agent session
+      const result = await executeAgentSession({
+        agentId: args.agent,
+        prompt: args.text,
+        timeout: args.timeout || 300000,
+      });
+
+      if (result.status === 'completed') {
+        return `✅ Agent @${args.agent} completed task\n\nSession: ${result.sessionId}\n\nResult:\n${result.result}`;
+      } else if (result.status === 'timeout') {
+        return `⏱️ Agent @${args.agent} timed out after ${args.timeout || 300}ms\n\nSession: ${result.sessionId}`;
+      } else {
+        return `⚠️ Agent @${args.agent} returned status: ${result.status}\n\nSession: ${result.sessionId}`;
+      }
+
+    } catch (e: any) {
+      return `❌ Failed to execute agent @${args.agent}: ${e.message}`;
+    }
   }
 });
 
+// --- BACKGROUND TASK ---
+
 export const background_task = tool({
-  description: "Start a long-running background task.",
+  description: "Start a long-running background task in another agent.",
   args: {
     agent: tool.schema.string().describe("Agent ID"),
     task: tool.schema.string().describe("Task description"),
-    context: tool.schema.string().optional()
+    timeout: tool.schema.number().optional().describe("Timeout in milliseconds.")
   },
   async execute(args) {
-    // Same logic, just different semantic wrapper
-    const daemon = getMaiaDaemon();
-    const task = await daemon.dispatch(
-      `[BACKGROUND] ${args.task}\nContext: ${args.context || 'None'}`,
-      args.agent
-    );
-    return `Background Process Started: ${task.id}`;
+    const config = loadAgentConfig(args.agent);
+    if (!config) {
+      return `❌ Agent '${args.agent}' not found.`;
+    }
+
+    try {
+      // For background tasks, use promptAsync which returns immediately
+      const client = (await import('../execution/opencode-client.js')).getOpenCodeClient();
+      if (!client) {
+        return `❌ OpenCode client not available`;
+      }
+
+      const createResult = await client.session.create({
+        agentId: args.agent,
+      });
+
+      if (createResult.error) {
+        return `❌ Failed to create session: ${createResult.error.message}`;
+      }
+
+      const sessionId = createResult.data.sessionId;
+
+      // Start async execution
+      const promptResult = await client.session.promptAsync({
+        sessionId,
+        prompt: args.task,
+      });
+
+      if (promptResult.error) {
+        return `❌ Failed to start task: ${promptResult.error.message}`;
+      }
+
+      return `🔄 Background task started\nAgent: @${args.agent}\nSession: ${sessionId}\nTask: ${args.task}\n\nUse session_status tool to check progress.`;
+
+    } catch (e: any) {
+      return `❌ Failed to start background task: ${e.message}`;
+    }
   }
 });
 
-/**
- * LEGACY/MOCK TOOLS (Kept for compatibility but routed to Daemon if possible)
- */
-export const get_active_sessions = tool({
-  description: "Get active tasks from ExecutionManager",
+// --- SESSION STATUS ---
+
+export const session_status = tool({
+  description: "Check the status of a running session.",
+  args: {
+    session_id: tool.schema.string().describe("The session ID to check."),
+  },
+  async execute(args) {
+    try {
+      const status = await getSessionStatus(args.session_id);
+
+      if (!status) {
+        return `❌ Session ${args.session_id} not found.`;
+      }
+
+      return `Session Status: ${args.session_id}\n` +
+        `Status: ${status.status}\n` +
+        `Agent: ${status.agentId || 'default'}\n` +
+        `Messages: ${status.messageCount || 0}\n` +
+        `Started: ${status.startedAt || 'Unknown'}`;
+    } catch (e: any) {
+      return `❌ Failed to get session status: ${e.message}`;
+    }
+  }
+});
+
+// --- LIST SESSIONS ---
+
+export const list_sessions = tool({
+  description: "List all active sessions.",
   args: {},
   async execute() {
-    // In fully implemented version, we'd query ExecutionManager
-    return "Querying Execution Manager... (Not implemented in this view yet)";
+    try {
+      const sessions = await listSessions();
+
+      if (sessions.length === 0) {
+        return `No active sessions.`;
+      }
+
+      let output = `Active Sessions (${sessions.length}):\n\n`;
+
+      for (const session of sessions) {
+        output += `• ${session.sessionId}\n`;
+        output += `  Status: ${session.status}\n`;
+        output += `  Agent: ${session.agentId || 'default'}\n`;
+        output += `  Messages: ${session.messageCount || 0}\n\n`;
+      }
+
+      return output;
+    } catch (e: any) {
+      return `❌ Failed to list sessions: ${e.message}`;
+    }
+  }
+});
+
+// --- LEGACY: GET ACTIVE SESSIONS (Kept for compatibility) ---
+
+export const get_active_sessions = tool({
+  description: "Get active sessions from OpenCode (alias for list_sessions).",
+  args: {},
+  async execute() {
+    // Redirect to list_sessions
+    return list_sessions.execute({});
   }
 });

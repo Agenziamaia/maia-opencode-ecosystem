@@ -1,72 +1,64 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { getEnhancedCouncil } from '../../../../../../.opencode/ecosystem/council/enhanced-council.js';
 
-const MOCK_DECISIONS = [
-  {
-    decision_id: 'council_123',
-    proposal: 'Should coder handle JWT authentication implementation?',
-    votes: [
-      {
-        agent_id: 'maia',
-        vote: 'upvote',
-        reasoning: 'Coder has strong auth implementation experience',
-        timestamp: new Date(Date.now() - 2 * 60 * 1000).toISOString(),
-      },
-      {
-        agent_id: 'sisyphus',
-        vote: 'upvote',
-        reasoning: 'This is a critical infrastructure task, coder is the right choice',
-        timestamp: new Date(Date.now() - 1.5 * 60 * 1000).toISOString(),
-      },
-      {
-        agent_id: 'reviewer',
-        vote: 'abstain',
-        reasoning: 'Will review once implementation is complete',
-        timestamp: new Date(Date.now() - 1 * 60 * 1000).toISOString(),
-      },
-    ],
-    status: 'pending',
-    consensus_threshold: 0.7,
-    created_at: new Date(Date.now() - 5 * 60 * 1000).toISOString(),
-    timeout_at: new Date(Date.now() + 3 * 60 * 1000).toISOString(),
-    timeout_ms: 300000,
-  },
-  {
-    decision_id: 'council_456',
-    proposal: 'Should we adopt TypeScript strict mode across all projects?',
-    votes: [
-      {
-        agent_id: 'maia',
-        vote: 'upvote',
-        reasoning: 'Improves type safety and reduces bugs',
-        timestamp: new Date(Date.now() - 15 * 60 * 1000).toISOString(),
-      },
-      {
-        agent_id: 'ops',
-        vote: 'downvote',
-        reasoning: 'May slow down development velocity',
-        timestamp: new Date(Date.now() - 14 * 60 * 1000).toISOString(),
-      },
-      {
-        agent_id: 'coder',
-        vote: 'upvote',
-        reasoning: 'Already using strict mode in new projects, works well',
-        timestamp: new Date(Date.now() - 13 * 60 * 1000).toISOString(),
-      },
-    ],
-    status: 'consensus',
-    consensus_threshold: 0.7,
-    created_at: new Date(Date.now() - 20 * 60 * 1000).toISOString(),
-    timeout_at: new Date(Date.now() - 17 * 60 * 1000).toISOString(),
-    final_decision: 'approved',
-    timeout_ms: 300000,
-  },
-];
-
+/**
+ * Get real council decisions from ecosystem
+ */
 export async function GET(request: NextRequest) {
   try {
+    const council = getEnhancedCouncil();
+
+    // Get both active proposals and past decisions
+    const activeProposals = council.getActiveProposals();
+    const decisions = council.getDecisions();
+
+    // Transform proposals to match the expected format
+    const proposalData = activeProposals.map(proposal => ({
+      decision_id: proposal.id,
+      proposal: proposal.description || proposal.title,
+      proposal_type: proposal.proposalType,
+      proposed_by: proposal.proposedBy,
+      votes: Array.from(proposal.votes?.entries() || []).map(([agentId, vote]) => ({
+        agent_id: agentId,
+        vote: vote.vote,
+        reasoning: vote.reasoning,
+        timestamp: vote.timestamp,
+      })),
+      status: proposal.status,
+      consensus_threshold: proposal.consensusThreshold || 0.7,
+      created_at: proposal.proposedAt,
+      expires_at: proposal.expiresAt,
+      timeout_ms: 300000,
+    }));
+
+    // Transform decisions to match the expected format
+    const decisionData = decisions.map(decision => ({
+      decision_id: decision.proposalId,
+      proposal: decision.rationale,
+      votes: [], // Votes are aggregated in the decision
+      status: decision.decision,
+      consensus_threshold: decision.consensusLevel,
+      created_at: decision.executedAt || new Date().toISOString(),
+      final_decision: decision.decision,
+      timeout_ms: 0,
+      vote_summary: decision.voteSummary,
+      consensus: decision.consensus,
+      precedent: decision.precedent,
+    }));
+
+    // Combine: show active proposals first, then recent decisions
+    const allData = [
+      ...proposalData,
+      ...decisionData.slice(0, 10), // Last 10 decisions
+    ];
+
     return NextResponse.json({
       success: true,
-      data: MOCK_DECISIONS,
+      data: allData,
+      meta: {
+        activeProposals: proposalData.length,
+        historicalDecisions: decisionData.length,
+      },
     });
   } catch (error) {
     return NextResponse.json(

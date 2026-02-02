@@ -1,205 +1,61 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { getAgentManager } from '../../../../../../.opencode/ecosystem/agents/agent-manager.js';
+import { getExecutionManager } from '../../../../../../.opencode/ecosystem/execution/execution-manager.js';
+import { promises as fs } from 'fs';
+import { join } from 'path';
 
-const VIBE_KANBAN_URL = process.env.VIBE_KANBAN_URL || 'http://localhost:62601';
-
-const MOCK_AGENTS = [
-  {
-    id: 'maia',
-    name: 'MAIA Orchestrator',
-    capabilities: ['planning', 'meta', 'coding'],
-    status: 'healthy',
-    currentTasks: 2,
-    maxTasks: 5,
-    lastSeen: new Date().toISOString(),
-    specialties: ['strategic planning', 'orchestration', 'meta-analysis'],
-  },
-  {
-    id: 'sisyphus',
-    name: 'Sisyphus PM',
-    capabilities: ['planning', 'meta'],
-    status: 'healthy',
-    currentTasks: 1,
-    maxTasks: 3,
-    lastSeen: new Date().toISOString(),
-    specialties: ['project management', 'task breakdown', 'scheduling'],
-  },
-  {
-    id: 'coder',
-    name: 'Coder Architect',
-    capabilities: ['coding', 'testing', 'frontend', 'backend'],
-    status: 'busy',
-    currentTasks: 7,
-    maxTasks: 10,
-    lastSeen: new Date().toISOString(),
-    specialties: ['architecture', 'implementation', 'refactoring'],
-  },
-  {
-    id: 'ops',
-    name: 'Ops Engineer',
-    capabilities: ['infrastructure', 'devops', 'automation'],
-    status: 'healthy',
-    currentTasks: 1,
-    maxTasks: 5,
-    lastSeen: new Date().toISOString(),
-    specialties: ['deployment', 'CI/CD', 'infrastructure'],
-  },
-  {
-    id: 'researcher',
-    name: 'Researcher Oracle',
-    capabilities: ['research', 'meta'],
-    status: 'idle',
-    currentTasks: 0,
-    maxTasks: 8,
-    lastSeen: new Date().toISOString(),
-    specialties: ['documentation', 'best practices', 'context research'],
-  },
-  {
-    id: 'reviewer',
-    name: 'Reviewer Gatekeeper',
-    capabilities: ['review', 'testing'],
-    status: 'healthy',
-    currentTasks: 2,
-    maxTasks: 6,
-    lastSeen: new Date().toISOString(),
-    specialties: ['code review', 'quality assurance', 'audit'],
-  },
-  {
-    id: 'workflow',
-    name: 'Workflow Automator',
-    capabilities: ['automation', 'infrastructure'],
-    status: 'idle',
-    currentTasks: 0,
-    maxTasks: 5,
-    lastSeen: new Date().toISOString(),
-    specialties: ['n8n', 'Flowise', 'automation workflows'],
-  },
-  {
-    id: 'researcher_deep',
-    name: 'Deep Oracle',
-    capabilities: ['research', 'meta'],
-    status: 'idle',
-    currentTasks: 0,
-    maxTasks: 5,
-    lastSeen: new Date().toISOString(),
-    specialties: ['academic research', 'thorough analysis', 'deep dive'],
-  },
-  {
-    id: 'vision',
-    name: 'Vision Analyst',
-    capabilities: ['research', 'meta'],
-    status: 'healthy',
-    currentTasks: 1,
-    maxTasks: 5,
-    lastSeen: new Date().toISOString(),
-    specialties: ['multimodal', 'image analysis', 'video analysis'],
-  },
-  {
-    id: 'starter',
-    name: 'Bootstrapper',
-    capabilities: ['planning', 'infrastructure'],
-    status: 'idle',
-    currentTasks: 0,
-    maxTasks: 5,
-    lastSeen: new Date().toISOString(),
-    specialties: ['project launch', 'bootstrap', 'init', 'setup'],
-  },
-  {
-    id: 'librarian',
-    name: 'Success Curator',
-    capabilities: ['research', 'meta'],
-    status: 'healthy',
-    currentTasks: 1,
-    maxTasks: 5,
-    lastSeen: new Date().toISOString(),
-    specialties: ['documentation', 'curation', 'knowledge vault', 'memory'],
-  },
-  {
-    id: 'maia_premium',
-    name: 'Supreme Arbiter',
-    capabilities: ['meta', 'planning', 'review'],
-    status: 'idle',
-    currentTasks: 0,
-    maxTasks: 3,
-    lastSeen: new Date().toISOString(),
-    specialties: ['escalation', 'paradox resolution', 'deadlock fix'],
-  },
-  {
-    id: 'prometheus',
-    name: 'Planner',
-    capabilities: ['planning', 'meta'],
-    status: 'healthy',
-    currentTasks: 2,
-    maxTasks: 5,
-    lastSeen: new Date().toISOString(),
-    specialties: ['milestones', 'decomposition', 'estimation'],
-  },
-  {
-    id: 'oracle',
-    name: 'Architect',
-    capabilities: ['meta', 'planning', 'coding'],
-    status: 'healthy',
-    currentTasks: 1,
-    maxTasks: 5,
-    lastSeen: new Date().toISOString(),
-    specialties: ['system mapping', 'risk assessment', 'complex debugging'],
-  },
-  {
-    id: 'explore',
-    name: 'Fast Scanner',
-    capabilities: ['research'],
-    status: 'healthy',
-    currentTasks: 0,
-    maxTasks: 10,
-    lastSeen: new Date().toISOString(),
-    specialties: ['scanning', 'codebase mapping', 'grep', 'glob'],
-  },
-  {
-    id: 'frontend',
-    name: 'UI Engineer',
-    capabilities: ['frontend', 'coding'],
-    status: 'idle',
-    currentTasks: 0,
-    maxTasks: 8,
-    lastSeen: new Date().toISOString(),
-    specialties: ['ui design', 'ux', 'responsive', 'animations', 'nextjs'],
-  },
-  {
-    id: 'github',
-    name: 'GitHub Expert',
-    capabilities: ['automation', 'meta'],
-    status: 'healthy',
-    currentTasks: 1,
-    maxTasks: 5,
-    lastSeen: new Date().toISOString(),
-    specialties: ['version control', 'git', 'collaboration', 'github actions'],
-  },
-  {
-    id: 'sisyphus_junior',
-    name: 'Code Executor',
-    capabilities: ['coding'],
-    status: 'busy',
-    currentTasks: 8,
-    maxTasks: 10,
-    lastSeen: new Date().toISOString(),
-    specialties: ['implementation', 'precision coding', 'diagnostics', 'task runner'],
-  },
-  {
-    id: 'opencode',
-    name: 'Platform Oracle',
-    capabilities: ['meta', 'infrastructure'],
-    status: 'healthy',
-    currentTasks: 0,
-    maxTasks: 5,
-    lastSeen: new Date().toISOString(),
-    specialties: ['ecosystem management', 'mcp integration', 'plugin audit'],
-  },
-];
-
+/**
+ * Get real agent data from ecosystem
+ */
 export async function GET(request: NextRequest) {
   try {
+    // Get agents from the agent manager
+    const agentManager = getAgentManager();
+    const executionManager = getExecutionManager();
+
+    // Get base agent data
+    const agents = agentManager.getAllAgents();
+
+    // Enhance with real-time data from execution manager
+    const execStats = executionManager.getStats();
+    const taskQueue = executionManager.getQueue();
+
+    // Count current tasks per agent from the actual queue
+    const agentTaskCounts = new Map<string, number>();
+    for (const task of taskQueue) {
+      if (task.agentId) {
+        agentTaskCounts.set(task.agentId, (agentTaskCounts.get(task.agentId) || 0) + 1);
+      }
+    }
+
+    // Merge real-time data with agent capabilities
+    const enrichedAgents = agents.map(agent => {
+      const currentTasks = agentTaskCounts.get(agent.id) || 0;
+      const utilization = currentTasks / agent.maxTasks;
+
+      // Determine status based on utilization and availability
+      let status: 'healthy' | 'busy' | 'idle' | 'unavailable';
+      if (!agent.available) {
+        status = 'unavailable';
+      } else if (utilization >= 0.8) {
+        status = 'busy';
+      } else if (currentTasks === 0) {
+        status = 'idle';
+      } else {
+        status = 'healthy';
+      }
+
+      return {
+        ...agent,
+        currentTasks,
+        status,
+        utilization: Math.round(utilization * 100) / 100,
+      };
+    });
+
     return NextResponse.json({
       success: true,
-      data: MOCK_AGENTS,
+      data: enrichedAgents,
     });
   } catch (error) {
     return NextResponse.json(

@@ -11,7 +11,11 @@ echo "━━━━━━━━━━━━━━━━━━━━━━━━�
 VIBE_PORT=${VIBE_KANBAN_PORT:-62601}
 VIBE_HOST=${VIBE_KANBAN_HOST:-127.0.0.1}
 
-# 1. SMART CHECK (Idempotency + Fix)
+# 1. SMART DEPENDENCY LOADER (Lazy Load Repos)
+echo "📦 Verifying Ecosystem Dependencies..."
+npx -y tsx .opencode/ecosystem/setup_ecosystem.ts || echo "⚠️ Dependency check failed (non-critical)"
+
+# 2. SMART CHECK (Idempotency + Fix)
 if lsof -i :$VIBE_PORT >/dev/null 2>&1; then
     if curl -s -o /dev/null -w "%{http_code}" http://$VIBE_HOST:$VIBE_PORT | grep -q "200"; then
         echo "✅ Vibe Kanban: ALREADY LIVE (Standard Port $VIBE_PORT)"

@@ -1,8 +1,9 @@
 /**
  * Execution Manager Module - Main Exports
  *
- * This module provides the execution manager for OpenCode GitHub issue #6470:
- * https://github.com/anomalyco/opencode/issues/6470
+ * This module provides the execution layer for the MAIA ecosystem:
+ * - ExecutionManager: Task execution and queue management
+ * - MaiaDaemon: Dispatch layer for task routing and monitoring
  *
  * Features:
  * - PARALLEL mode: Agents work in isolated git worktrees simultaneously
@@ -14,6 +15,9 @@
 
 // Core execution manager
 export * from './execution-manager.js';
+
+// MaiaDaemon (dispatch layer)
+export * from './maia-daemon.js';
 
 // MCP tools
 export * from './execution-tools.js';
