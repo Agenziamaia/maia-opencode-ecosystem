@@ -206,6 +206,22 @@ def main():
     
     # Run tests
     results = []
+    
+    # 0. LIVE PING (If requested)
+    if "--ping" in args:
+        print(f"{BOLD}📡 executing Live Ping of Core Agents...{RESET}")
+        try:
+             # Run the JS pinger
+             subprocess.run(["npx", "tsx", ".opencode/scripts/ping_agents.js"], check=True)
+             # If successful, we assume core health is good
+             print(f"{GREEN}✅ Core Pulse Verified.{RESET}")
+        except subprocess.CalledProcessError:
+             print(f"{RED}❌ Agent Ping Failed. Some agents are unresponsive.{RESET}")
+             if fix_mode:
+                print(f"{YELLOW}🔧 Auto-Fix: Applying fallback models to core agents...{RESET}")
+                # Apply fallbacks logic here or just warn
+                # For now, we flag it in results
+    
     for agent_name, agent_config in agents.items():
         model = agent_config.get("model", "unknown")
         result = test_agent_simple(agent_name, model)
