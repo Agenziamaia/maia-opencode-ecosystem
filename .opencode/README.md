@@ -126,6 +126,6 @@ node .opencode/validate-github-token.js
 
 ---
 
-**Maintained by**: OPS (GLM-4.7)
+**Maintained by**: OPS (GLM-5)
 **Last Updated**: 2026-01-22
 **Status**: ✅ Infrastructure Ready for @coder

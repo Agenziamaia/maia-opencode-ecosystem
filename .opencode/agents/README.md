@@ -38,15 +38,15 @@ Just tell me. I handle the rest.
 ### 🧠 Orchestrators (The Brain)
 | Agent | Role | Model | When to Use |
 | :--- | :--- | :--- | :--- |
-| **@maia** | **Planner** | GLM-4.7 | Default planner. Breaks down features. |
+| **@maia** | **Planner** | GLM-5 | Default planner. Breaks down features. |
 | **@maia_premium** | **Strategist** | GPT-5.2 | "Impossible" problems requiring deep reasoning. |
 | **@giuzu** | **Director** | GPT-5.2 | Digital clone. Consult when you need "The Vision". |
 
 ### 🛠️ Builders (The Hands)
 | Agent | Role | Model | When to Use |
 | :--- | :--- | :--- | :--- |
-| **@coder** | **Architect** | GLM-4.7 | Writing code, implementing features. |
-| **@ops** | **Infra God** | GLM-4.7 | Docker, Coolify, Deployment. |
+| **@coder** | **Architect** | GLM-5 | Writing code, implementing features. |
+| **@ops** | **Infra God** | GLM-5 | Docker, Coolify, Deployment. |
 | **@workflow** | **Automator** | Qwen 2.5 | Building n8n/Flowise/Trigger.dev workflows. |
 | **@starter** | **Wizard** | Gemini Flash | Onboarding new workspaces. |
 
@@ -55,7 +55,7 @@ Just tell me. I handle the rest.
 | :--- | :--- | :--- | :--- |
 | **@reviewer** | **Gatekeeper** | Hermes 3 405B | **NO MERCY** code audits. |
 | **@researcher** | **Oracle** | Gemini Pro | Deep research & documentation reading. |
-| **@opencode** | **Meta** | GLM-4.7 | Configuring the agent system itself. |
+| **@opencode** | **Meta** | GLM-5 | Configuring the agent system itself. |
 
 ## 🚀 COMMANDS - What They Do
 

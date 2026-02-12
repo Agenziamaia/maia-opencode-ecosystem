@@ -1,7 +1,7 @@
 {
   "$schema": "https://opencode.ai/config.json",
   "default_agent": "maia",
-  "model": "zai-coding-plan/glm-4.7",
+  "model": "zai-coding-plan/glm-5",
   "permission": {
     "edit": "allow",
     "bash": "allow",
@@ -81,7 +81,7 @@
   "agent": {
     "maia": {
       "description": "SUPREME ORCHESTRATOR.",
-      "model": "zai-coding-plan/glm-4.7",
+      "model": "zai-coding-plan/glm-5",
       "mode": "primary",
       "tools": {
         "vibekanban_*": true,
@@ -105,7 +105,7 @@
     },
     "sisyphus": {
       "description": "Project Manager.",
-      "model": "zai-coding-plan/glm-4.7",
+      "model": "zai-coding-plan/glm-5",
       "mode": "subagent",
       "tools": {
         "vibekanban_*": true,
@@ -125,7 +125,7 @@
     },
     "coder": {
       "description": "LSP Architect.",
-      "model": "zai-coding-plan/glm-4.7",
+      "model": "zai-coding-plan/glm-5",
       "mode": "subagent",
       "tools": {
         "filesystem_*": true,
@@ -141,7 +141,7 @@
     },
     "ops": {
       "description": "Infra & Scripts.",
-      "model": "zai-coding-plan/glm-4.7",
+      "model": "zai-coding-plan/glm-5",
       "mode": "subagent",
       "tools": {
         "bash": true,
@@ -214,7 +214,7 @@
     },
     "workflow": {
       "description": "Automations.",
-      "model": "zai-coding-plan/glm-4.7",
+      "model": "zai-coding-plan/glm-5",
       "mode": "subagent",
       "tools": {
         "read": true,
@@ -246,17 +246,6 @@
         "skill": true
       }
     },
-    "librarian": {
-      "description": "Success Curator.",
-      "model": "google/gemini-2.5-flash",
-      "mode": "subagent",
-      "tools": {
-        "read": true,
-        "write": true,
-        "skill": true,
-        "glob": true
-      }
-    },
     "maia_premium": {
       "description": "Supreme Arbiter.",
       "model": "google/gemini-2.5-pro",
@@ -275,46 +264,21 @@
         "vibekanban_*": true
       }
     },
-    "prometheus": {
-      "description": "Planner. Creates work plans and milestones.",
-      "model": "openrouter/deepseek/deepseek-r1-0528:free",
-      "mode": "subagent",
-      "tools": {
-        "read": true,
-        "grep": true,
-        "glob": true,
-        "skill": true,
-        "todowrite": true,
-        "todoread": true
-      }
-    },
-    "oracle": {
-      "description": "Architect & Debugger. Deep system analysis.",
-      "model": "zai-coding-plan/glm-4.7",
-      "mode": "subagent",
-      "tools": {
-        "read": true,
-        "grep": true,
-        "glob": true,
-        "lsp": true,
-        "bash": true,
-        "skill": true
-      }
-    },
-    "explore": {
-      "description": "Fast Scanner. Read-only codebase exploration.",
+    "librarian": {
+      "description": "Success Curator. The Knowledge Filter.",
       "model": "google/gemini-2.5-flash",
       "mode": "subagent",
       "tools": {
         "read": true,
-        "grep": true,
+        "write": true,
+        "skill": true,
         "glob": true,
-        "list": true
+        "grep": true
       }
     },
     "frontend": {
       "description": "UI/UX Engineer. Frontend development specialist.",
-      "model": "zai-coding-plan/glm-4.7",
+      "model": "zai-coding-plan/glm-5",
       "mode": "subagent",
       "tools": {
         "read": true,
@@ -327,7 +291,7 @@
     },
     "sisyphus_junior": {
       "description": "Code Executor.",
-      "model": "zai-coding-plan/glm-4.7",
+      "model": "zai-coding-plan/glm-5",
       "mode": "subagent",
       "tools": {
         "read": true,
@@ -341,7 +305,7 @@
     },
     "github": {
       "description": "GitHub Expert.",
-      "model": "zai-coding-plan/glm-4.7",
+      "model": "zai-coding-plan/glm-5",
       "mode": "subagent",
       "tools": {
         "read": true,
@@ -385,7 +349,7 @@
     },
     "workflow": {
       "description": "Automation Architect",
-      "template": "Workflow Task: \"$ARGUMENTS\". Use @workflow (GLM-4.7) for n8n/Flowise.",
+      "template": "Workflow Task: \"$ARGUMENTS\". Use @workflow (GLM-5) for n8n/Flowise.",
       "agent": "workflow"
     },
     "swarm_learn": {

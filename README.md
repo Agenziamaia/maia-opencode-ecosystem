@@ -38,10 +38,10 @@ We are a 20-agent engine optimized for strategy, execution, and research:
 
 | Category | Headliner | Role |
 | :--- | :--- | :--- |
-| **Strategy** | **@MAIA** | Supreme Orchestrator (GLM-4.7) |
-| **PM** | **@Sisyphus** | Project Manager (GLM-4.7) |
+| **Strategy** | **@MAIA** | Supreme Orchestrator (GLM-5) |
+| **PM** | **@Sisyphus** | Project Manager (GLM-5) |
 | **Logic** | **@Giuzu** | Strategic Advisor (DeepSeek R1) |
-| **Code** | **@Coder** | Lead Architect (GLM-4.7) |
+| **Code** | **@Coder** | Lead Architect (GLM-5) |
 | **Quality** | **@Reviewer** | Quality Gate (Big Pickle) |
 | **Research** | **@Researcher** | Intel lead (Gemini Pro/Flash) |
 

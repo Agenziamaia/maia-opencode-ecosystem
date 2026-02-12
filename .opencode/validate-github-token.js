@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * OPS (GLM-4.7): GitHub Token Validation Script
+ * OPS (GLM-5): GitHub Token Validation Script
  *
  * Usage:
  *   node .opencode/validate-github-token.js

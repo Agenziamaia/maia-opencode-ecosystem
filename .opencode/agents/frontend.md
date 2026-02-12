@@ -1,6 +1,6 @@
 ---
 description: UI/UX Engineer. Frontend development specialist for Sisyphus.
-model: zai-coding-plan/glm-4.7
+model: zai-coding-plan/glm-5
 mode: subagent
 tools:
   read: true

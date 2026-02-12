@@ -11,7 +11,7 @@ When any task is moved to `in_review`, the following chain **MUST** trigger auto
 
 ### 🕵️ STEP 1: LOGIC AUDIT (@reviewer)
 **Trigger:** Task moves `in_progress` → `in_review`
-**Agent:** @reviewer (GLM-4.7)
+**Agent:** @reviewer (GLM-5)
 **Checklist:**
 1. **Security Scan**: Are there API keys, typos, or injection risks?
 2. **Logic Proof**: Does the code actually handle edge cases?

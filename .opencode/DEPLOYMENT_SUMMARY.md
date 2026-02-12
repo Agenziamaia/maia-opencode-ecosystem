@@ -1,6 +1,6 @@
 # 🚀 GitHub Token Manager - DEPLOYMENT COMPLETE
 
-**Deployed by**: OPS (GLM-4.7)
+**Deployed by**: OPS (GLM-5)
 **Deployment Date**: 2026-01-22
 **Status**: ✅ OPERATIONAL - Ready for @coder API Layer
 
@@ -295,6 +295,6 @@ node .opencode/validate-github-token.js
 
 ---
 
-_Deployed by OPS (GLM-4.7) on 2026-01-22_
+_Deployed by OPS (GLM-5) on 2026-01-22_
 _All security protocols verified_
 _Zero downtime maintained_

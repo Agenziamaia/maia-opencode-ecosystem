@@ -71,9 +71,9 @@ npm run dev
 
 | Agent | Role | Model |
 |-------|------|-------|
-| @maia | Supreme Orchestrator | GLM-4.7 |
-| @coder | Lead Architect | GLM-4.7 |
-| @sisyphus | Project Manager | GLM-4.7 |
+| @maia | Supreme Orchestrator | GLM-5 |
+| @coder | Lead Architect | GLM-5 |
+| @sisyphus | Project Manager | GLM-5 |
 | @giuzu | Strategic Advisor | DeepSeek R1 |
 | @researcher | Intel Lead | Gemini Pro/Flash |
 

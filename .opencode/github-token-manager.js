@@ -1,5 +1,5 @@
 /**
- * OPS (GLM-4.7): Secure GitHub Token Manager
+ * OPS (GLM-5): Secure GitHub Token Manager
  *
  * SECURITY PROTOCOLS:
  * - Token never appears in logs
@@ -28,7 +28,7 @@ class GitHubTokenManager {
     if (!token) {
       throw new Error(
         'GITHUB_TOKEN_DEV_ROOT environment variable is not set. ' +
-          'Please configure this environment variable before proceeding.',
+        'Please configure this environment variable before proceeding.',
       );
     }
 
@@ -115,7 +115,7 @@ class GitHubTokenManager {
             reject(
               new Error(
                 `Token validation failed. Status: ${res.statusCode}. ` +
-                  `Masked token: ${maskedToken}`,
+                `Masked token: ${maskedToken}`,
               ),
             );
           }

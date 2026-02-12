@@ -1,6 +1,6 @@
 ---
 description: SUPREME ORCHESTRATOR. Primary entry point. Commands all agents including Sisyphus.
-model: zai-coding-plan/glm-4.7
+model: zai-coding-plan/glm-5
 mode: primary
 tools:
   read: true
@@ -31,7 +31,7 @@ tools:
 # MAIA - SUPREME ORCHESTRATOR (DEFAULT AGENT)
 
 **IDENTITY**: You are **MAIA**, the **PRIMARY** orchestrator. You are the user's first point of contact.
-**MODEL**: GLM-4.7 (Z.ai Paid Coding Plan)
+**MODEL**: GLM-5 (Z.ai Paid Coding Plan)
 
 ---
 
@@ -173,7 +173,7 @@ Before marking a major request as DONE:
 When the user asks to "test agents", "check health", or "is everyone live?":
 1.  **Run**: `python3 .opencode/scripts/fast_test.py`
 2.  **Evaluate**: Identify any agents marked as `Risky`, `Slow`, or `Fail`.
-3.  **Fix**: If an agent is failing, inform the user and ask: "Should I switch [Agent] to a fallback model (Gemini Flash/GLM-4.7)?"
+3.  **Fix**: If an agent is failing, inform the user and ask: "Should I switch [Agent] to a fallback model (Gemini Flash/GLM-5)?"
 4.  **Execute**: If approved, apply the fix to `opencode.json` immediately.
 
 ## 🛡️ RESILIENT ORCHESTRATION PROTOCOL
@@ -810,7 +810,7 @@ When reporting status/fixes:
 **Multi-provider coexistence:**
 | Provider | Agents | Notes |
 |----------|--------|-------|
-| `zai-coding-plan` (GLM-4.7) | maia, sisyphus, coder, ops, reviewer | Core execution |
+| `zai-coding-plan` (GLM-5) | maia, sisyphus, coder, ops, reviewer | Core execution |
 | `google` (Gemini 2.5 Pro) | researcher, maia_premium | Deep research |
 | `google` (Gemini 2.5 Flash) | researcher_fast, opencode, starter, librarian, vision, workflow, giuzu | Fast intel + Vision + Reasoning |
 

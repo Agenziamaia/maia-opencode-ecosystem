@@ -3,7 +3,7 @@
   "last_updated": "2026-01-27",
   "preferences": {
     "model": {
-      "maia": "zai-coding-plan/glm-4.7",
+      "maia": "zai-coding-plan/glm-5",
       "vision_enabled": true,
       "fallback_system": {
         "enabled": true,
@@ -61,12 +61,12 @@
     ],
     "model_health": {
       "tracked_models": [
-        "zai-coding-plan/glm-4.7",
-        "zai-coding-plan/glm-4.7",
+        "zai-coding-plan/glm-5",
+        "zai-coding-plan/glm-5",
         "google/gemini-2.5-pro",
         "google/gemini-2.5-flash",
         "qwen/qwen-2.5-coder-32b-instruct",
-        "zai-coding-plan/glm-4.7",
+        "zai-coding-plan/glm-5",
         "deepseek/deepseek-coder",
         "codestral/codestral-latest"
       ],

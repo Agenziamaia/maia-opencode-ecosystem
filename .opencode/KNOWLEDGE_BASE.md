@@ -11,10 +11,10 @@
 
 | Agent | Model | Role | Fallback |
 | :--- | :--- | :--- | :--- |
-| **@maia** | `zai-coding-plan/glm-4.7` | Orchestrator, Strategic Planning | N/A (Primary) |
-| **@coder** | `zai-coding-plan/glm-4.7` | Code Synthesis, Architecture | @maia, @ops |
-| **@ops** | `zai-coding-plan/glm-4.7` | DevOps, Infrastructure, Docker | @coder, @maia |
-| **@reviewer** | `zai-coding-plan/glm-4.7` | Code Audit, Quality Gates | @maia, @coder |
+| **@maia** | `zai-coding-plan/glm-5` | Orchestrator, Strategic Planning | N/A (Primary) |
+| **@coder** | `zai-coding-plan/glm-5` | Code Synthesis, Architecture | @maia, @ops |
+| **@ops** | `zai-coding-plan/glm-5` | DevOps, Infrastructure, Docker | @coder, @maia |
+| **@reviewer** | `zai-coding-plan/glm-5` | Code Audit, Quality Gates | @maia, @coder |
 | **@researcher** | `google/gemini-2.5-pro` | Deep Research, Documentation | @researcher_fast, @maia |
 | **@researcher_fast** | `google/gemini-2.5-flash` | Fast Research, High Availability | @maia |
 | **@vision** | `google/gemini-2.5-flash` | Image Analysis, Multimodal | @researcher_fast, @maia |
@@ -22,7 +22,7 @@
 | **@giuzu** | `qwen/qwen-2.5-coder-32b-instruct` | Digital Clone, Pattern Learning | @coder, @maia |
 | **@opencode** | `google/gemini-2.5-flash` | OpenCode Config, Meta-Management | @maia |
 | **@starter** | `google/gemini-2.5-flash` | Workspace Onboarding | @maia |
-| **@maia_premium** | `zai-coding-plan/glm-4.7` | Complex Challenges (Escalation) | @maia |
+| **@maia_premium** | `zai-coding-plan/glm-5` | Complex Challenges (Escalation) | @maia |
 
 ### Plugin Stack
 

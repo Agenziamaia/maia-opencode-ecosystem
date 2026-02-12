@@ -8,8 +8,8 @@ _Status: Optimized for ROI and Performance (2026-01-26)_
 
 | Agent             | Model          | Primary Capability  | Note                                                                 |
 | ----------------- | -------------- | ------------------- | -------------------------------------------------------------------- |
-| **@maia**         | GLM-4.7        | Orchestration       | Best balance of speed and complex instruction following.             |
-| **@sisyphus**     | GLM-4.7        | Logic/Execution     | Reliable tool-caller. Doesn't miss steps in loops.                   |
+| **@maia**         | GLM-5        | Orchestration       | Best balance of speed and complex instruction following.             |
+| **@sisyphus**     | GLM-5        | Logic/Execution     | Reliable tool-caller. Doesn't miss steps in loops.                   |
 | **@researcher**   | Gemini 2.5 Pro | 2M Context Intel    | Massive context window. Can ingest entire repos or 50+ PDFs at once. |
 | **@maia_premium** | Gemini 2.5 Pro | Supreme Arbitration | Deepest reasoning available. Used for "Dead End" resolution.         |
 
@@ -25,7 +25,7 @@ _Status: Optimized for ROI and Performance (2026-01-26)_
 | Agent         | Model              | Primary Capability | Note                                            |
 | ------------- | ------------------ | ------------------ | ----------------------------------------------- |
 | **@reviewer** | Big-Pickle         | Logic Audits       | Specialized in finding bugs and security risks. |
-| **@ops**      | GLM-4.7            | Infrastructure     | Stable terminal handler and bash executor.      |
+| **@ops**      | GLM-5            | Infrastructure     | Stable terminal handler and bash executor.      |
 | **@opencode** | Gemini 2.5 Flash   | Meta-Level         | Manages tool audit and ecosystem evolution.     |
 | **@workflow** | Qwen 2.5 Coder 32B | Automation         | Builds n8n/Flowise workflows and automations.   |
 

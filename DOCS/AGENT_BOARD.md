@@ -7,11 +7,11 @@
 
 | Agent | Role | Model | Provider |
 |-------|------|-------|----------|
-| **@maia** | Orchestrator | GLM-4.7 | Z.ai Paid |
-| **@sisyphus** | Project Manager | GLM-4.7 | Z.ai Paid |
-| **@coder** | LSP Architect | GLM-4.7 | Z.ai Paid |
-| **@ops** | Infrastructure | GLM-4.7 | Z.ai Paid |
-| **@reviewer** | Logic Audit | GLM-4.7 | Z.ai Paid |
+| **@maia** | Orchestrator | GLM-5 | Z.ai Paid |
+| **@sisyphus** | Project Manager | GLM-5 | Z.ai Paid |
+| **@coder** | LSP Architect | GLM-5 | Z.ai Paid |
+| **@ops** | Infrastructure | GLM-5 | Z.ai Paid |
+| **@reviewer** | Logic Audit | GLM-5 | Z.ai Paid |
 | **@researcher** | Deep Intel | Gemini 2.5 Pro | Google |
 | **@researcher_fast** | Flash Oracle | Gemini 2.5 Flash | Google |
 | **@maia_premium** | Supreme Arbiter | Gemini 2.5 Pro | Google |
@@ -24,7 +24,7 @@
 
 ## Model Tiers
 
-- **GLM-4.7 (Paid)**: Core execution layer - reliable, fast, tool-calling
+- **GLM-5 (Paid)**: Core execution layer - reliable, fast, tool-calling
 - **Gemini 2.5 Pro**: Deep reasoning, 2M context window
 - **Gemini 2.5 Flash**: Fast multimodal, cost-effective
 - **DeepSeek R1 (Free)**: Strategic reasoning with thinking blocks

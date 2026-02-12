@@ -30,7 +30,7 @@ TIMEOUT_SECONDS = 20
 # Fallback models for each provider type
 FALLBACKS = {
     "openrouter": "google/gemini-2.5-flash",
-    "opencode": "zai-coding-plan/glm-4.7",
+    "opencode": "zai-coding-plan/glm-5",
     "google/gemini-2.5-pro": "google/gemini-2.5-flash",
 }
 

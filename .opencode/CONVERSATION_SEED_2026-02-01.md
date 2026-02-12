@@ -35,8 +35,8 @@
 ## 🔧 CRITICAL TECHNICAL DECISIONS
 
 ### Agent Roles & Models
-- **MAIA** (GLM-4.7): Supreme orchestrator, not dispatcher
-- **Sisyphus** (GLM-4.7): Project manager for campaigns
+- **MAIA** (GLM-5): Supreme orchestrator, not dispatcher
+- **Sisyphus** (GLM-5): Project manager for campaigns
 - **Giuzu** (DeepSeek R1): Strategic consultant for reasoning
 - **Council:** Democratic voting with consensus thresholds
 - **Constitution:** Supreme law for behavior governance
@@ -72,7 +72,7 @@
 - **Dashboard:** `src/components/dashboard/` - Live monitoring UI
 
 ### Configuration Files
-- **Models:** GLM-4.7 (primary), Gemini Flash/Pro (research), DeepSeek R1 (reasoning)
+- **Models:** GLM-5 (primary), Gemini Flash/Pro (research), DeepSeek R1 (reasoning)
 - **Timeouts:** Health (30s), Code (3m), Research (2m), Network (8s)
 - **Tools:** 20+ MCP tools including council_*, dna_*, agent_*, ecosystem_*
 

@@ -12,18 +12,18 @@ This file tracks tested configurations that are known to work.
 
 | Agent | Role | Model | Why? |
 |-------|------|-------|------|
-| **@maia** | Supreme Orchestrator | **GLM-4.7** | Core reasoning, paid reliability |
-| **@sisyphus** | Project Manager | **GLM-4.7** | Task decomposition, reliability |
-| **@coder** | Architect/LSP | **GLM-4.7** | Precision coding |
-| **@ops** | Infrastructure | **GLM-4.7** | Precision ops commands |
+| **@maia** | Supreme Orchestrator | **GLM-5** | Core reasoning, paid reliability |
+| **@sisyphus** | Project Manager | **GLM-5** | Task decomposition, reliability |
+| **@coder** | Architect/LSP | **GLM-5** | Precision coding |
+| **@ops** | Infrastructure | **GLM-5** | Precision ops commands |
 | **@reviewer** | Quality Gate | **Big Pickle** | Logic auditing |
 | **@giuzu** | Strategic Advisor | **DeepSeek R1** | Deep reasoning & strategy |
 | **@prometheus** | Planner | **DeepSeek R1** | Planning requires deep thinking |
-| **@workflow** | Auto Architect | **GLM-4.7** | JSON precision for n8n/Flowise |
-| **@frontend** | UI/UX Engineer | **GLM-4.7** | Complex React/Tailwind logic |
-| **@oracle** | Debugger | **GLM-4.7** | Deep system analysis |
-| **@sisyphus_junior** | Executor | **GLM-4.7** | Strict code execution |
-| **@github** | GitHub Expert | **GLM-4.7** | Git operations |
+| **@workflow** | Auto Architect | **GLM-5** | JSON precision for n8n/Flowise |
+| **@frontend** | UI/UX Engineer | **GLM-5** | Complex React/Tailwind logic |
+| **@oracle** | Debugger | **GLM-5** | Deep system analysis |
+| **@sisyphus_junior** | Executor | **GLM-5** | Strict code execution |
+| **@github** | GitHub Expert | **GLM-5** | Git operations |
 | **@researcher** | Fast Intel | **Gemini Flash** | Speed & volume |
 | **@researcher_deep** | Deep Intel | **Gemini Pro** | 2M context for deep analysis |
 | **@maia_premium** | Supreme Arbiter | **Gemini Pro** | Complex decisions |
@@ -34,7 +34,7 @@ This file tracks tested configurations that are known to work.
 | **@opencode** | Meta Manager | **Gemini Flash** | Speed |
 
 ### Summary
-- **9x GLM-4.7** (Core & Coding)
+- **9x GLM-5** (Core & Coding)
 - **7x Gemini Flash** (Fast Utility)
 - **2x Gemini Pro** (Deep Context)
 - **2x DeepSeek R1** (Strategic Reasoning)

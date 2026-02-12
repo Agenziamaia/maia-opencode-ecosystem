@@ -164,11 +164,11 @@ async function delegateWithTimeout(agent, prompt, timeoutMs = 120000) {
    ┌─────────────────────────────────────────┐
    │ MAIA ECOSYSTEM STATUS                   │
    ├─────────────────────────────────────────┤
-   │ ✅ @coder      GLM-4.7         ONLINE   │
-   │ ✅ @ops        GLM-4.7         ONLINE   │
+   │ ✅ @coder      GLM-5         ONLINE   │
+   │ ✅ @ops        GLM-5         ONLINE   │
    │ ✅ @researcher Gemini-Pro      ONLINE   │
    │ ⚠️ @workflow   Qwen-32B        TIMEOUT  │
-   │ ✅ @reviewer   GLM-4.7         ONLINE   │
+   │ ✅ @reviewer   GLM-5         ONLINE   │
    │ ✅ @vision     Gemini-Flash    ONLINE   │
    │ ❌ @giuzu      Qwen-32B        OFFLINE  │
    ├─────────────────────────────────────────┤

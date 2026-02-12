@@ -3,21 +3,21 @@
 ## 🧠 The Brain Trust (Strategy & PM)
 | Droid | Role | Model | Provider |
 | :--- | :--- | :--- | :--- |
-| **@maia** | Supreme Orchestrator | GLM-4.7 | Z.ai (Paid) |
-| **@sisyphus** | Project Manager | GLM-4.7 | Z.ai (Paid) |
+| **@maia** | Supreme Orchestrator | GLM-5 | Z.ai (Paid) |
+| **@sisyphus** | Project Manager | GLM-5 | Z.ai (Paid) |
 | **@giuzu** | Strategic Advisor | DeepSeek R1 | OpenRouter (Free) |
 | **@prometheus** | Task Planner | DeepSeek R1 | OpenRouter (Free) |
 
 ## 🛠️ The Builders (Execution)
 | Droid | Role | Model | Provider |
 | :--- | :--- | :--- | :--- |
-| **@coder** | Architect/LSP | GLM-4.7 | Z.ai (Paid) |
-| **@ops** | Infrastructure | GLM-4.7 | Z.ai (Paid) |
-| **@frontend** | UI/UX Engineer | GLM-4.7 | Z.ai (Paid) |
-| **@workflow** | Auto Architect | GLM-4.7 | Z.ai (Paid) |
-| **@sisyphus_junior** | Code Executor | GLM-4.7 | Z.ai (Paid) |
-| **@github** | GitHub Expert | GLM-4.7 | Z.ai (Paid) |
-| **@oracle** | Debugger | GLM-4.7 | Z.ai (Paid) |
+| **@coder** | Architect/LSP | GLM-5 | Z.ai (Paid) |
+| **@ops** | Infrastructure | GLM-5 | Z.ai (Paid) |
+| **@frontend** | UI/UX Engineer | GLM-5 | Z.ai (Paid) |
+| **@workflow** | Auto Architect | GLM-5 | Z.ai (Paid) |
+| **@sisyphus_junior** | Code Executor | GLM-5 | Z.ai (Paid) |
+| **@github** | GitHub Expert | GLM-5 | Z.ai (Paid) |
+| **@oracle** | Debugger | GLM-5 | Z.ai (Paid) |
 
 ## 🔍 The Intel (Research & Data)
 | Droid | Role | Model | Provider |

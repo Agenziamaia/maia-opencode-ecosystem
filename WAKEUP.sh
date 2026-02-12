@@ -59,7 +59,15 @@ if [ ! -z "$HEALTH_PID" ]; then
     echo "✅ Health Check Server: ALREADY RUNNING (PID: $HEALTH_PID)"
 else
     # Start health check server in background
-    nohup node ecosystem/health/health-server.js > logs/health-server.log 2>&1 &
+    # 5. Generate Codebase Map (Navigation)
+echo "🗺️ Generating Codebase Map..."
+npx -y tsx .opencode/scripts/generate-codebase-map.ts
+
+# 6. Start Health Check Server (Port 62602)
+# Replaced JS path with TS path to fix MODULE_NOT_FOUND error
+echo "🏥 Starting Health Check Server..."
+nohup npx -y tsx .opencode/ecosystem/health/health-server.ts > logs/health-server.log 2>&1 &
+echo "   - Health Check Server running on port 62602"
     echo "✅ Health Check Server: STARTED on port 62602"
 fi
 
@@ -118,7 +126,7 @@ done
 # 4. THE MANIFESTO (Visual Status - Dream Team)
 echo ""
 echo "=== DREAM TEAM ROSTER (20 AGENTS) ==="
-echo "👑 GLM-4.7 (PAID)      → maia, sisyphus, coder, ops, oracle, sisyphus_junior, workflow, frontend, github"
+echo "👑 GLM-5 (PAID)      → maia, sisyphus, coder, ops, oracle, sisyphus_junior, workflow, frontend, github"
 echo "⚡ GEMINI FLASH (FAST) → researcher, opencode, starter, librarian, explore"
 echo "🧠 DEEPSEEK R1 (THINK) → giuzu, prometheus"
 echo "📚 GEMINI PRO (DEEP)   → researcher_deep, maia_premium, reviewer"

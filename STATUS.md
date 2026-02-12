@@ -1,6 +1,6 @@
 # 🎯 MAIA ECOSYSTEM - LIVING STATUS
 
-**Last Updated:** 2026-02-01 00:00
+**Last Updated:** 2026-02-08 17:07
 **System State:** 🟢 FULLY OPERATIONAL | 📋 IMPLEMENTATION ROADMAP READY
 
 ---
@@ -229,7 +229,7 @@ opencode run "@agent_name test prompt"
 
 ### Model Lessons Learned
 - **`:free` suffix causes 404s** - Always use clean model IDs
-- **GLM-4.7 proven reliable** - Core agents work perfectly with it
+- **GLM-5 is live** - Core agents upgraded from GLM-4.7
 - **Gemini Flash > Pro for speed** - Use researcher_fast as default, Pro for deep dives
 - **DeepSeek R1** - Best for reasoning/strategic tasks (Giuzu)
 
